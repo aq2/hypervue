@@ -1,6 +1,6 @@
 <template lang='pug'>
   #wrapper
-    #sidebar my sidebar :)
+    #sidebar my sidebar
       #file file
       #cats cats
       #vizType vizType
