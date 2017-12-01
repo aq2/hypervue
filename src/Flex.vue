@@ -4,6 +4,7 @@
       #file file
       #cats cats
       #vizType vizType
+    //- <aq-sidebar></aq-sidebar>  
     #main
       h1 {{ foo }}
       button(id='btn1',
@@ -26,7 +27,9 @@ export default {
     makeSidebarTaller: function() {      
       var aq = require('./helpers')
       var windowH = window.innerHeight
-      var mainH = windowH - 100
+      var headerH = aq.$('header')
+      console.log(headerH)
+      var mainH = windowH - 80
       aq.$('sidebar').style.height = mainH + 'px'
     },
     makeSidebarSlim: function(w) {

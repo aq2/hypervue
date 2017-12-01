@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <app-header></app-header>
-    <app-flex></app-flex>
+    <aq-header></aq-header>
+    <aq-flex></aq-flex>
   </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
 <style lang="stylus">
 
 body
-  background #777
+  background #557
+  margin 0
 
 </style>

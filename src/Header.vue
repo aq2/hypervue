@@ -2,7 +2,7 @@
   //- <div>
   //-   <span>HyperViz</span> interactive dataViz for hyper-dimensional data
   //- </div>
-  div
+  header
     span HyperDViz
     | interactive dataViz for hyper-dimensional data
 </template>
@@ -19,7 +19,7 @@ export default {
 
 <style lang='stylus' scoped>
   div
-    background #333
+    background #779
     padding .5em
     
   span 
