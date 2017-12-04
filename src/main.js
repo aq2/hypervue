@@ -1,20 +1,35 @@
 // import vues
 import Vue from 'vue'
 import App from './App.vue'
-import Header from './Header.vue'
-import Flex from './Flex.vue'
-import Sidebar from './Sidebar.vue'
+import Header from './components/Header.vue'
+import Sidebar from './components/Sidebar.vue'
+import Contents from './components/Contents.vue'
 
-
+// vuex datastore
 import {store} from './store/store'
 
-// my helper functions
-// var aq = require('./helpers')
-
 // setup vue components
-Vue.component('aq-header', Header)
-Vue.component('aq-flex', Flex)
-Vue.component('aq-sidebar', Sidebar)
+Vue.component('q-header', Header)
+Vue.component('q-sidebar', Sidebar)
+Vue.component('q-contents', Contents)
+
+// setup event bus that components can register with
+export const bus = new Vue()
+
+// my global helper functions
+// my ajQuery selector
+window.$ = (selector) => {
+  var selectorType = 'querySelectorAll'
+  if (selector.indexOf('#') === 0) {
+      selectorType = 'getElementById'
+      selector = selector.substr(1, selector.length)
+  }
+  return document[selectorType](selector)
+}
+
+window.foobar = () => {
+  alert('foobar')
+}
 
 
 // start the app

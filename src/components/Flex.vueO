@@ -1,0 +1,65 @@
+<template lang='pug'>
+#wrapper
+  <q-sidebar/> 
+  //- #content
+  //-   h1 {{ foo }}
+  //-   button(id='btn1' @click='sidebarWidth')
+  //-       | narrower
+  //- <instructions/>
+  <q-contents/>
+</template>
+
+
+
+<script>
+// import instructions from './Instructions.vue'
+import contents from './Contents.vue'
+
+export default {
+  components: {
+    // 'instructions': instructions,
+    'contents': contents    
+  },
+  mounted: function() {
+    this.makeSidebarTaller()
+    // $('#btn1').onclick=this.sidebarWidth
+  },
+  
+  methods: {
+    makeSidebarTaller: function() {      
+      var windowH = window.innerHeight
+      var headerH = $('#header').offsetHeight
+      var contentH = windowH - headerH
+      $('#sidebar').style.height = contentH + 'px'
+    },
+    sidebarWidth: function(evt, width = 300) {
+      document.getElementById('sidebar').style.width = width + 'px'
+      alert('flex method')      
+    }
+  },
+
+  computed: {
+    foo() {
+      return this.$store.state.foo
+    }
+  }
+}
+</script>
+
+
+
+<style lang='stylus'>
+  #wrapper
+    background orange
+    display flex
+
+  #sidebar
+    background steelblue
+    transition 2s all ease
+    width 150px
+    // flex-grow -1
+
+  #content
+    background peachpuff
+    flex 1
+</style>
