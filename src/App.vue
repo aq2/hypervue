@@ -53,7 +53,5 @@ body
   flex 1
   padding-left .5em
 
-#pageWrapper
-    text-align center
 
 </style>

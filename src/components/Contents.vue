@@ -36,3 +36,11 @@ export default {
 }
 </script>
 
+<style lang="stylus">
+
+#pageWrapper
+  // background orange
+  width 600px
+  margin 0 auto;
+
+</style>

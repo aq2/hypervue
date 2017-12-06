@@ -4,18 +4,17 @@
     p press the button i the sidebar to seelct a data file
     p it must be in CSV format
     p with criteria headers as first row, eg:
-    <pre>        
-    |    city,state,population,land area
-    |    seattle,WA,652405,83.9
-    |     new york,NY,8405837,302.6
-    |     boston,MA,645966,48.3
-    |     kansas city,MO,467007,315.0
+    <pre> city,state,population,land area<br>
+    |  seattle,WA,652405,83.9
+    |  new york,NY,8405837,302.6
+    |  boston,MA,645966,48.3
+    |  kansas city,MO,467007,315.0
     </pre>
 </template>
 
 
 <script>
-
+// page3 functionaility is in sidebar
 export default {
   created() {
     // sidebar needs to be wide

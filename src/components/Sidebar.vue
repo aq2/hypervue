@@ -1,7 +1,7 @@
 <template lang='pug'>
   #sidebar 
     #toggle(@click='toggleSidebarWidth') >
-    #getFile(v-show='page3') get a button
+    get-file(v-show='page3')
     //- #cats cats
     //- #vizType vizType
 </template>
@@ -10,8 +10,12 @@
 <script>
 // register with event bus
 import {bus} from '../main'
+import getfile from './GetFile.vue'
 
 export default {
+  components: {
+    'get-file': getfile
+  },
   data() {
     return {
       page3: false
@@ -19,22 +23,21 @@ export default {
   },
   methods: {
     toggleSidebarWidth: () => {
-      // toggle between 15 and 150px
       let sid = $('#sidebar')
       sid.style.width = sid.offsetWidth >= 30 ? '15px' : '150px'
-    },
-    doPage3: () => {
-      console.log('sidebar sez page 3')
-      this.page3 = true
     }
+    
   },
   created() {
     bus.$on('pageEvt', (data) => {
       if (data == 3) {
-        this.doPage3()
+        this.page3 = true
       }
     })
-  } 
+  },
+  computed: {
+
+  }
 }
 </script>
 
