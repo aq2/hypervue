@@ -5,17 +5,24 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    myCounter: 0
+    myCnter: 0
   },
   getters: {
-    getCounter: state => {
-      var count = state.myCounter
+    getCnter: state => {
+      var count = state.myCnter
       return count
     }
   },
   mutations: {
-    incCountMut: state => {
-      state.myCounter++
+    incCntMut: (state, payload) => {
+      state.myCnter += payload
+    },
+  },
+  actions: {
+    incCntAct: (context, payload) => {
+      setTimeout(function() {
+        context.commit('incCntMut', payload)
+      }, 2000)
     }
   }
 })

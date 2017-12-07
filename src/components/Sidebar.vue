@@ -4,8 +4,8 @@
     get-file(v-show='page3')
     //- #cats cats
     //- #vizType vizType
-    button(@click='incCounterFn') +1
-    button(@click='incCounterFn') -1
+    button(@click='incCounterFn(1)') +1
+    button(@click='incCounterFn(-1)') -1
 </template>
 
 
@@ -32,9 +32,10 @@ export default {
       let sid = $('#sidebar')
       sid.style.width = sid.offsetWidth >= 30 ? '15px' : '150px'
     },
-    incCounterFn: function() {
-      // this.$store.state.myCounter++
-      this.$store.commit('incCountMut')
+    incCounterFn: function(inc) {
+      // this.$store.state.myCnter++      // change store directly BAD
+      // this.$store.commit('incCntMut')  // commit mutation BETTER
+      this.$store.dispatch('incCntAct',inc)   // dispatch action BEST (async)
 
     }
   },
