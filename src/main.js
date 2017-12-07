@@ -8,6 +8,9 @@ import Contents from './components/Contents.vue'
 // vuex datastore
 import {store} from './store'
 
+// http stuff
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
 
 // setup vue components
 Vue.component('q-header', Header)
