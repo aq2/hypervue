@@ -18,38 +18,30 @@ export default {
   // can use them in v-directives too
   data() {
     return {
-      conts: ''
+      fileContents: ''
     }
   },
   // functions exclusive to this component
   // called using this.functionName
   methods: {
     gotFile: function(evt) {
-      let r, f, parsedFile, catData = {}
+      let r, f, parsedFileData
       
       if (f = evt.target.files[0]) {    // conditional variable
         r = new FileReader()
         r.onload = e => { 
-          this.conts = e.target.result
-          parsedFile = this.isFileGood()
+          this.fileContents = e.target.result
+          parsedFileData = this.isFileGood()
 
-          if (parsedFile) {
-            // store them separately or as object?
-            // var cats = parsedFile.cats
-            // var cands = parsedFile.cands
-            // var alfs = parsedFile.alfs
-            this.storeData(parsedFile)
-            // console.log('cats', cats)
-            // console.log('cands', cands)
-            // console.log('alfs', alfs)            
+          if (parsedFileData) {
+            // stick data in store
+            this.$store.dispatch('setCats', parsedFileData)
           } else {
             // todo error message, or do in isFileGood()?
             console.log('bad file')
             return false
           }
           
-          console.log('about to get data')
-          alert('done')
           // built data, now build cats sidebar
           // getCatData(cats, candidates)
         }
@@ -73,7 +65,7 @@ export default {
       candidates=[],       // array of candidate objects
       alphas= new Set()    // array of alpha cat values - should be set
  
-      lines = this.conts.split('\n')
+      lines = this.fileContents.split('\n')
       // first line is headers - todo must have headers - check for alpha?
       catsLine = lines.shift()
       categories = catsLine.split(',')
@@ -121,16 +113,6 @@ export default {
         cands: candidates,
         alfs: alphas
       }
-    },
-
-    storeData: function(parsedFile) {
-      var cats = parsedFile.cats
-      var cands = parsedFile.cands
-      var alfs = parsedFile.alfs
-      console.log('cats', cats)
-      console.log('cands', cands)
-      console.log('alfs', alfs)
-     // qq - add to store!
     }
   }
 }
