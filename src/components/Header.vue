@@ -1,22 +1,19 @@
 <template lang='pug'>
-  //- <div>
-  //-   <span>HyperViz</span> interactive dataViz for hyper-dimensional data
-  //- </div>
+
   #header
-    span HyperDViz - count is 
+    span HyperDViz - count is {{counter}}
     | interactive dataViz for hyper-dimensional data
+
 </template>
 
 <script>
 
 export default {
   computed: {
-    // foo() {
-    //   return this.$store.state.foo
-    // }
-    // counter() {
-    //   // return this.$store.state.myCounter
-    // }
+    counter() {
+      // return this.$store.state.myCounter
+      return this.$store.getters.getCounter
+    }
   }
 }
 </script>
@@ -28,5 +25,5 @@ export default {
     
   span 
     font-size 2.5em
-    margin-right 5em
+    margin-right 2em
 </style>

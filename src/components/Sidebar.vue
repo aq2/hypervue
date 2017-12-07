@@ -5,7 +5,7 @@
     //- #cats cats
     //- #vizType vizType
     button(@click='incCounterFn') +1
-    button(@click='') -1
+    button(@click='incCounterFn') -1
 </template>
 
 
@@ -13,6 +13,7 @@
 // register with event bus
 import {bus} from '../main'
 import getfile from './GetFile.vue'
+// import store from '../store' 
 
 export default {
   components: {
@@ -27,14 +28,15 @@ export default {
     }
   },
   methods: {
-    incCounterFn: () => {
-      // this.$store.state.myCounter++
-    },
     toggleSidebarWidth: () => {
       let sid = $('#sidebar')
       sid.style.width = sid.offsetWidth >= 30 ? '15px' : '150px'
+    },
+    incCounterFn: function() {
+      // this.$store.state.myCounter++
+      this.$store.commit('incCountMut')
+
     }
-    
   },
   created() {
     bus.$on('pageEvt', (data) => {
