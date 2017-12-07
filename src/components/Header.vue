@@ -3,16 +3,20 @@
   //-   <span>HyperViz</span> interactive dataViz for hyper-dimensional data
   //- </div>
   #header
-    span HyperDViz
+    span HyperDViz - count is 
     | interactive dataViz for hyper-dimensional data
 </template>
 
 <script>
+
 export default {
   computed: {
-    foo() {
-      return this.$store.state.foo
-    }
+    // foo() {
+    //   return this.$store.state.foo
+    // }
+    // counter() {
+    //   // return this.$store.state.myCounter
+    // }
   }
 }
 </script>

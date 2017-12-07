@@ -12,6 +12,7 @@
 
 
 <script>
+
 export default {
   // sorta 'global' data, each method can access with this.variableName
   // can use them in v-directives too
@@ -129,8 +130,7 @@ export default {
       console.log('cats', cats)
       console.log('cands', cands)
       console.log('alfs', alfs)
-      this.$store.state.categories = cats
-      this.$store.state.limbo = cats
+     // qq - add to store!
     }
   }
 }

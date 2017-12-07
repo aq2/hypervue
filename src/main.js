@@ -6,7 +6,6 @@ import Sidebar from './components/Sidebar.vue'
 import Contents from './components/Contents.vue'
 
 // vuex datastore
-import {store} from './store/store'
 
 // setup vue components
 Vue.component('q-header', Header)
@@ -34,7 +33,8 @@ window.foobar = () => {
 
 // start the app
 new Vue({
-  store: store,
   el: '#app',
+  // store: store,
+  // store,
   render: h => h(App)
 })

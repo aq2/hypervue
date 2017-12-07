@@ -9,6 +9,7 @@
 
 
 <script>
+
 export default {
   mounted: function() {
     this.makeSidebarTaller()
@@ -20,7 +21,7 @@ export default {
       var contentH = windowH - headerH
       $('#sidebar').style.height = contentH + 'px'
     }
-  }  
+  }
 }
 </script>
 
@@ -32,8 +33,6 @@ html
 
 *, *:before, *:after
   box-sizing inherit
-
-
 
 body
   background #f00

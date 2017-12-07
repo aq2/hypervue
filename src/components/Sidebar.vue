@@ -4,6 +4,8 @@
     get-file(v-show='page3')
     //- #cats cats
     //- #vizType vizType
+    button(@click='incCounterFn') +1
+    button(@click='') -1
 </template>
 
 
@@ -16,12 +18,18 @@ export default {
   components: {
     'get-file': getfile
   },
+  computed: {
+    
+  },
   data() {
     return {
       page3: false
     }
   },
   methods: {
+    incCounterFn: () => {
+      // this.$store.state.myCounter++
+    },
     toggleSidebarWidth: () => {
       let sid = $('#sidebar')
       sid.style.width = sid.offsetWidth >= 30 ? '15px' : '150px'
@@ -34,9 +42,6 @@ export default {
         this.page3 = true
       }
     })
-  },
-  computed: {
-
   }
 }
 </script>
