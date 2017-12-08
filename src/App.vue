@@ -4,13 +4,38 @@
     #wrapper
       <q-sidebar></q-sidebar>
       <q-contents/>
+    div(v-for="message in massages")
+      h4 {{message.title}}
+      p {{ message.text}} 
+      p {{ message.timestamp}} 
   </div>
+
 </template>
 
+// <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
 
 <script>
+import Firebase from 'firebase'
+
+// Initialize Firebase
+let config = {
+  apiKey: "AIzaSyBNYxHpiJt0U-h9Yb3E4MGXVCUBywtFpck",
+  authDomain: "dvzvue.firebaseapp.com",
+  databaseURL: "https://dvzvue.firebaseio.com",
+  projectId: "dvzvue",
+  storageBucket: "dvzvue.appspot.com",
+  messagingSenderId: "804794548950"
+};
+
+let app = Firebase.initializeApp(config);
+let db = app.database()
+let messagesRef = db.ref('massages')
 
 export default {
+  name: 'app',
+  firebase: {
+    massages: messagesRef
+  },
   mounted: function() {
     this.makeSidebarTaller()
   },  

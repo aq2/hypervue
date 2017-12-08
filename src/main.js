@@ -12,6 +12,11 @@ import {store} from './store'
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 
+// firebase
+import VueFire from 'vuefire'
+Vue.use(VueFire)
+
+
 // setup vue components
 Vue.component('q-header', Header)
 Vue.component('q-sidebar', Sidebar)

@@ -11,7 +11,6 @@
 export default {
   computed: {
     counter() {
-      // return this.$store.state.myCounter
       return this.$store.getters.getCnter
     }
   }
@@ -21,9 +20,9 @@ export default {
 <style lang='stylus' scoped>
   #header
     background #456
-    padding .5em
+    padding .51em
     
   span 
-    font-size 2.5em
+    font-size 2.51em
     margin-right 2em
 </style>

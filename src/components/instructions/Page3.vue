@@ -32,7 +32,6 @@ export default {
     // get data from dbase
     this.$http.get('https://dvzvue.firebaseio.com/mystuff.json')
       .then(function(data) {
-        // this.blogs = data.body.slice(0, 10)
         return data.json()
       })
       .then(function(data) {
@@ -44,6 +43,7 @@ export default {
           blogsArray.push(data[key])
         }
         console.log(blogsArray)
+        this.blogs = blogsArray
         
       })
   },
