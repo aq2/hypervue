@@ -1,14 +1,10 @@
 <template lang='pug'>
-  <div id="app">
-    <q-header></q-header>
-    #wrapper
-      <q-sidebar></q-sidebar>
-      <q-contents/>
-    div(v-for="message in massages")
-      h4 {{message.title}}
-      p {{ message.text}} 
-      p {{ message.timestamp}} 
-  </div>
+  #app
+    q-sidebar
+    #contents-wrapper
+      q-header
+      q-contents
+       
 
 </template>
 
@@ -44,7 +40,7 @@ export default {
       var windowH = window.innerHeight
       var headerH = $('#header').offsetHeight
       var contentH = windowH - headerH
-      $('#sidebar').style.height = contentH + 'px'
+      $('#sidebar').style.height = windowH + 'px'
     }
   }
 }
@@ -60,21 +56,30 @@ html
   box-sizing inherit
 
 body
-  background #f00
+  background #00f
   margin 0
+  // display flex
 
-#wrapper
-  background orange
+#app 
   display flex
+  background #f00
+
+#contents-wrapper
+  background #777
+  // display inline-flex
+  flex-grow 1
 
 #sidebar
   transition 1s all ease
-  width 15px
-  padding-left .1em
+  width 150px
+  // padding-left .1em
+  box-sizing border-box
+  
+  // display flex
 
 #content
   background #456
-  flex 1
+  // flex 1
   padding-left .5em
 
 

@@ -1,7 +1,7 @@
 <template lang='pug'>
 
   #header
-    span HyperDViz - count is {{counter}}
+    span HyperDViz
     | interactive dataViz for hyper-dimensional data
 
 </template>

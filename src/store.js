@@ -33,6 +33,8 @@ export const store = new Vuex.Store({
       state.fileData = payload
     }
   },
+  // qq these are the actions that should be dispatched
+  // eg. this.$store.dispatch(actionName, payload)
   actions: {
     incCntAct: (context, payload) => {
       setTimeout(function() {

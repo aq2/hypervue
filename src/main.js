@@ -16,6 +16,12 @@ Vue.use(VueResource)
 import VueFire from 'vuefire'
 Vue.use(VueFire)
 
+// awesome icons
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+Vue.component('icon', Icon)
+
+
 
 // setup vue components
 Vue.component('q-header', Header)
@@ -34,10 +40,6 @@ window.$ = (selector) => {
       selector = selector.substr(1, selector.length)
   }
   return document[selectorType](selector)
-}
-
-window.foobar = () => {
-  alert('foobar')
 }
 
 

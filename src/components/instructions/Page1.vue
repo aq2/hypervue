@@ -1,9 +1,12 @@
 <template lang="pug">
+
   #pageWrapper
     h1 Welcome to HyperDViz
+    <icon name='bar-chart' scale=4></icon>
     p it doesn't look like much yet, but it will be great
     p it's recommended to run this app in full-screen mode, which is toggled with F11
     p press the button to continue
+
 </template>
 
 
@@ -18,4 +21,5 @@ export default {
   // #pageWrapper
   //   text-align center
     // margin 0 auto
+
 </style>

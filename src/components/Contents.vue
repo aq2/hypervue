@@ -10,14 +10,14 @@
 import {bus} from '../main'
 import page1 from './instructions/Page1.vue'
 import page2 from './instructions/Page2.vue'
-import page3 from './instructions/Page3.vue'
+// import page3 from './instructions/Page3.vue'
 
 
 export default {
   components: {
     'page1': page1,
-    'page2': page2,
-    'page3': page3
+    'page2': page2
+    // , 'page3': page3
   },
   data() {
     return {
@@ -40,7 +40,7 @@ export default {
 
 #pageWrapper
   // background orange
-  width 600px
+  // width 1600px
   margin 0 auto;
 
 </style>
