@@ -24,9 +24,9 @@ Vue.component('icon', Icon)
 
 
 // setup vue components
-Vue.component('q-header', Header)
-Vue.component('q-sidebar', Sidebar)
-Vue.component('q-contents', Contents)
+Vue.component('app-header', Header)
+Vue.component('app-sidebar', Sidebar)
+Vue.component('app-contents', Contents)
 
 // setup event bus that components can register with
 export const bus = new Vue()

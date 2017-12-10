@@ -15,12 +15,14 @@
 </template>
 
 <script>
-import getfile from '../GetFile.vue'
+
+import getfile from './GetFile.vue'
 export default {
   components: {
     'get-file': getfile
   }
 }
+
 </script>
 
 
@@ -28,6 +30,7 @@ export default {
 
 
 <style lang="stylus" scoped>
+
 #csv 
   background #aaa
   padding 5px 10px

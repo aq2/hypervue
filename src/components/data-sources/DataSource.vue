@@ -1,10 +1,13 @@
 <template lang="pug">
   div
-    h1 Choose a data-file
-    fbsrc
-    csvsrc
+    h1 Choose a dataset
+    button(@click='fb=true;csv=false') get dataset from firebase
+    span(class='spacer') or
+    button(@click='csv=true;fb=false') get data from CSV file
+    fbsrc(v-if="fb")
+      //- button(@click.prevent='firePost') save to firebase
+    csvsrc(v-if='csv')
     br
-    button(@click.prevent='firePost') save to firebase
     br
     //- #yay(v-if='submitted') you submitted post!
     //-   .single-post(v-for='blog in blogs')
@@ -51,7 +54,10 @@ export default {
   data() {
     return {
       submitted: false,
-      blogs: []
+      blogs: [],
+      datasource: '',
+      fb: false,
+      csv: false
     }
   },
   methods: {
@@ -70,7 +76,11 @@ export default {
 </script>
 
 
-<style lang="stylus">
-
+<style lang="stylus" scoped>
+.spacer 
+  width 50px
+  // color red
+  display inline-block
+  text-align center
 
 </style>

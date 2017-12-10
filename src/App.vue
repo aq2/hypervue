@@ -1,9 +1,9 @@
 <template lang='pug'>
   #app
-    q-sidebar
+    app-sidebar
     #contents-wrapper
-      q-header
-      q-contents
+      app-header
+      app-contents
        
 
 </template>
@@ -58,6 +58,7 @@ html
 body
   background #00f
   margin 0
+  // font-size 24px
   // display flex
 
 #app 
@@ -81,6 +82,22 @@ body
   background #456
   // flex 1
   padding-left .5em
+
+button
+  background: #36b
+  border 1px solid transparent
+  // border none
+  padding .5em
+  color #aaa
+  border-radius 5px
+  box-sizing border-box
+  font-size 1.2em
+
+button:hover
+  background: #47c
+  cursor: pointer
+  color #ccc
+  border 1px solid darkblue
 
 
 </style>

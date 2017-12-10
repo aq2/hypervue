@@ -3,8 +3,10 @@
 #getFile
   hr
   //- button get File
-  label(id='browseLabel' for='browseFile') data file...
   input(type="file" id='browseFile' accept=".csv, text/csv" @change='gotFile')
+  <label id='browseLabel' for='browseFile'> 
+    <icon name='upload' class='icon' scale=1.2 />  choose a file...
+  </label>
   hr
 
 </template>
@@ -36,6 +38,13 @@ export default {
           if (parsedFileData) {
             // stick data in store
             this.$store.dispatch('setCats', parsedFileData)
+            alert('data saved')
+
+            // now need to call something else, somehow
+            // call a function? 
+            // set a variable to load in another component??
+            // replace csv source with csvTable?
+
           } else {
             // todo error message, or do in isFileGood()?
             console.log('bad file')
@@ -120,9 +129,58 @@ export default {
 
 
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 
 #browseFile 
   color transparent
+
+input
+  background #36b
+
+#browseFile 
+  width 0.1px
+  height 0.1px
+  opacity 0
+  overflow hidden
+  position absolute
+  z-index -1
+
+label 
+  font-size 1.2em
+  color white
+  display inline-block
+  background #36b
+  padding .5em
+  border 1px solid transparent
+  cursor pointer
+  border-radius 5px
+
+
+label:hover
+    background #47c
+    border 1px solid darkblue
+
+.icon
+  margin-right 15px
+  margin-bottom -2px
+
+// input 
+//   width: 0.1px
+//   height 0.1px
+//   opacity 0
+//   overflow hidden
+//   position absolutez-index -1
+
+// input + label
+//     font-size 1.25em
+//     color white
+//     display inline-block
+//     cursor pointer
+
+// input:focus + label,
+// .input + label:hover {
+//     background-color: red;
+// }
+
 
 </style>
