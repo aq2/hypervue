@@ -14,6 +14,7 @@
 
 
 <script>
+import {bus} from '../../main'
 
 export default {
   // sorta 'global' data, each method can access with this.variableName
@@ -37,13 +38,14 @@ export default {
 
           if (parsedFileData) {
             // stick data in store
-            this.$store.dispatch('setCats', parsedFileData)
-            alert('data saved')
+            this.$store.dispatch('setFileData', parsedFileData)
+            // alert('data saved')
 
             // now need to call something else, somehow
-            // call a function? 
-            // set a variable to load in another component??
             // replace csv source with csvTable?
+            // set event ??
+            bus.$emit('fileParsed', 'insert payload here')
+
 
           } else {
             // todo error message, or do in isFileGood()?

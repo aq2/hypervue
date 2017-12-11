@@ -1,22 +1,21 @@
 <template lang="pug">
-  div
-    h1 Choose a dataset
-    button(@click='fb=true;csv=false') get dataset from firebase
+
+#contents
+  h1(id='h') Choose a dataset
+  #buttons()
+    button(@click="chooseSource('fb')") get dataset from firebase
     span(class='spacer') or
-    button(@click='csv=true;fb=false') get data from CSV file
-    fbsrc(v-if="fb")
-      //- button(@click.prevent='firePost') save to firebase
-    csvsrc(v-if='csv')
-    br
-    br
-    //- #yay(v-if='submitted') you submitted post!
-    //-   .single-post(v-for='blog in blogs')
-    //-     h2 {{blog.title}}
-    //-     article {{blog.body}}
+    button(@click="chooseSource('csv')") get data from CSV file
+  fbsrc(v-if='fb')
+    //- button(@click.prevent='firePost') save to firebase
+  csvsrc(v-if='csv')
+  
+  
+
 </template>
-
-
+///
 <script>
+///
 
 import FirebaseSource from './FirebaseSource.vue'
 import CSVSource from './CSVSource.vue'
@@ -57,7 +56,8 @@ export default {
       blogs: [],
       datasource: '',
       fb: false,
-      csv: false
+      csv: false,
+      buttoned: false
     }
   },
   methods: {
@@ -69,18 +69,36 @@ export default {
         console.log(data)
         this.submitted = true
       })
+    },
+    chooseSource: function(src) {
+      if (src == 'fb') {
+        this.fb = true
+        this.csv = false
+      }
+      if (src == 'csv') {
+        this.csv = true
+        this.fb = false
+      }
+      this.buttoned = true
+      var h = $('#h')
+      h.style.paddingRight = '2em'
+      h.style.display = 'inline-block'
+
     }
   }
 
 }
 </script>
 
-
+///
 <style lang="stylus" scoped>
 .spacer 
   width 50px
-  // color red
   display inline-block
   text-align center
+
+#buttons 
+  display inline-block
+
 
 </style>

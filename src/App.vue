@@ -1,16 +1,17 @@
 <template lang='pug'>
-  #app
-    app-sidebar
-    #contents-wrapper
-      app-header
-      app-contents
+///
+#app
+  app-sidebar
+  app-contents
        
-
 </template>
 
 // <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
 
+
+///
 <script>
+///
 import Firebase from 'firebase'
 
 // Initialize Firebase
@@ -38,17 +39,16 @@ export default {
   methods: {
     makeSidebarTaller: function() {      
       var windowH = window.innerHeight
-      var headerH = $('#header').offsetHeight
-      var contentH = windowH - headerH
+      // var headerH = $('#header').offsetHeight
+      // var contentH = windowH - headerH
       $('#sidebar').style.height = windowH + 'px'
     }
   }
 }
 </script>
 
-
+///
 <style lang="stylus">
-
 html 
   box-sizing border-box
 
@@ -82,6 +82,7 @@ body
   background #456
   // flex 1
   padding-left .5em
+  flex-grow 1
 
 button
   background: #36b
