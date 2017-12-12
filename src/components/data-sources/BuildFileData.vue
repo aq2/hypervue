@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang='pug'> 
   #gotFile
     h2 category meta data
     #cont
@@ -8,10 +8,9 @@
         .rankable rankable
         .maxi(v-if='step > 0') maxi
         .id(v-if='step > 1') ID
-
       .list(v-for='(cat, index) in cats') 
         .catName {{cat}}
-        .example {{exampleData.scores[index]}}
+        .example {{exampleData.scores[index].origScore}}
         .rankable
           label 
           input(type='checkbox' :value='index' v-model='rankable')
@@ -54,20 +53,12 @@
 
 
 <script>
+  // todo - file getting too big -> subcomponentize?
 export default {
   // get stuff from store!
   computed: {
     fileData() {
       return this.$store.getters.getFileData
-    },
-    cats() {
-      return this.fileData.catData.cats
-    },
-    cands() {
-      return this.fileData.cands
-    },
-    alfs() {
-      return this.fileData.catData.alphas
     },
     exampleData() {
       return this.fileData.cands[0]
@@ -77,48 +68,80 @@ export default {
     checkRankables() {
       // must be at least two rankables
       if (this.rankable.length > 1) {
-        this.catData.cats = this.cats // ??
-        this.catData.rankables = this.rankable
         this.step = 1
-        this.makeCandidateRankables()
       } else {
         alert('not enough rankables - need at least two!')
       }
-    },
-    makeCandidateRankables() {
-      var cands = this.fileData.cands
-      var rankableCats = this.catData.rankables
-      // var rankableCatsL = rankableCats.length
-      // var candsL = cands.length
-
-      for (var cand of cands) {
-        for (var rankCat of rankableCats) {
-          cand.rankables.push(cand.scores[rankCat])
-        }
-      }
-    },
-    
+    },   
     isRankable(i) {
       return this.rankable.includes(i)
     },
     checkMaxis() {
-        this.catData.maxis = this.maxi
+        // this.catData.maxis = this.maxi
         this.step = 2
         var rankables = this.rankable
         var maxis = this.maxi
-        // assign maxis to all cands //qq
-        // err no - only used in normalizing rankables
-        // should we do it here??
-        // may as well - make sure algo is correct
         // first need to make sure maxi is in rankable
         for (var max of maxis) {
           if (!rankables.includes(max)) {
             alert('maxi not in rank')
+            // todo deal with it!
           }
         }
+        this.buildRankableScoresForCandidates()
+
+        // normalise all the rankables!
+        // buildNormalisedScoresForCandidates // qq
+
+    },
+    buildRankableScoresForCandidates() {
+      var cands = this.fileData.cands
+      var candsL = cands.length
+      var rankables = this.rankable
+      
+      var catData = this.catData    // do i need these?
+      var cats = catData.cats
+      var catsL = cats.length
+
+      var mins = []
+      var maxs = []
+      for (var ca = 0; ca < catsL; ca++) {
+        mins[ca] = this.fileData.cands[0].scores[ca].origScore
+        maxs[ca] = mins[ca]
+      }
+
+      // for each cand,
+      for (var c=0; c<candsL; c++) {
+        var cand = cands[c]
+        // for each score/category
+        for (var s=0; s<catsL; s++ ) {
+          var orig = cand.scores[s].origScore
+          if (orig < mins[s]) {
+            mins[s] = orig
+          } //else?
+          if (orig > maxs[s]) {
+            maxs[s] = orig
+          }
+          // add rankable score = same as origScore or false
+          cand.scores[s].rankableScore = false
+          if (rankables.includes(s)) {
+            cand.scores[s].rankableScore = orig
+          }
+        }
+      }
+      console.log('cands', cands)
+      console.log('mins', mins)
+      console.log('maxs', maxs)
+      // ok where to store them?
+      // in catData - need new cat datastructure! // qq
 
 
-        // then normalise each rankable for each candidate
+      //now normalise() - or call it in checkMaxis above
+
+    },
+    normaliseAll() {
+      // then normalise each rankable for each candidate
+
     },
     checkID() {
       this.catData.ID = this.ID
@@ -127,7 +150,7 @@ export default {
       // assign ID to all cands
       // step 3?
         // save data to store
-       // qq offer to save it to firebase
+       // todo offer to save it to firebase
     }
   },
   data() {
@@ -145,7 +168,7 @@ export default {
     this.catData = this.fileData.catData
     this.rankable = this.catData.rankables 
     this.alphas = this.catData.alphas
-    // checkRankables
+    this.cats = this.catData.cats
   }
 }
 </script>
