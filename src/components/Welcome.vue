@@ -17,9 +17,15 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
+
+  // @import('~styles/_vars.styl')
   // #pageWrapper
   //   text-align center
     // margin 0 auto
+
+  // p
+  //   background $red
+  //   color $blue
 
 </style>

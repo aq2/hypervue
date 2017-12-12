@@ -8,7 +8,8 @@
     button(@click="chooseSource('csv')") get data from CSV file
   fbsrc(v-if='fb')
     //- button(@click.prevent='firePost') save to firebase
-  csvsrc(v-if='csv')
+  transition(name='fade')
+    csvsrc(v-if='csv')
   
   
 
@@ -31,24 +32,24 @@ export default {
     let sid = $('#sidebar')
     sid.style.width = '150px'
 
-    // get data from dbase
-    this.$http.get('https://dvzvue.firebaseio.com/mystuff.json')
-      .then(function(data) {
-        // console
-        return data.json()
-      })
-      .then(function(data) {
-        console.log(data)
-        var blogsArray = []
-        for (let key in data) {
-          console.log(key, data[key])
-          data[key].id = key
-          blogsArray.push(data[key])
-        }
-        console.log(blogsArray)
-        this.blogs = blogsArray
+    // // get data from dbase
+    // this.$http.get('https://dvzvue.firebaseio.com/mystuff.json')
+    //   .then(function(data) {
+    //     // console
+    //     return data.json()
+    //   })
+    //   .then(function(data) {
+    //     console.log(data)
+    //     var blogsArray = []
+    //     for (let key in data) {
+    //       console.log(key, data[key])
+    //       data[key].id = key
+    //       blogsArray.push(data[key])
+    //     }
+    //     console.log(blogsArray)
+    //     this.blogs = blogsArray
         
-      })
+    //   })
   },
   data() {
     return {
@@ -100,5 +101,11 @@ export default {
 #buttons 
   display inline-block
 
+
+.fade-enter-active, .fade-leave-active
+  transition opacity .5s
+
+.fade-enter, .fade-leave-active
+  opacity 0
 
 </style>

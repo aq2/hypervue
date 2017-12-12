@@ -13,7 +13,7 @@
       |  kansas city,MO,467007,315.0
     get-file
   #hey(v-if='fileGot')
-    got-file
+    build-file-data
 
 </template>
 
@@ -21,7 +21,7 @@
 <script>
 import {bus} from '../../main'
 import getfile from './GetFile.vue'
-import gotfile from './GotFile.vue'
+import buildfiledata from './BuildFileData.vue'
 
 export default {
   data() {
@@ -31,7 +31,7 @@ export default {
   },
   components: {
     'get-file': getfile,
-    'got-file': gotfile
+    'build-file-data': buildfiledata
   },
   created() {
     bus.$on('fileParsed', (data) => {

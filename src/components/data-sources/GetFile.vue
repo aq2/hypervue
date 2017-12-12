@@ -34,7 +34,10 @@ export default {
         r = new FileReader()
         r.onload = e => { 
           this.fileContents = e.target.result
+          
           parsedFileData = this.isFileGood()
+          console.log('pfd', parsedFileData)
+          
 
           if (parsedFileData) {
             // stick data in store
@@ -73,6 +76,7 @@ export default {
       candidate,           // individual candidate object 
       scores=[],           //  array containing all cat values
       categories,          // array of category names
+      rankables=[],
       candidates=[],       // array of candidate objects
       alphas= new Set()    // array of alpha cat values - should be set
  
@@ -102,11 +106,27 @@ export default {
         candidate.normRank = []
         j = 0
         for (prop of scores) {
+          
           propname = categories[j]
-          // if prop value is alpha, trim it and add to alphas set, else just use the numeric val
-          // todo alpha check here?     
-          prop = (isNaN(numb=Number(prop))) ? (prop.trim(), alphas.add(j)) : numb
-          // alphas.push(j) // fixme ???
+          // if prop value is alpha, trim it and add to alphas set, else just use the numeric val - FIXME: ? - alphs props being returned as Set?
+
+          // qq HERE sort out prop and add to rankables if non alpha
+          // fuck clever ternary
+
+          numb = Number(prop)
+          var isAlpha = isNaN(numb)
+          
+          if (!isAlpha) {
+            prop = numb
+          } else {
+            prop = prop.trim()
+          }
+
+          // no don't do it here, it will be repeated for all cands!
+
+          // prop = (isNaN(numb=Number(prop))) ? (prop.trim(), alphas.add(j)) : numb
+          
+                 
           // fugling hacky
           j = (j == categories.length - 1) ? -1 : j      
           j++
@@ -118,13 +138,43 @@ export default {
         candidates.push(candidate)
       }
       
-      // todo should return object rather than array
-      return {
-        cats: categories,
-        cands: candidates,
-        alfs: alphas
+
+      
+
+      // process rankables and alphas here qq
+      // loop through cats, if alpha add to alphas else add to rankables
+      // hah need to loop through candidate scores for alphas!
+
+      // var exampleCandidateScores = candidates[0].scores
+      // console.log('xCS', exampleCandidateScores)
+      var scoresL = categories.length
+      for (i=0;i<scoresL;i++) {
+        // console.log('sc', scores[i])
+        var score = Number(scores[i])
+        var isAlf = isNaN(score)
+        if (!isAlf) {
+          rankables.push(i)
+        } else {
+          alphas.add(i)
+        }
       }
-    }
+
+      // ?? return better object
+      var catData = {
+        cats: categories,
+        alphas: alphas,
+        rankables: rankables,
+        maxis: [],
+        ID: -1
+      }
+
+
+
+      return {
+        catData: catData,
+        cands: candidates
+      }
+    } // end isFileGood
   }
 }
 </script>

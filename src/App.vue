@@ -49,6 +49,8 @@ export default {
 
 ///
 <style lang="stylus">
+$blue = #47c
+
 html 
   box-sizing border-box
 

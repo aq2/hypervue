@@ -25,7 +25,13 @@ module.exports = {
             'stylus': [
               'vue-style-loader',
               'css-loader',
-              'stylus-loader'
+              'stylus-loader',
+              {
+                loader: 'stylus-resources-loader',
+                options: {
+                  resources: path.resolve(__dirname, './src/style/_vars.styl')
+                }
+              }
             ]
           }
           // other vue-loader options go here
@@ -46,12 +52,20 @@ module.exports = {
       {
         test: /\.pug$/,
         loader: 'pug-html-loader',
-      }
+      },
+      // {
+      //   loader: 'stylus-resources-loader',
+      //   options: {
+      //     resources: path.resolve(__dirname, './src/style/_vars.styl')
+      //     // resources: '../src/style/_vars.styl'
+      //   }
+      // }
     ]
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      'styles': path.resolve(__dirname, './src/style/')
     },
     extensions: ['*', '.js', '.vue', '.json']
   },

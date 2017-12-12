@@ -6,45 +6,48 @@
         .catName category
         .example example
         .rankable rankable
-        .maxi(v-if="step > 0") maxi
-        .id(v-if="step > 1") ID
+        .maxi(v-if='step > 0') maxi
+        .id(v-if='step > 1') ID
 
       .list(v-for='(cat, index) in cats') 
         .catName {{cat}}
         .example {{exampleData.scores[index]}}
-        // todo auto-select all non-alphas
-        .rankable(v-if="step >= 0")
+        .rankable
           label 
           input(type='checkbox' :value='index' v-model='rankable')
-        // todo only show for rankables
-        .maxi(v-if="step >= 1")
+        .maxi(v-if='step > 0 && isRankable(index)')
           label 
           input(type='checkbox' :value='index' v-model='maxi')
-        // shouldn't be an array, but a single integer value
-        .id(v-if="step >= 2")
+        .maxi(v-if='step > 0 && !isRankable(index)')
+          .boxy
+        .id(v-if='step > 1')
           label 
-          input(type='checkbox' :value='index' v-model='ID')
+          input(type='radio' :value='index' v-model='ID')
 
-    div(v-if="step==0") first, select orderable categories to include in rankings
+    div(v-if='step == 0')
+      p first, select orderable categories to include in rankings
       p ie don't select a non-numeric category
       p need at least two categories
       p press OK when done
       button(@click='checkRankables') OK
     
-    div(v-if="step == 1") now select categories where high values are good
+    div(v-if='step == 1')
+      p now select categories where high values are good
       p default is lower values are better
+      .list DO WE EVEN NEED THIS?
       p press OK when done
       button(@click='checkMaxis') OK
     
-    div(v-if="step == 2") now select a category to use as an identifier
+    div(v-if='step == 2')
+      p now select a category to use as an identifier
       p this name will be used to identify candidates
       p so chose an alpha-numeric name
       p press OK when done
       button(@click='checkID') OK
 
-    //- p rankable {{rankable}}
-    //- p maxi {{maxi}}
-    //- p ID {{ID}}
+    p rankable {{rankable}}
+    p maxi {{maxi}}
+    p ID {{ID}}
 
 </template>
 
@@ -58,13 +61,13 @@ export default {
       return this.$store.getters.getFileData
     },
     cats() {
-      return this.fileData.cats
+      return this.fileData.catData.cats
     },
     cands() {
       return this.fileData.cands
     },
     alfs() {
-      return this.fileData.alfs
+      return this.fileData.catData.alphas
     },
     exampleData() {
       return this.fileData.cands[0]
@@ -74,22 +77,53 @@ export default {
     checkRankables() {
       // must be at least two rankables
       if (this.rankable.length > 1) {
-        this.catData.cats = this.cats
+        this.catData.cats = this.cats // ??
         this.catData.rankables = this.rankable
         this.step = 1
-        // assign rankables to all cands!
+        this.makeCandidateRankables()
       } else {
         alert('not enough rankables - need at least two!')
       }
     },
+    makeCandidateRankables() {
+      var cands = this.fileData.cands
+      var rankableCats = this.catData.rankables
+      // var rankableCatsL = rankableCats.length
+      // var candsL = cands.length
+
+      for (var cand of cands) {
+        for (var rankCat of rankableCats) {
+          cand.rankables.push(cand.scores[rankCat])
+        }
+      }
+    },
+    
+    isRankable(i) {
+      return this.rankable.includes(i)
+    },
     checkMaxis() {
         this.catData.maxis = this.maxi
         this.step = 2
-        // assign maxis to all cands
+        var rankables = this.rankable
+        var maxis = this.maxi
+        // assign maxis to all cands //qq
+        // err no - only used in normalizing rankables
+        // should we do it here??
+        // may as well - make sure algo is correct
+        // first need to make sure maxi is in rankable
+        for (var max of maxis) {
+          if (!rankables.includes(max)) {
+            alert('maxi not in rank')
+          }
+        }
+
+
+        // then normalise each rankable for each candidate
     },
     checkID() {
       this.catData.ID = this.ID
       this.step = 3
+      console.log('catData', this.catData)
       // assign ID to all cands
       // step 3?
         // save data to store
@@ -103,8 +137,15 @@ export default {
       rankable: [],
       maxi: [],
       ID: [],
-      catData: {}
+      catData: {},
+      alphas: new Set()
     }
+  },
+  created() {
+    this.catData = this.fileData.catData
+    this.rankable = this.catData.rankables 
+    this.alphas = this.catData.alphas
+    // checkRankables
   }
 }
 </script>
@@ -116,7 +157,7 @@ export default {
   background #eee
 
 .list 
-  background #b00
+  background $blue
 
 .cell
   min-width 140px  // should be calculated somehow or flexboxed!
@@ -135,13 +176,9 @@ export default {
   padding-left 10px
   font-weight bold
   
-
 .boxy
   @extend .cell
   text-align center
- 
-.box1
-  background black
 
 .example
   @extend .cell
@@ -163,13 +200,6 @@ export default {
   background #9ab
   text-align center
 
-.instructions
-  @extend .cell
-  margin-left 1em
-
-.instructions2
-  @extend .cell
-  margin-left 1em
 
 label
   // display none

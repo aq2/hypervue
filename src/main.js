@@ -17,7 +17,11 @@ import VueFire from 'vuefire'
 Vue.use(VueFire)
 
 // awesome icons
-import 'vue-awesome/icons'
+import 'vue-awesome/icons/bar-chart'
+import 'vue-awesome/icons/upload'
+import 'vue-awesome/icons/chevron-circle-right'
+import 'vue-awesome/icons/chevron-circle-left'
+// import 'vue-awesome/icons'  // !! warns bundles all icons = 500kB
 import Icon from 'vue-awesome/components/Icon'
 Vue.component('icon', Icon)
 
