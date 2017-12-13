@@ -11,15 +11,15 @@
 
 <script>
 import {bus} from '../main'
-import page1 from './Welcome.vue'
-import page2 from './data-sources/DataSource.vue'
+import welcome from './Welcome.vue'
+import dataSource from './data-sources/DataSource.vue'
 // import page3 from './instructions/Page3.vue'
 
 
 export default {
   components: {
-    'page-welcome': page1,
-    'page-data': page2
+    'page-welcome': welcome,
+    'page-data': dataSource
     // , 'page3': page3
   },
   data() {

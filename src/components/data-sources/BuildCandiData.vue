@@ -99,7 +99,7 @@ export default {
       var candsL = cands.length
       var rankables = this.rankable
       
-      var catData = this.catData    // do i need these?
+      var catData = this.catData
       var cats = catData.cats
       var catsL = cats.length
 

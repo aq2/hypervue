@@ -11,27 +11,27 @@
       |  new york,NY,8405837,302.6
       |  boston,MA,645966,48.3
       |  kansas city,MO,467007,315.0
-    get-file
+    get-file-data
   #hey(v-if='fileGot')
-    build-file-data
+    build-candidata
 
 </template>
 
 //qq
 <script>
 import {bus} from '../../main'
-import getfile from './GetFile.vue'
-import buildfiledata from './BuildFileData.vue'
+import GetFileData from './GetFileData.vue'
+import BuildCandiData from './BuildCandiData.vue'
 
 export default {
+  components: {
+    'get-file-data': GetFileData,
+    'build-candidata': BuildCandiData
+  },
   data() {
     return {
       fileGot: false
     }
-  },
-  components: {
-    'get-file': getfile,
-    'build-file-data': buildfiledata
   },
   created() {
     bus.$on('fileParsed', (data) => {
