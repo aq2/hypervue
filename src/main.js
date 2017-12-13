@@ -1,9 +1,6 @@
 // import vues
 import Vue from 'vue'
 import App from './App.vue'
-import Header from './components/Header.vue'
-import Sidebar from './components/Sidebar.vue'
-import Contents from './components/Contents.vue'
 
 // vuex datastore
 import {store} from './store'
@@ -17,6 +14,7 @@ import VueFire from 'vuefire'
 Vue.use(VueFire)
 
 // awesome icons
+// cheaper to import them as you need them
 import 'vue-awesome/icons/bar-chart'
 import 'vue-awesome/icons/upload'
 import 'vue-awesome/icons/chevron-circle-right'
@@ -26,16 +24,10 @@ import Icon from 'vue-awesome/components/Icon'
 Vue.component('icon', Icon)
 
 
-
-// setup vue components
-Vue.component('app-header', Header)
-Vue.component('app-sidebar', Sidebar)
-Vue.component('app-contents', Contents)
-
-// setup event bus that components can register with
+// setup global event bus that components can register with
 export const bus = new Vue()
 
-// my global helper functions
+// my global helper functions // todo include somehow in another file
 // my ajQuery selector
 window.$ = (selector) => {
   var selectorType = 'querySelectorAll'
@@ -45,7 +37,6 @@ window.$ = (selector) => {
   }
   return document[selectorType](selector)
 }
-
 
 // start the app
 new Vue({

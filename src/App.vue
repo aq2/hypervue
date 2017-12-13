@@ -6,13 +6,15 @@
        
 </template>
 
+// qq
 // <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
 
 
 ///
 <script>
-///
-import Firebase from 'firebase'
+
+import Sidebar from './components/Sidebar.vue'
+import Contents from './components/Contents.vue'
 
 // Initialize Firebase
 let config = {
@@ -23,7 +25,7 @@ let config = {
   storageBucket: "dvzvue.appspot.com",
   messagingSenderId: "804794548950"
 };
-
+import Firebase from 'firebase'
 let app = Firebase.initializeApp(config);
 let db = app.database()
 let messagesRef = db.ref('massages')
@@ -31,7 +33,11 @@ let messagesRef = db.ref('massages')
 export default {
   name: 'app',
   firebase: {
-    massages: messagesRef
+    massages: messagesRef   // qq
+  },
+  components: {
+    'app-sidebar': Sidebar,
+    'app-contents': Contents
   },
   mounted: function() {
     this.makeSidebarTaller()
@@ -39,8 +45,6 @@ export default {
   methods: {
     makeSidebarTaller: function() {      
       var windowH = window.innerHeight
-      // var headerH = $('#header').offsetHeight
-      // var contentH = windowH - headerH
       $('#sidebar').style.height = windowH + 'px'
     }
   }
@@ -49,7 +53,7 @@ export default {
 
 ///
 <style lang="stylus">
-$blue = #47c
+// $blue = #47c
 
 html 
   box-sizing border-box
@@ -60,36 +64,28 @@ html
 body
   background #00f
   margin 0
-  // font-size 24px
-  // display flex
 
 #app 
   display flex
   background #f00
 
-#contents-wrapper
-  background #777
-  // display inline-flex
-  flex-grow 1
+// #contents-wrapper
+//   background #777
+//   // display inline-flex
+//   flex-grow 1
 
 #sidebar
-  transition 1s all ease
-  width 150px
-  // padding-left .1em
+  transition .75s all ease
   box-sizing border-box
-  
-  // display flex
 
 #content
-  background #456
-  // flex 1
+  background $grey
   padding-left .5em
   flex-grow 1
 
 button
-  background: #36b
+  background: $blue
   border 1px solid transparent
-  // border none
   padding .5em
   color #aaa
   border-radius 5px
@@ -97,7 +93,7 @@ button
   font-size 1.2em
 
 button:hover
-  background: #47c
+  background: $lightblue
   cursor: pointer
   color #ccc
   border 1px solid darkblue

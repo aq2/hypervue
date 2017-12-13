@@ -20,15 +20,10 @@ export default {
       fileContents: '',
       categories: [],
       candidates: [],
-      candidateStrings: []
+      allCandidateStrings: []
     }
   },
   methods: {
-    // called by upload button
-    // change name to ?
-    // what does it do exactly?
-    // it gets the button event, checks for headers and cands
-    // parses file, then dispatches to store - OMG
     getFileData: function(evt) {
       var r,                  // file reader ? - rename it
           f,                  // file read in
@@ -72,7 +67,7 @@ export default {
 
       // get rid of last empty entry
       lines.pop()
-      this.candidateStrings = lines
+      this.allCandidateStrings = lines
       // now all remaining lines are candidates
       candsL = lines.length - 1   // the last one is blank for some reason
 
@@ -89,9 +84,89 @@ export default {
       var rankables =[]
       var alphas = new Set()
       var cats = this.categories
-      var candStrings = this.candidateStrings
+      var candStrings = this.allCandidateStrings
       var candsL = candStrings.length
       var cands = []
+
+      // qq make and store simple data?
+
+      for (var c=0; c<candsL; c++) {
+        var cand = { 
+          key:c, 
+          ID:null,
+          scores:[]
+          // rankables: []
+        }
+        // now build scores
+        // for each word in candString, make a cat, and score?
+
+        var candString = candStrings[c].split(',')
+        var stringValuesL = candString.length
+        console.log('candString', candString)
+        
+
+        for (var w=0; w<stringValuesL; w++) {
+          var word = candString[w]  // is it a string? alpha...
+          if (isNaN(word)) {
+            word = word.trim()
+          } else {
+            word = Number(word)
+          }
+          var score = {
+            catNum: w,
+            catName: cats[w],
+            origScore: word,
+            rankableScore: null,
+            normalisedScore: null
+          }
+          cand.scores.push(score)
+        }
+        // console.log('cand', cand)
+        cands.push(cand)
+      }
+
+      var exScores = cands[0].scores
+      var scoresL = cats.length
+      for (var i=0; i<scoresL; i++) {
+        if (isNaN(exScores[i].origScore)) {
+          alphas.add(i)
+        } else {
+          rankables.push(i)
+        }
+      }
+
+      // ?? return better object
+      var catData = {
+        cats: cats,
+        alphas: alphas,
+        rankables: rankables,
+        maxis: [],
+        ID: -1
+      }
+
+      // console.group()
+      //   console.log('cD', catData)
+      //   console.log('cands', cands)
+      // console.groupEnd()
+      
+
+      return {
+        catData: catData,
+        cands: cands
+      }
+
+    },
+    parseFileOLD: function() {
+      // for each candidate, build candidate object
+      var rankables =[]
+      var alphas = new Set()
+      var cats = this.categories
+      var candStrings = this.allCandidateStrings
+      var candsL = candStrings.length
+      var cands = []
+
+      // qq make and store simple data?
+
 
       for (var c=0; c<candsL; c++) {
         var cand = { 

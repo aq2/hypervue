@@ -2,14 +2,14 @@
 
 #contents
   h1(id='h') Choose a dataset
-  #buttons()
+  #buttons
     button(@click="chooseSource('fb')") get dataset from firebase
     span(class='spacer') or
     button(@click="chooseSource('csv')") get data from CSV file
-  fbsrc(v-if='fb')
+  src-fb(v-if='fb')
     //- button(@click.prevent='firePost') save to firebase
   transition(name='fade')
-    csvsrc(v-if='csv')
+    src-csv(v-if='csv')
   
   
 
@@ -24,14 +24,10 @@ import CSVSource from './CSVSource.vue'
 // page3 functionaility is in sidebar
 export default {
   components: {
-    'fbsrc': FirebaseSource,
-    'csvsrc': CSVSource
+    'src-fb': FirebaseSource,
+    'src-csv': CSVSource
   },
   created() {
-    // sidebar needs to be wide
-    let sid = $('#sidebar')
-    sid.style.width = '150px'
-
     // // get data from dbase
     // this.$http.get('https://dvzvue.firebaseio.com/mystuff.json')
     //   .then(function(data) {
@@ -107,5 +103,11 @@ export default {
 
 .fade-enter, .fade-leave-active
   opacity 0
+
+#np 
+  display none
+  background orange
+  padding 200px
+
 
 </style>

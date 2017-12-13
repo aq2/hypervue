@@ -9,9 +9,10 @@
     //- get-file(v-show='page3' v-if='sidebarOpen')
     //- #cats cats
     //- #vizType vizType
-    #dataBtn(v-if='page2')  insert link here
+    #dataBtn(v-if='currentPage > 1')
+      button data source
 
-
+    
 
 </template>
 
@@ -20,7 +21,6 @@
 
 // register with event bus
 import {bus} from '../main'
-// import getfile from './GetFile.vue'
 
 export default {
   components: {
@@ -28,23 +28,51 @@ export default {
   },
   data() {
     return {
-      page2: false,
-      sidebarOpen: false
+      sidebarOpen: false,
+      currentPage: 1
     }
   },
   methods: {
     toggleSidebarWidth: function() {
+      console.log('toggled')
+      
       let sid = $('#sidebar')
       sid.style.width = sid.offsetWidth >= 30 ? '25px' : '150px'
-      this.sidebarOpen = !this.sidebarOpen
+      // this.sidebarOpen = !this.sidebarOpen
+    },
+    openSidebar: function() {
+      console.log('opened')
+      let sid = $('#sidebar')
+      sid.style.width = '150px'
+      // this.sidebarOpen = true
+    },
+    closeSidebar: function() {
+      let sid = $('#sidebar')
+      sid.style.width = '25px'
+      // this.sidebarOpen = false
     }
   },
   created() {
-    bus.$on('pageEvt', (data) => {
-      if (data == 2) {
-        this.page2 = true
+    bus.$on('pageChangeEvt', (pageN) => {
+      this.currentPage = pageN
+      switch (pageN) {
+        case 1:
+          break
+        case 2:
+          this.openSidebar()
+          // whatever else...
+          break
+        case 3:
+          // whatever
+          break
+        default:
+          // whatever
       }
+      
     })
+  },
+  mounted() {
+    this.closeSidebar()    
   }
 }
 </script>

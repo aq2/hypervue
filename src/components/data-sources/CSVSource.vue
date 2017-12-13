@@ -1,7 +1,7 @@
 <template lang="pug">
 
 #csv
-  #main(v-if='!fileGot')
+  #get(v-if='!fileGot')
     h1 get data from csv
     p it must be in CSV format
     p with criteria headers as first row, eg:
@@ -12,7 +12,7 @@
       |  boston,MA,645966,48.3
       |  kansas city,MO,467007,315.0
     get-file-data
-  #hey(v-if='fileGot')
+  #build(v-if='fileGot')
     build-candidata
 
 </template>
@@ -55,9 +55,6 @@ export default {
   padding 5px 10px
   // width 600px
   margin 0 auto
-
-#hey 
-  // min-width 800px
 
 
 </style>
