@@ -1,7 +1,7 @@
 <template lang="pug">
 
 #csv
-  #get(v-if='!fileGot')
+  #get(v-if='!fileGot && !dataBuilt')
     h1 get data from csv
     p it must be in CSV format
     p with criteria headers as first row, eg:
@@ -14,30 +14,41 @@
     get-file-data
   #build(v-if='fileGot')
     build-candidata
+  #save(v-if='dataBuilt')
+    save-csv-to-fb
 
 </template>
 
 //qq
 <script>
-import {bus} from '../../main'
+import {eventBus} from '../../main'
 import GetFileData from './GetFileData.vue'
 import BuildCandiData from './BuildCandiData.vue'
+import SaveCSVToFB from './SaveCSVtoFB.vue'
 
 export default {
   components: {
     'get-file-data': GetFileData,
-    'build-candidata': BuildCandiData
+    'build-candidata': BuildCandiData,
+    'save-csv-to-fb': SaveCSVToFB
   },
   data() {
     return {
-      fileGot: false
+      fileGot: false,
+      dataBuilt: false
     }
   },
   created() {
-    bus.$on('fileParsed', (data) => {
+    eventBus.$on('fileParsed', (data) => {
       // console.log(data)
       // alert('event heard!')
       this.fileGot = true
+    }),
+    eventBus.$on('dataBuilt', (data) => {
+      // console.log(data)
+      // alert('event heard!')
+      this.dataBuilt = true
+      this.fileGot = false // ??
     })
   }
 }

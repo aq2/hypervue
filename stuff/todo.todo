@@ -1,17 +1,32 @@
 sidebar:
-  ✔ sidebar buttons/links should disappear when sidebar closes @low @done(17-12-14 05:32)
 
 doing now:
-  ✔ remove max mins from parseFile? @done(17-12-14 05:32)
     // we can get them from min/max when sorting for ranking
     // sorted[0] = min, sorted[last]=max
+  ✔ ID @done(17-12-14 17:40)
 
 next:
-  ☐ deal with maxis
-  ☐ ID
-  ☐ normalise
+  ☐ save all data to store @critical 
+  ☐ save all data to firebase @high 
+  ☐ retrieve data from firebase @today
   ☐ pareto
+  
+later:  
+  ☐ deal with maxis @low
+  ☐ componentise buildCandData @low
+    ☐ we're going to need at least normalise
+    ☐ ranking etc.. for ron in case things change
+  ☐ css!
+  ☐ sort out missing null data items
+  ☐ autoselect first alpha as ID
+
 
     
 
-✔ omg - colours! @done(17-12-13 20:55)
+
+
+Archive:
+  ✔ sidebar buttons/links should disappear when sidebar closes @low @done(17-12-14 05:32)
+  ✔ remove max mins from parseFile? @done(17-12-14 05:32)
+  ✔ normalise @done(17-12-14 15:52)
+  ✔ omg - colours! @done(17-12-13 20:55))

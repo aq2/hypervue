@@ -12,7 +12,7 @@
 
 
 <script>
-import {bus} from '../main'
+import {eventBus} from '../main'
 
 import WelcomePage from './Welcome.vue'
 import DataSourcePage from './data-sources/DataSource.vue'
@@ -32,12 +32,12 @@ export default {
   methods: {
     nextPage: function() {
       this.pageNum++
-      bus.$emit('pageChangeEvt', this.pageNum)
+      eventBus.$emit('pageChangeEvt', this.pageNum)
     }
   },
   created() {
     // change paging logic - relies on pageVt
-    bus.$on('pageChangeEvt', (pageN) => {
+    eventBus.$on('pageChangeEvt', (pageN) => {
       switch (pageN) {
         case 2:
           this.page = 'page-datasrc'

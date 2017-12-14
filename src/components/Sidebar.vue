@@ -19,8 +19,8 @@
 
 <script>
 
-// register with event bus
-import {bus} from '../main'
+// register with event eventBus
+import {eventBus} from '../main'
 
 export default {
   components: {
@@ -53,7 +53,7 @@ export default {
     }
   },
   created() {
-    bus.$on('pageChangeEvt', (pageN) => {
+    eventBus.$on('pageChangeEvt', (pageN) => {
       this.currentPage = pageN
       switch (pageN) {
         case 1:

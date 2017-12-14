@@ -24,8 +24,8 @@ import Icon from 'vue-awesome/components/Icon'
 Vue.component('icon', Icon)
 
 
-// setup global event bus that components can register with
-export const bus = new Vue()
+// setup global event eventBus that components can register with
+export const eventBus = new Vue()
 
 // my global helper functions // todo include somehow in another file
 // my ajQuery selector

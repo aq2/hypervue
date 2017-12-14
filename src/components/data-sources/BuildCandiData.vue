@@ -61,6 +61,8 @@
 
 <script>
   // todo - file getting too big -> subcomponentize?
+  import {eventBus} from '../../main'
+
 export default {
   // get stuff from store!
   computed: {
@@ -238,6 +240,7 @@ export default {
         // makeIDforCats qq
         this.makeIDforCats(ID)
         
+        eventBus.$emit('dataBuilt')
 
       } else {
         // todo
