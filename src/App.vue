@@ -1,7 +1,7 @@
 <template lang='pug'>
 #app
   app-sidebar
-  app-contents(class='hi')
+  app-contents
        
 </template>
 

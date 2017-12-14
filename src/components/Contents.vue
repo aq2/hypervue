@@ -1,10 +1,11 @@
 <template lang="pug">
 
   #content
-    p show me something
     //- dynamic component bound to page property
     //- pattern allows compnt data retention using <keep-alive/>
     //- not using it here, but could
+      or slots?
+      or sidebar page controller(s)
     component(v-bind:is='page')
        
     button(v-if="showEvtBtn" @click="nextPage") next page
