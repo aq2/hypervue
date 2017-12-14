@@ -49,6 +49,10 @@
     p maxi {{maxi}}
     p ID {{ID}}
 
+    //-
+      // step 4?
+        // save data to store
+       // todo offer to save it to firebase
     
 
 </template>
@@ -174,7 +178,6 @@ export default {
           var values = cat.values
           // normalise them
           normed = this.normalise(values, cat.min, cat.max)
-          console.log({values, normed})
         } else {
           // else false?
           normed = false
@@ -218,13 +221,57 @@ export default {
       }
     },
     checkID() {
-      this.catData.ID = this.ID
+      // alert('checkID')
+      
+      var ID = this.ID
+      this.catData.ID = ID
       this.step = 3
-      console.log('catData', this.catData)
-      // assign ID to all cands
-      // step 3?
-        // save data to store
-       // todo offer to save it to firebase
+      if (ID != null) {
+        var IDname = this.catData.cats[ID]
+        // var candID = 
+        // console.log({IDname})
+        
+        // makeIDforCands
+        this.makeIDforCands(ID)
+        // catDataID? - already set somehow ??
+        
+        // makeIDforCats qq
+        this.makeIDforCats(ID)
+        
+
+      } else {
+        // todo
+        return false
+      }
+      
+    },
+    makeIDforCats(ID) {
+      var categories = this.catData.categories
+      var catsL = categories.length 
+      // for each category
+      for (var c=0; c<catsL; c++) {
+        // set cat.ID to true or false
+        var cat = categories[c]
+          if (c == ID) {
+            cat.ID  = true
+          } else {
+            cat.ID  = false            
+          }
+      }
+    },
+    makeIDforCands(ID) {
+      // alert('boo')
+      var cands = this.cands
+      var candsL = cands.length
+      // for all cands,
+      for (var c=0; c<candsL; c++) {
+        var cand = cands[c]
+        // assign ID
+        var candID = cand.scores[ID].origScore
+        cand.ID = candID
+      // console.log({cand})
+      }
+      
     }
   },
   data() {
@@ -233,7 +280,7 @@ export default {
       step: '0',
       rankable: [],
       maxi: [],
-      ID: [],
+      ID: null,
       catData: {},
       alphas: new Set(),
       cands: []
