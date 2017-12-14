@@ -100,7 +100,9 @@ export default {
         this.findRankingsForCandidates()
 
         // normalise all the rankables!
-        // buildNormalisedScoresForCandidates // qq
+        this.buildNormalisedScoresForCategories()
+        this.buildNormalisedScoresForCandidates() 
+        // qq
 
     },
     findRankingsForCandidates() {
@@ -154,66 +156,66 @@ export default {
         }
       }
     },
-    findRankOfCand0(x, values) {
-      var rankOfIndex = values.find(function(v) {
-        if (v.index == x) {
-          return true 
-        }
-      })
-      return values.indexOf(rankOfIndex)
-    },
     findRankOfCand(x, values) {
       var rankOfIndex = values.find(v => v.index == x)
       return values.indexOf(rankOfIndex)
     },
-    buildRankableScoresForCandidates00() { // not using?
-      var cands = this.fileData.cands
-      var candsL = cands.length
-      var rankables = this.rankable
-      
-      var catData = this.catData
-      var cats = catData.cats
-      var catsL = cats.length
+    buildNormalisedScoresForCategories() {
+      var categories = this.catData.categories
+      var catsL = categories.length
+      var normed
 
-      var mins = []
-      var maxs = []
-      for (var ca = 0; ca < catsL; ca++) {
-        mins[ca] = this.fileData.cands[0].scores[ca].origScore
-        maxs[ca] = mins[ca]
+      // for all categories
+      for (var c=0; c<catsL; c++) {
+        var cat = categories[c]
+        // if rankable
+        if (cat.rankable) {
+          // get values
+          var values = cat.values
+          // normalise them
+          normed = this.normalise(values, cat.min, cat.max)
+          console.log({values, normed})
+        } else {
+          // else false?
+          normed = false
+        }
+        // add them to category object
+        cat.normalised = normed
       }
-
-      // for each cand,
+    },
+    normalise(a, min, max) {
+      var l = a.length
+      var normalised = []
+      for (var i=0; i<l; i++) {
+        var norm = (a[i] - min) / (max - min)
+        normalised.push(norm)
+      }
+      return normalised
+    },
+    buildNormalisedScoresForCandidates() {
+      var cands = this.cands
+      var candsL = cands.length
+      var cats = this.catData.categories
+      var catsL = cats.length
+      
+      // for all candidates
       for (var c=0; c<candsL; c++) {
         var cand = cands[c]
-        // for each score/category
-        for (var s=0; s<catsL; s++ ) {
-          var orig = cand.scores[s].origScore
-          if (orig < mins[s]) {
-            mins[s] = orig
-          } //else?
-          if (orig > maxs[s]) {
-            maxs[s] = orig
-          }
-          // add rankable score = same as origScore or false
-          cand.scores[s].rankableScore = false
-          if (rankables.includes(s)) {
-            cand.scores[s].rankableScore = orig
+      
+        // for all rankable cats
+        for (var i=0; i<catsL; i++) {
+          var cat = cats[i]
+          if (cat.rankable) {
+            // get normalised score
+            var norm = cat.normalised[c]
+            // add it to candidate score
+            cand.scores[i].normalisedScore = norm
+          } else {
+            cand.scores[i].normalisedScore = false   
           }
         }
+
       }
-      console.log('cands', cands)
-      console.log('mins', mins)
-      console.log('maxs', maxs)
-      // ok where to store them?
-      // in catData - need new cat datastructure! // qq
-
-
-      //now normalise() - or call it in checkMaxis above
-
-    },
-    normaliseAll() {
-      // then normalise each rankable for each candidate
-
     },
     checkID() {
       this.catData.ID = this.ID

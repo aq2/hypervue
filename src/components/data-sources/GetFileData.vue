@@ -76,8 +76,6 @@ export default {
     },
     parseFile: function() {
       // for each candidate, build candidate object
-      // var mins = []
-      // var maxs = []
       var tots = []
       var cands = []
       var rankables =[]
@@ -89,7 +87,12 @@ export default {
 
       // build cat array of emptys
       for (var cat=0; cat<candsL; cat++) {
-        var category = {values:[], min:null, max:null, total:0, mean:null}
+      
+        var name = cats[cat]
+        var category = {
+          values:[], min:null, max:null, total:0, mean:null, name:name, key:cat,
+          rankable:null, alpha:null, maxi:null, ID:null
+        }
         categories.push(category)
       }
       
@@ -103,12 +106,22 @@ export default {
           
           if (isNaN(value)) {
             value = value.trim()
-            if (c==0) {
+            if (c == 0) {
               alphas.add(catID)
+              categories[catID].alpha = true
+              categories[catID].rankable = false
+              categories[catID].min = false
+              categories[catID].max = false
+              // categories[catID].maxi = null
             }
           } else {
             value = Number(value)
-            if (c==0) {
+            if (c == 0) {
+              categories[catID].alpha = false
+              categories[catID].rankable = true
+              // categories[catID].min = false
+              // categories[catID].max = false
+              // categories[catID].maxi = null
               rankables.push(catID)
               tots[catID] = 0
             }
@@ -125,9 +138,12 @@ export default {
             normalisedScore: null
           }
           cand.scores.push(score)
+          // categories[catID].key = catID   // todo assigning mukltiple times?
+          // categories[catID].name = cats[catID]
           categories[catID].total = tots[catID]
           categories[catID].mean = tots[catID] / candsL
         }
+          // alert('foo')
         cands.push(cand)
       }
 

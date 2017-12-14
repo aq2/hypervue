@@ -53,7 +53,7 @@ export default {
 #csv 
   background #aaa
   padding 5px 10px
-  width 600px
+  // width 600px
   // margin 0 auto
 
 
