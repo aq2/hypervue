@@ -54,3 +54,24 @@ var exampleCand = {
         ]
         // later add pareto object {}
       }
+
+
+var values = [
+  {index:0, value:3},
+  {index:1, value:7},
+  {index:2, value:2},
+  {index:3, value:7}
+]
+
+values.sort(function(a,b) {return a.value - b.value})
+console.log(values)
+
+
+function findRankOfCand(x) {
+var rankOfIndex = values.find(v => v.index == x)
+return values.indexOf(rankOfIndex)
+}
+
+
+var r = findRankOfCand(0)
+console.log(r)

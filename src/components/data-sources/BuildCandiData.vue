@@ -13,7 +13,8 @@
         .example {{exampleData.scores[index].origScore}}
         .rankable
           label 
-          input(type='checkbox' :value='index' v-model='rankable')
+          input(type='checkbox' :value='index' v-model='rankable' v-if='!isAlpha(index)')
+          .boxy(v-else)
         .maxi(v-if='step > 0 && isRankable(index)')
           label 
           input(type='checkbox' :value='index' v-model='maxi')
@@ -48,6 +49,8 @@
     p maxi {{maxi}}
     p ID {{ID}}
 
+    
+
 </template>
 
 
@@ -76,6 +79,9 @@ export default {
     isRankable(i) {
       return this.rankable.includes(i)
     },
+    isAlpha(i) {
+      return this.alphas.has(i)
+    },
     checkMaxis() {
         // this.catData.maxis = this.maxi
         this.step = 2
@@ -87,14 +93,80 @@ export default {
             alert('maxi not in rank')
             // todo deal with it!
           }
-        }
-        this.buildRankableScoresForCandidates()
+        }        
+        
+        // qq JUST DONE MONSTER SESH
+        // this.buildRankableScoresForCandidates()
+        this.findRankingsForCandidates()
 
         // normalise all the rankables!
         // buildNormalisedScoresForCandidates // qq
 
     },
-    buildRankableScoresForCandidates() {
+    findRankingsForCandidates() {
+      // todo componentize - it will be handy for ron
+      // also split into smaller functions - bit of a head fuck
+      // should deal with maxis somewhere - or wait for normalize?
+      var catData = this.catData
+      var rankables = catData.rankables
+      var ranksL = rankables.length
+      var categories = catData.categories
+      var catsL = categories.length
+      var allIndexedRankables = []
+      var alphas = catData.alphas      
+      var alphasL = alphas.size
+
+      for (var a=0; a<alphasL; a++) {
+        allIndexedRankables.push({rankable: false})
+      }
+
+      // for each rankable category
+      for (var r=0; r<ranksL; r++) {
+        var indexedRankable = []        
+        var scores = categories[rankables[r]].values
+
+        // build new array of [{index:0, value:6}, ... {index:3, value:4}]
+        for (var cat = 0; cat<catsL; cat++) {
+          indexedRankable.push({index: cat, value: scores[cat]})
+        }
+        
+        // then sort that by value
+        indexedRankable.sort(function(a,b) {return a.value - b.value})
+        // min = sorted[0], max = sorted[last]        
+        categories[rankables[r]].min = indexedRankable[0].value
+        categories[rankables[r]].max = indexedRankable[catsL-1].value
+
+        allIndexedRankables.push(indexedRankable)
+      } 
+      
+      // can find rankings of ID via my clever method
+      var cands = this.cands
+      var candsL = cands.length
+      // for each candidate,
+      for (var cand=0; cand<candsL; cand++) {
+        var candidate = cands[cand]
+        // for each rankable category
+        for (var ra=0; ra<ranksL; ra++) {
+          // find their ranking by index (?)
+          var rankingInScores  = this.findRankOfCand(cand, allIndexedRankables[rankables[ra]])
+          // add ranking to scores[]
+          candidate.scores[rankables[ra]].ranking = rankingInScores
+        }
+      }
+    },
+    findRankOfCand0(x, values) {
+      var rankOfIndex = values.find(function(v) {
+        if (v.index == x) {
+          return true 
+        }
+      })
+      return values.indexOf(rankOfIndex)
+    },
+    findRankOfCand(x, values) {
+      var rankOfIndex = values.find(v => v.index == x)
+      return values.indexOf(rankOfIndex)
+    },
+    buildRankableScoresForCandidates00() { // not using?
       var cands = this.fileData.cands
       var candsL = cands.length
       var rankables = this.rankable
@@ -161,7 +233,8 @@ export default {
       maxi: [],
       ID: [],
       catData: {},
-      alphas: new Set()
+      alphas: new Set(),
+      cands: []
     }
   },
   created() {
@@ -169,6 +242,7 @@ export default {
     this.rankable = this.catData.rankables 
     this.alphas = this.catData.alphas
     this.cats = this.catData.cats
+    this.cands = this.fileData.cands
   }
 }
 </script>

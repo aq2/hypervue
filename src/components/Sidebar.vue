@@ -9,8 +9,8 @@
     //- get-file(v-show='page3' v-if='sidebarOpen')
     //- #cats cats
     //- #vizType vizType
-    #dataBtn(v-if='currentPage > 1')
-      button data source
+    #dataBtn(v-if='currentPage > 1 && sidebarOpen')
+      button.linky data source
 
     
 
@@ -38,18 +38,18 @@ export default {
       
       let sid = $('#sidebar')
       sid.style.width = sid.offsetWidth >= 30 ? '25px' : '150px'
-      // this.sidebarOpen = !this.sidebarOpen
+      this.sidebarOpen = !this.sidebarOpen
     },
     openSidebar: function() {
-      console.log('opened')
+      // console.log('opened')
       let sid = $('#sidebar')
       sid.style.width = '150px'
-      // this.sidebarOpen = true
+      this.sidebarOpen = true
     },
     closeSidebar: function() {
       let sid = $('#sidebar')
       sid.style.width = '25px'
-      // this.sidebarOpen = false
+      this.sidebarOpen = false
     }
   },
   created() {
@@ -136,5 +136,11 @@ export default {
 
 span 
   color white
+
+.linky {
+  background $grey
+  width 130px
+  font-size 1rem
+}
 
 </style>

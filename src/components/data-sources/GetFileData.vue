@@ -30,7 +30,6 @@ export default {
           parsedFileData         // boolean for file worthiness
 
       if (f = evt.target.files[0]) {    // conditional variable
-        
         r = new FileReader()
         r.onload = e => {
           this.fileContents = e.target.result
@@ -49,30 +48,26 @@ export default {
             // todo deal with it!
           }
         } 
-      r.readAsText(f)
+      r.readAsText(f)   // not sure how this works?
       } else {
         alert('failed to load file')
       }
     },
     fileIsGood: function() {
       var lines = [],          // all lines in the file
-          catsLine,            // first line with headers/cats
-          candsL               // how many candidates - eg rest of lines
+          catsLine            // first line with headers/cats
 
       lines = this.fileContents.split('\n')
-      // first line is headers 
-      // todo must have headers - check for alpha?
+      // first line is headers  todo must have headers - check for alpha?
       catsLine = lines.shift()
       this.categories = catsLine.split(',')
 
       // get rid of last empty entry
       lines.pop()
       this.allCandidateStrings = lines
-      // now all remaining lines are candidates
-      candsL = lines.length - 1   // the last one is blank for some reason
 
-      // first check for at least two candidates
-      if (candsL < 2) {
+      // check for at least two candidates
+      if (lines.length < 3) {
         // todo show error message in instructions?
         console.log('not enough candiates - need at least two')
         return false
@@ -81,159 +76,68 @@ export default {
     },
     parseFile: function() {
       // for each candidate, build candidate object
+      // var mins = []
+      // var maxs = []
+      var tots = []
+      var cands = []
       var rankables =[]
+      var categories = []
       var alphas = new Set()
       var cats = this.categories
       var candStrings = this.allCandidateStrings
       var candsL = candStrings.length
-      var cands = []
 
-      // qq make and store simple data?
-
+      // build cat array of emptys
+      for (var cat=0; cat<candsL; cat++) {
+        var category = {values:[], min:null, max:null, total:0, mean:null}
+        categories.push(category)
+      }
+      
       for (var c=0; c<candsL; c++) {
-        var cand = { 
-          key:c, 
-          ID:null,
-          scores:[]
-          // rankables: []
-        }
-        // now build scores
-        // for each word in candString, make a cat, and score?
-
+        var cand = { key:c, ID:null, scores:[] }
         var candString = candStrings[c].split(',')
         var stringValuesL = candString.length
-        console.log('candString', candString)
         
-
-        for (var w=0; w<stringValuesL; w++) {
-          var word = candString[w]  // is it a string? alpha...
-          if (isNaN(word)) {
-            word = word.trim()
+        for (var catID=0; catID<stringValuesL; catID++) {
+          var value = candString[catID]  // is it a string? alpha...
+          
+          if (isNaN(value)) {
+            value = value.trim()
+            if (c==0) {
+              alphas.add(catID)
+            }
           } else {
-            word = Number(word)
+            value = Number(value)
+            if (c==0) {
+              rankables.push(catID)
+              tots[catID] = 0
+            }
+            tots[catID] += value
           }
+          
+          categories[catID].values.push(value)
+                
           var score = {
-            catNum: w,
-            catName: cats[w],
-            origScore: word,
-            rankableScore: null,
+            catNum: catID,
+            catName: cats[catID],
+            origScore: value,
+            ranking: null,
             normalisedScore: null
           }
           cand.scores.push(score)
+          categories[catID].total = tots[catID]
+          categories[catID].mean = tots[catID] / candsL
         }
-        // console.log('cand', cand)
         cands.push(cand)
       }
 
-      var exScores = cands[0].scores
-      var scoresL = cats.length
-      for (var i=0; i<scoresL; i++) {
-        if (isNaN(exScores[i].origScore)) {
-          alphas.add(i)
-        } else {
-          rankables.push(i)
-        }
-      }
+      var catData = { cats, alphas, rankables, categories }
 
-      // ?? return better object
-      var catData = {
-        cats: cats,
-        alphas: alphas,
-        rankables: rankables,
-        maxis: [],
-        ID: -1
-      }
-
-      // console.group()
-      //   console.log('cD', catData)
-      //   console.log('cands', cands)
-      // console.groupEnd()
-      
-
-      return {
-        catData: catData,
-        cands: cands
-      }
-
-    },
-    parseFileOLD: function() {
-      // for each candidate, build candidate object
-      var rankables =[]
-      var alphas = new Set()
-      var cats = this.categories
-      var candStrings = this.allCandidateStrings
-      var candsL = candStrings.length
-      var cands = []
-
-      // qq make and store simple data?
-
-
-      for (var c=0; c<candsL; c++) {
-        var cand = { 
-          key:c, 
-          ID:null,
-          scores:[]
-          // rankables: []
-        }
-        // now build scores
-        // for each word in candString, make a cat, and score?
-        var words = candStrings[c].split(',')
-        var wordsL = words.length
-        for (var w=0; w<wordsL; w++) {
-          var word = words[w]  // is it a string? alpha...
-          if (isNaN(word)) {
-            word = word.trim()
-          } else {
-            word = Number(word)
-          }
-          var score = {
-            catNum: w,
-            catName: cats[w],
-            origScore: word,
-            rankableScore: null,
-            normalisedScore: null
-          }
-          cand.scores.push(score)
-        }
-        // console.log('cand', cand)
-        cands.push(cand)
-      }
-
-      var exScores = cands[0].scores
-      var scoresL = cats.length
-      for (var i=0; i<scoresL; i++) {
-        if (isNaN(exScores[i].origScore)) {
-          alphas.add(i)
-        } else {
-          rankables.push(i)
-        }
-      }
-
-      // ?? return better object
-      var catData = {
-        cats: cats,
-        alphas: alphas,
-        rankables: rankables,
-        maxis: [],
-        ID: -1
-      }
-
-      // console.group()
-      //   console.log('cD', catData)
-      //   console.log('cands', cands)
-      // console.groupEnd()
-      
-
-      return {
-        catData: catData,
-        cands: cands
-      }
-
-    }
+      return { catData, cands }
+    }    
   }
 }
 </script>
-
 
 
 <style lang="stylus" scoped>
@@ -262,7 +166,6 @@ label
   cursor pointer
   border-radius 5px
 
-
 label:hover
     background #47c
     border 1px solid darkblue
@@ -271,4 +174,13 @@ label:hover
   margin-right 15px
   margin-bottom -2px
 
+<div id="cc"></div>
+<div></div>
+
+#ccc 
+  bac
+#cacaca
+  ba
+#cat 
+  baf
 </style>

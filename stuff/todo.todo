@@ -1,6 +1,16 @@
 sidebar:
-  ☐ sidebar buttons/links should disappear when sidebar closes @low 
+  ✔ sidebar buttons/links should disappear when sidebar closes @low @done(17-12-14 05:32)
 
+doing now:
+  ✔ remove max mins from parseFile? @done(17-12-14 05:32)
+    // we can get them from min/max when sorting for ranking
+    // sorted[0] = min, sorted[last]=max
 
-  
+next:
+  ☐ deal with maxis
+  ☐ normalise
+  ☐ pareto
+
+    
+
 ✔ omg - colours! @done(17-12-13 20:55)
