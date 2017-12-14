@@ -56,6 +56,7 @@ export default {
   display flex
   flex-wrap wrap
   background #222
+  flex-grow 1
   
 
 .single-post 

@@ -9,9 +9,10 @@
     //- get-file(v-show='page3' v-if='sidebarOpen')
     //- #cats cats
     //- #vizType vizType
+    #welcomeBtn(v-if='sidebarOpen')
+      button.linky welcome
     #dataBtn(v-if='currentPage > 1 && sidebarOpen')
       button.linky data source
-
     
 
 </template>
@@ -28,7 +29,7 @@ export default {
   },
   data() {
     return {
-      sidebarOpen: false,
+      sidebarOpen: true,
       currentPage: 1
     }
   },
@@ -59,7 +60,7 @@ export default {
         case 1:
           break
         case 2:
-          this.openSidebar()
+          // this.openSidebar()
           // whatever else...
           break
         case 3:
@@ -72,7 +73,7 @@ export default {
     })
   },
   mounted() {
-    this.closeSidebar()    
+    // this.closeSidebar()    
   }
 }
 </script>
@@ -80,13 +81,25 @@ export default {
 
 <style lang='stylus' scoped>
 
-#sidebar 
-  background #345
-  border 1px solid #345
+
+#sidebar
+  border 1px solid $g3
+  background $g3
+  transition .5s all ease
+  box-sizing border-box
+  width 150px
+  height 100vh
+  margin 0
+
+
+button
+  // width 80px
+  // margin 0 auto
 
 #toggle
   color #ddd
-  padding: 3px 
+  padding: 3px
+  text-align left
 
 #toggle:hover
   cursor pointer
@@ -141,6 +154,8 @@ span
   background $grey
   width 130px
   font-size 1rem
+  margin 0 auto
+  
 }
 
 </style>

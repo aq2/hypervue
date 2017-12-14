@@ -10,6 +10,8 @@ next:
   ☐ save all data to firebase @high 
   ☐ retrieve data from firebase @today
   ☐ pareto
+  ☐ welcome button in sidebar @started(17-12-14 22:00)
+  ☐ buttons in sidebar!
   
 later:  
   ☐ deal with maxis @low
@@ -19,6 +21,12 @@ later:
   ☐ css!
   ☐ sort out missing null data items
   ☐ autoselect first alpha as ID
+  ☐ word cloud map?
+  ☐ slots for changing contents?
+  ☐ page-controller as alternative to slots -> live in sidebar
+  ☐ use flexbox plus vh/vw
+  ☐ header
+  
 
 
     

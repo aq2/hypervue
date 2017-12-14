@@ -1,6 +1,7 @@
 <template lang="pug">
 
   #content
+    p show me something
     //- dynamic component bound to page property
     //- pattern allows compnt data retention using <keep-alive/>
     //- not using it here, but could
@@ -54,3 +55,15 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+
+#content
+  background $g5
+  padding-left .5em
+  flex-grow 1
+  transition .75s all ease
+
+  
+
+</style>

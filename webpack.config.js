@@ -29,7 +29,9 @@ module.exports = {
               {
                 loader: 'stylus-resources-loader',
                 options: {
-                  resources: path.resolve(__dirname, './src/style/_vars.styl')
+                  resources: path.resolve(__dirname, './src/main.styl'),
+                  // resources: path.resolve(__dirname, './src/style/_globs.styl')
+                  
                 }
               }
             ]
