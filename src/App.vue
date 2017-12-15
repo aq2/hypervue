@@ -11,7 +11,6 @@
 <script>
 
 import Sidebar from './components/Sidebar.vue'
-import Contents from './components/Contents.vue'
 
 // Initialize Firebase
 let config = {
@@ -35,7 +34,6 @@ export default {
   },
   components: {
     'app-sidebar': Sidebar,
-    'app-contents': Contents
   }
 }
 

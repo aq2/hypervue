@@ -1,7 +1,7 @@
 import Welcome from './components/Welcome.vue'
-import GetFile from './components/data-sources/GetFileData.vue'
+import GetFile from './components/data-sources/csv/GetFileData.vue'
 import DataSource from './components/data-sources/DataSource.vue'
-import CSVSource from './components/data-sources/CSVSource.vue'
+import CSVSource from './components/data-sources/csv/CSVSource.vue'
 import FirebaseSource from './components/data-sources/FirebaseSource.vue'
 
 

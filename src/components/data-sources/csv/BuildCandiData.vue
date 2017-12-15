@@ -61,7 +61,7 @@
 
 <script>
   // todo - file getting too big -> subcomponentize?
-  import {eventBus} from '../../main'
+  import {eventBus} from '../../../main'
 
 export default {
   // get stuff from store!
@@ -123,6 +123,9 @@ export default {
       var allIndexedRankables = []
       var alphas = catData.alphas      
       var alphasL = alphas.size
+      this.ID = alphas.keys().next().value
+      // console.log({myID})
+      
 
       for (var a=0; a<alphasL; a++) {
         allIndexedRankables.push({rankable: false})
@@ -240,7 +243,7 @@ export default {
         // makeIDforCats qq
         this.makeIDforCats(ID)
         
-        eventBus.$emit('dataBuilt')
+        // eventBus.$emit('dataBuilt')
 
       } else {
         // todo

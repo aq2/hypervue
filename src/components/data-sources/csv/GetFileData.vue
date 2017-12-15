@@ -1,18 +1,16 @@
 <template lang="pug">
 
 #getFile
-  hr
   input(type="file" id='browseFile' accept=".csv, text/csv" @change='getFileData')
   label(id='browseLabel' for='browseFile') 
     icon(name='upload' class='icon' scale=1.2)
     | choose a file...
-  hr
   
 </template>
 
 
 <script>
-import {eventBus} from '../../main'
+import {eventBus} from '../../../main'
 
 export default {
   data() {

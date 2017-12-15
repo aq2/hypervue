@@ -6,7 +6,7 @@
       icon(v-if='open' name='chevron-circle-left')
       icon(v-else name='chevron-circle-right')
       br
-    #fullscreen(@click='goFullScreen()')
+    //- #fullscreen(@click='goFullScreen()')
       icon(name='window-restore')
     sidebar-links(v-if='open')
 
@@ -56,30 +56,9 @@ export default {
 
       rfs.call(el)
     }
-  },
-  created() {
-    eventBus.$on('pageChangeEvt', (pageN) => {
-      this.currentPage = pageN
-      switch (pageN) {
-        case 1:
-          break
-        case 2:
-          // this.openSidebar()
-          // whatever else...
-          // change controller?
-          break
-        case 3:
-          // whatever
-          break
-        default:
-          // whatever
-      }
-      
-    })
-    // enterFullscreen()
   }
-  
 }
+
 </script>
 
 
@@ -104,8 +83,5 @@ export default {
 
 #toggle:hover
   cursor pointer
-
-
-
 
 </style>
