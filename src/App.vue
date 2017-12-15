@@ -1,12 +1,11 @@
 <template lang='pug'>
-#app
-  app-sidebar
-  app-contents
-       
-</template>
 
-// qq
-// <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+  #app       
+    app-sidebar
+    #router
+      router-view
+  
+</template>
 
 
 <script>
@@ -22,7 +21,8 @@ let config = {
   projectId: "dvzvue",
   storageBucket: "dvzvue.appspot.com",
   messagingSenderId: "804794548950"
-};
+}
+
 import Firebase from 'firebase'
 let app = Firebase.initializeApp(config);
 let db = app.database()
@@ -38,13 +38,18 @@ export default {
     'app-contents': Contents
   }
 }
+
 </script>
+
 
 <style lang="stylus">
 
-
-#app 
+#app
   display flex
   margin 0
+
+#router 
+  padding 0 1rem
+  min-width 800px
 
 </style>

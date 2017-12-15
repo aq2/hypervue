@@ -1,23 +1,3 @@
-<template>
-  <div id="wrapper">
-    <div id="sidebar">
-      sidebar
-      {{ foo }}
-      <div id="cats">
-        categories
-      </div>
-      <div id="vizType">
-        viz type
-      </div>
-    </div>
-    <div id="main">
-      <h1>main</h1>
-      <button id='btn1' onclick="document.getElementById('sidebar').style.width = '130px'">transit</button>
-    </div>
-  </div>
-</template>
-
-
 var exampleCand = {
         key: 0,
         ID: 'Cambridge',
@@ -64,7 +44,6 @@ var values = [
 ]
 
 values.sort(function(a,b) {return a.value - b.value})
-console.log(values)
 
 
 function findRankOfCand(x) {
@@ -72,6 +51,38 @@ var rankOfIndex = values.find(v => v.index == x)
 return values.indexOf(rankOfIndex)
 }
 
-
 var r = findRankOfCand(0)
 console.log(r)
+
+
+ firePost: function() {
+      this.$http.post('https://dvzvue.firebaseio.com/mystuff.json', {
+        msg: 'success!',
+        author: 'mickey'
+      }).then(function(data){
+        console.log(data)
+        this.submitted = true
+      })
+    }
+
+    created() {
+      // get data from dbase
+      this.$http.get('https://dvzvue.firebaseio.com/mystuff.json')
+        .then(function(data) {
+          // console
+          return data.json()
+        })
+        .then(function(data) {
+          console.log(data)
+          var blogsArray = []
+          for (let key in data) {
+            console.log(key, data[key])
+            data[key].id = key
+            blogsArray.push(data[key])
+          }
+          console.log(blogsArray)
+          this.blogs = blogsArray
+          
+        })
+    }
+

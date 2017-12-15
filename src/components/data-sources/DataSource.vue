@@ -2,51 +2,41 @@
 
 #contents
   h1(id='h') Choose a dataset
-  #buttons
-    button(@click="chooseSource('fb')") get dataset from firebase
-    span(class='spacer') or
-    button(@click="chooseSource('csv')") get data from CSV file
+  icon(name='database' scale=8)
+  span(class='spacer')
+  icon(name='upload' scale=8)
+  span(class='spacer')
+  icon(name='tasks' scale=8)
+  
+  #text
+    p First, you need to get some data.
+    p either by uploading a CSV file from you computer,
+    p or you can pick from an exciting range of sources
+  
+  #links
+    ul 
+      li
+        router-link(to='fb') 
+          icon(name='cloud' scale=4)
+          p get dataset from firebase
+      li
+        router-link(to='csv')
+          icon(name='folder-open' scale=4)
+          p get data from CSV file
+
+
   src-fb(v-if='fb')
-    //- button(@click.prevent='firePost') save to firebase
   transition(name='fade')
     src-csv(v-if='csv')
   
   
 
 </template>
-///
+
+
 <script>
-///
 
-import FirebaseSource from './FirebaseSource.vue'
-import CSVSource from './CSVSource.vue'
-
-// page3 functionaility is in sidebar
 export default {
-  components: {
-    'src-fb': FirebaseSource,
-    'src-csv': CSVSource
-  },
-  created() {
-    // // get data from dbase
-    // this.$http.get('https://dvzvue.firebaseio.com/mystuff.json')
-    //   .then(function(data) {
-    //     // console
-    //     return data.json()
-    //   })
-    //   .then(function(data) {
-    //     console.log(data)
-    //     var blogsArray = []
-    //     for (let key in data) {
-    //       console.log(key, data[key])
-    //       data[key].id = key
-    //       blogsArray.push(data[key])
-    //     }
-    //     console.log(blogsArray)
-    //     this.blogs = blogsArray
-        
-    //   })
-  },
   data() {
     return {
       submitted: false,
@@ -56,39 +46,14 @@ export default {
       csv: false,
       buttoned: false
     }
-  },
-  methods: {
-    firePost: function() {
-      this.$http.post('https://dvzvue.firebaseio.com/mystuff.json', {
-        msg: 'success!',
-        author: 'mickey'
-      }).then(function(data){
-        console.log(data)
-        this.submitted = true
-      })
-    },
-    chooseSource: function(src) {
-      if (src == 'fb') {
-        this.fb = true
-        this.csv = false
-      }
-      if (src == 'csv') {
-        this.csv = true
-        this.fb = false
-      }
-      this.buttoned = true
-      var h = $('#h')
-      h.style.paddingRight = '2em'
-      h.style.display = 'inline-block'
-
-    }
   }
-
 }
+
 </script>
 
-///
+
 <style lang="stylus" scoped>
+
 .spacer 
   width 50px
   display inline-block
@@ -97,17 +62,39 @@ export default {
 #buttons 
   display inline-block
 
-
 .fade-enter-active, .fade-leave-active
   transition opacity .5s
 
 .fade-enter, .fade-leave-active
   opacity 0
 
-#np 
-  display none
-  background orange
-  padding 200px
+#text 
+  background $g5
+  padding 0.5rem 1rem
+  margin 1rem 0
+
+ul
+  padding 0 
+  // background $g2
+  max-width 1020px
+  margin 0 auto
+  list-style-type none
+  display flex
+  justify-content space-around
+
+li
+  background $blue
+  padding .5rem
+  margin 1rem 0
+  border-radius 5px
+  font-size 1.05rem
+  transition 0.5s all ease
+  text-align center
+  flex-grow 1
+  max-width 300px
+
+a
+  padding 2em 0
 
 
 </style>

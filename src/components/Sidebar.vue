@@ -1,19 +1,16 @@
 <template lang='pug'>
  
   #sidebar 
-    #toggle(@click='toggleSidebarWidth'  class='tooltip') 
+    #toggle(@click='toggle'  class='tooltip') 
       span(class='tooltiptext') click to toggle sidebar
-      icon(v-if='sidebarOpen' name='chevron-circle-left')
+      icon(v-if='open' name='chevron-circle-left')
       icon(v-else name='chevron-circle-right')
-    
-    #welcomeBtn(v-if='sidebarOpen')
-      button.linky welcome
-    
-    #dataBtn(v-if='currentPage > 1 && sidebarOpen')
-      button.linky data source
-    
-    //- #page-controller 
-      // could have nice things in here
+      br
+    #fullscreen(@click='goFullScreen()')
+      icon(name='window-restore')
+    sidebar-links(v-if='open')
+
+
 
 </template>
 
@@ -21,32 +18,43 @@
 <script>
 
 import {eventBus} from '../main'
+import SidebarLinks from './SidebarLinks'
 
 export default {
+  components: {
+    'sidebar-links': SidebarLinks
+  },
   data() {
     return {
-      sidebarOpen: true,
+      open: true,
       currentPage: 1
     }
   },
   methods: {
-    toggleSidebarWidth: function() {
-      console.log('toggled')
-      
+    toggle: function() {
+      this.open = !this.open
       let sid = $('#sidebar')
       sid.style.width = sid.offsetWidth >= 30 ? '25px' : '150px'
-      this.sidebarOpen = !this.sidebarOpen
     },
     openSidebar: function() {
       // console.log('opened')
       let sid = $('#sidebar')
       sid.style.width = '150px'
-      this.sidebarOpen = true
+      this.open = true
     },
     closeSidebar: function() {
       let sid = $('#sidebar')
       sid.style.width = '25px'
-      this.sidebarOpen = false
+      this.open = false
+    },
+    goFullScreen() {
+      var el = document.documentElement,
+        rfs = el.requestFullScreen
+          || el.webkitRequestFullScreen
+          || el.mozRequestFullScreen
+          || el.msRequestFullscreen
+
+      rfs.call(el)
     }
   },
   created() {
@@ -68,6 +76,7 @@ export default {
       }
       
     })
+    // enterFullscreen()
   }
   
 }
@@ -79,35 +88,24 @@ export default {
 #sidebar
   border 1px solid $g3
   background $g3
-  transition .5s all ease
+  transition .1s all ease-out
   box-sizing border-box
   width 150px
   height 100vh
   margin 0
-
-
-button
-  // width 80px
-  // margin 0 auto
+  border-right 1px solid $g2
+  // padding .25rem
 
 #toggle
   color #ddd
-  padding: 3px
   text-align left
+  width 80px
+  padding-left .15rem
 
 #toggle:hover
   cursor pointer
 
 
-span 
-  color white
 
-.linky {
-  background $grey
-  width 130px
-  font-size 1rem
-  margin 0 auto
-  
-}
 
 </style>
