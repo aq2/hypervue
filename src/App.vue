@@ -1,7 +1,7 @@
 <template lang='pug'>
 
   #app       
-    app-sidebar
+    TheSidebar
     #router
       router-view
   
@@ -10,7 +10,7 @@
 
 <script>
 
-import Sidebar from './components/Sidebar.vue'
+import TheSidebar from './components/sidebar/Sidebar.vue'
 
 // Initialize Firebase
 let config = {
@@ -33,7 +33,7 @@ export default {
     massages: messagesRef   // qq
   },
   components: {
-    'app-sidebar': Sidebar,
+    TheSidebar
   }
 }
 

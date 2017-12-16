@@ -21,6 +21,7 @@ Vue.use(VueResource)
 import VueFire from 'vuefire'
 Vue.use(VueFire)
 
+
 // awesome icons
 // cheaper to import them as you need them
 import 'vue-awesome/icons/bar-chart'

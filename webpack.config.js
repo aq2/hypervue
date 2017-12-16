@@ -29,9 +29,7 @@ module.exports = {
               {
                 loader: 'stylus-resources-loader',
                 options: {
-                  resources: path.resolve(__dirname, './src/main.styl'),
-                  // resources: path.resolve(__dirname, './src/style/_globs.styl')
-                  
+                  resources: path.resolve(__dirname, './src/main.styl')
                 }
               }
             ]
@@ -54,14 +52,7 @@ module.exports = {
       {
         test: /\.pug$/,
         loader: 'pug-html-loader',
-      },
-      // {
-      //   loader: 'stylus-resources-loader',
-      //   options: {
-      //     resources: path.resolve(__dirname, './src/style/_vars.styl')
-      //     // resources: '../src/style/_vars.styl'
-      //   }
-      // }
+      }
     ]
   },
   resolve: {

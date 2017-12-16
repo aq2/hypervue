@@ -8,7 +8,7 @@
       br
     //- #fullscreen(@click='goFullScreen()')
       icon(name='window-restore')
-    sidebar-links(v-if='open')
+    TheSidebarLinks(v-if='open')
 
 
 
@@ -17,12 +17,15 @@
 
 <script>
 
-import {eventBus} from '../main'
-import SidebarLinks from './SidebarLinks'
+// import {eventBus} from '../../main'
+import TheSidebarLinks from './SidebarLinks'
+// todo find out how to import $
+// or better, import it globally
+// how am i doing it now window.$ in main.j!
 
 export default {
   components: {
-    'sidebar-links': SidebarLinks
+    TheSidebarLinks
   },
   data() {
     return {

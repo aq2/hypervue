@@ -21,8 +21,9 @@
 
 </template>
 
-//qq
+
 <script>
+
 import {eventBus} from '../../../main'
 import GetFileData from './GetFileData.vue'
 import BuildCandiData from './BuildCandiData.vue'
@@ -41,14 +42,10 @@ export default {
     }
   },
   created() {
-    eventBus.$on('fileParsed', (data) => {
-      // console.log(data)
-      // alert('event heard!')
+    eventBus.$on('fileParsed', (dataIfwanted) => {
       this.fileGot = true
     }),
-    eventBus.$on('dataBuilt', (data) => {
-      // console.log(data)
-      // alert('event heard!')
+    eventBus.$on('dataBuilt', () => {
       this.dataBuilt = true
       this.fileGot = false // ??
     })
@@ -58,9 +55,6 @@ export default {
 </script>
 
 
-
-
-/qq
 <style lang="stylus" scoped>
 
 #csv 

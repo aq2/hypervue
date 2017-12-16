@@ -6,7 +6,7 @@
     icon(name='bar-chart' scale=8)
     icon(name='area-chart' scale=8)
     icon(name='line-chart' scale=8)
-    icon(name='pie-chart' scale=7 spin)
+    icon(name='pie-chart' scale=7 pulse)
     #text
       p it doesn't look like much yet, but it will be great!
       p it's better to run this app in full-screen mode, toggled with F11
