@@ -8,7 +8,7 @@
       br
     //- #fullscreen(@click='goFullScreen()')
       icon(name='window-restore')
-    TheSidebarLinks(v-if='open')
+    TheSidebarLinks(v-show='open')
 
 
 
@@ -17,11 +17,12 @@
 
 <script>
 
-// import {eventBus} from '../../main'
+// import {EventBus} from '../../main'
 import TheSidebarLinks from './SidebarLinks'
+
 // todo find out how to import $
 // or better, import it globally
-// how am i doing it now window.$ in main.j!
+// how am i doing it now window.$ in main.js
 
 export default {
   components: {
@@ -79,7 +80,7 @@ export default {
   // padding .25rem
 
 #toggle
-  color #ddd
+  color #789
   text-align left
   width 80px
   padding-left .15rem

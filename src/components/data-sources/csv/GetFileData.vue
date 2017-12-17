@@ -10,7 +10,7 @@
 
 
 <script>
-import {eventBus} from '../../../main'
+import {EventBus} from '../../../main'
 
 export default {
   data() {
@@ -40,7 +40,7 @@ export default {
             // stick data in store
             this.$store.dispatch('setFileData', parsedFileData)
             // and let them know it's done
-            eventBus.$emit('fileParsed', 'insert payload here')
+            EventBus.$emit('fileParsed', 'insert payload here')
           } else {
             alert('bad format')
             // todo deal with it!

@@ -45,6 +45,7 @@
 
   v-show: expensive load, cheap toggle
           use when toggles often
+          CAN'T USE v-if !
 
   v-if:   cheap load, expensive toggle
           use for cheapness when not often toggled

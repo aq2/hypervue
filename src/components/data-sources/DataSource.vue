@@ -1,11 +1,11 @@
 <template lang="pug">
 
-#contents
-  h1(id='h') Choose a dataset
+#DataSource
+  h1 Choose a dataset
   icon(name='database' scale=8)
-  span(class='spacer')
+  .spacer
   icon(name='upload' scale=8)
-  span(class='spacer')
+  .spacer
   icon(name='tasks' scale=8)
   
   #text
@@ -21,14 +21,8 @@
           p get dataset from firebase
       li
         router-link(to='csv')
-          icon(name='folder-open' scale=4)
-          p get data from CSV file
-
-
-  src-fb(v-if='fb')
-  transition(name='fade')
-    src-csv(v-if='csv')
-  
+            icon(name='folder-open' scale=4)
+            p get data from CSV file
   
 
 </template>

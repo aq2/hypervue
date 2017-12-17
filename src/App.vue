@@ -2,7 +2,8 @@
 
   #app       
     TheSidebar
-    #router
+    #page-content
+      //- transition(name='fade')
       router-view
   
 </template>
@@ -46,7 +47,7 @@ export default {
   display flex
   margin 0
 
-#router 
+#page-content
   padding 0 1rem
   min-width 800px
 

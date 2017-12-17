@@ -1,47 +1,59 @@
 sidebar:
 
 doing now:
-    // we can get them from min/max when sorting for ranking
-    // sorted[0] = min, sorted[last]=max
+  ☐ css of cells @started(17-12-17 03:20)
+  ☐ compontentizing
 
 next:
-  ☐ save all data to store @critical 
-  ☐ save all data to firebase @high 
-  ☐ retrieve data from firebase @today
+  ☐ componentise buildCandData @high
+    ☐ should be able to optimise code - try writing fuinctionally? @crit
+    ☐ we're going to need at least normalise 
+    ☐ ranking etc.. for ron in case things change
+    ☐ maxis
+    ☐ ID
+    
+  .  
+  ☐ custom checkbox (component!) that covers whole cell
+    
   ☐ pareto
-  ☐ buttons in sidebar!
-  ☐ sort out git for better sync
-  ☐ code settings for lappy
-  
+.
+
+data: @normal
+  ☐ save all data to store @normal 
+  ☐ save all data to firebase @normal 
+  ☐ retrieve data from firebase @normal
+.
+
 later:  
   ☐ deal with maxis @low
-  ☐ componentise buildCandData @high
-    ☐ should be able to optimise code - try writing fuinctionally?
-    ☐ we're going to need at least normalise
-    ☐ ranking etc.. for ron in case things change
   ☐ css!
   ☐ sort out missing null data items
-  ☐ autoselect first alpha as ID
   ☐ word cloud map?
   ☐ slots for changing contents?
-  ☐ page-controller as alternative to slots -> live in sidebar
   ☐ use flexbox plus vh/vw
   ☐ header
-  
+
+lappy:
+  ☐ sort out git for better sync to lappy
+  ☐ code settings for lappy  
+//
 
 js:
-  sets
-  iterators
-  maps!
-  object methods??
-  show set in vue console, use computed to turn into spread/array and show that
-  
+  ☐ sets
+  ☐ iterators
+  ☐ maps!
+  ☐ object methods??
+  ☐ show set in vue console, use computed to turn into spread/array and show that
+.  
 
 other:
-  browser shortcuts - need new set?
 
 
 Archive:
+  ✔ autoselect first alpha as ID @done(17-12-16 22:41)
+  ✘ page-controller as alternative to slots -> live in sidebar @cancelled(17-12-16 22:41)
+  ✔ browser shortcuts - need new set? @done(17-12-16 22:39)
+  ✔ buttons in sidebar! @done(17-12-16 22:36)
   ✔ ID @done(17-12-14 17:40)
   ✔ welcome button in sidebar @started(17-12-14 22:00) @done(17-12-15 10:43) @lasted(12 hours 43 minutes 53 seconds)
   ✔ sidebar buttons/links should disappear when sidebar closes @low @done(17-12-14 05:32)

@@ -1,108 +1,121 @@
 <template lang='pug'> 
-  
-#BuildCandidata
-  h2 category meta data
-  #exampleTable
-    #catNames
-      .catName category
-      .list(v-for='cat in cats') 
+  #gotFile
+    h2 category meta data
+    #cont
+      #top
+        .catName category
+        .example example
+        .rankable rankable
+        .maxi(v-if='step > 0') maxi
+        .id(v-if='step > 1') ID
+      .list(v-for='(cat, index) in cats') 
         .catName {{cat}}
-    //
-
-    #exampleData
-      .example example
-      .list(v-for='score in cands[0].scores') 
-        .example {{score.origScore}}
-    //
-    
-    #rankables
-      .rankable rankable
-      .list(v-for='(cat, index) in cats') 
-        label 
-        input(type='checkbox' :value='index' v-model='rankable' v-if='!isAlpha(index)')
-        .boxy(v-else)
-    //
-
-    //- #maxis(v-show='step > 0')
-      .maxi maxis
-      .list(v-for='(cat, index) in cats') 
-        label 
-        input(type='checkbox' :value='index' v-model='maxi' v-if='isRankable(index)')
-        .boxy(v-else)
-    //
-
-    // qq
-    transition(name='fade')
-      #maxis(v-show='step > 0')
-        TableMaxis(
-          v-bind:rankable='rankable'
-          v-bind:cats='cats'
-        )
-
-    transition(name='fade')
-      #ID(v-show='step > 1')
-        .id ID
-        .list(v-for='(cat, index) in cats') 
+        .example {{exampleData.scores[index].origScore}}
+        .rankable
           label 
+          input(type='checkbox' :value='index' v-model='rankable' v-if='!isAlpha(index)')
+          .boxy(v-else)
+        .maxi(v-if='step > 0 && isRankable(index)')
+          label 
+          input(type='checkbox' :value='index' v-model='maxi')
+        .maxi(v-if='step > 0 && !isRankable(index)')
+          .boxy(v-else)
+        .id(v-if='step > 1')
+          label
           input(type='radio' :value='index' v-model='ID')
-          .boxy
-    //
 
-  //
-
-  // - dynamic components? slots?
-  #instructions
-    div(v-show='step == 0')
+    div(v-if='step == 0')
       p first, select orderable categories to include in rankings
       p ie don't select a non-numeric category
       p need at least two categories
       p press OK when done
       button(@click='checkRankables') OK
-    //
-
-    div(v-show='step == 1')
+    
+    div(v-if='step == 1')
       p now select categories where high values are good
       p default is lower values are better
+      .list DO WE EVEN NEED THIS?
       p press OK when done
       button(@click='checkMaxis') OK
-    //
-
-    div(v-show='step == 2')
+    
+    div(v-if='step == 2')
       p now select a category to use as an identifier
       p this name will be used to identify candidates
       p so chose an alpha-numeric name
       p press OK when done
       button(@click='checkID') OK
-    //
 
     p rankable {{rankable}}
-    p maxi {{maxis}}
+    p maxi {{maxi}}
     p ID {{ID}}
-  //
 
-  hr
-  p idx {{idx}}
-  p maxs {{maxs}}
-  p maxis {{maxis}}
-  p maxSet {{...maxSet}}
-  p maxSetAry {{Array.from(maxSet)}}
-  p maxSetsize {{maxSet.size}}
+    //-
+      // step 4?
+        // save data to store
+       // todo offer to save it to firebase
+
+    #newcont
+      #catNames
+        .catName category
+        .list(v-for='cat in cats') 
+          .catName {{cat}}
+      #exampleData
+        .example example
+        .list(v-for='score in cands[0].scores') 
+          .example {{score.origScore}}
+      #rankables
+        .rankable rankable
+        .list(v-for='(cat, index) in cats') 
+          //- .list(v-for='(cat, index) in isAlpha(index)') 
+          label 
+          input(type='checkbox' :value='index' v-model='rankable' v-if='!isAlpha(index)')
+          .boxy(v-else)
+      #maxis(v-show='step > 0')
+        .maxi maxis
+        .list(v-for='(cat, index) in cats') 
+          label 
+          input(type='checkbox' :value='index' v-model='maxi' v-if='isRankable(index)')
+          .boxy(v-else)
+      #ID(v-show='step > 1')
+        .id ID
+        .list(v-for='cat in cats') 
+          label 
+          input(type='radio' :value='index' v-model='ID')
+          .boxy
+
+    #newinstr
+      div(v-show='step == 0')
+        p first, select orderable categories to include in rankings
+        p ie don't select a non-numeric category
+        p need at least two categories
+        p press OK when done
+        button(@click='checkRankables') OK
+      //
+
+      div(v-show='step == 1')
+        p now select categories where high values are good
+        p default is lower values are better
+        p press OK when done
+        button(@click='checkMaxis') OK
+    
+      div(v-show='step == 2')
+        p now select a category to use as an identifier
+        p this name will be used to identify candidates
+        p so chose an alpha-numeric name
+        p press OK when done
+        button(@click='checkID') OK
+
 
 </template>
 
 
 
 <script>
-
-// todo - file getting too big -> subcomponentize?
-import {EventBus} from '../../../main'
-import TableMaxis from './TableMaxis'
+  // todo - file getting too big -> subcomponentize?
+  import {EventBus} from '../../../main'
 
 export default {
   // get stuff from store!
-  components: {
-    TableMaxis
-  },
   computed: {
     fileData() {
       return this.$store.getters.getFileData
@@ -130,7 +143,7 @@ export default {
         // this.catData.maxis = this.maxi
         this.step = 2
         var rankables = this.rankable
-        var maxis = this.maxis
+        var maxis = this.maxi
         // first need to make sure maxi is in rankable
         for (var max of maxis) {
           if (!rankables.includes(max)) {
@@ -323,15 +336,11 @@ export default {
       steps: ['rankable', 'maxi', 'ID'],
       step: '0',
       rankable: [],
-      maxis: [],
-      maxs: [],
-      maxSet: new Set(),
+      maxi: [],
       ID: null,
       catData: {},
       alphas: new Set(),
-      cands: [],
-      numberOfCats: -1,
-      idx: -1
+      cands: []
     }
   },
   created() {
@@ -340,27 +349,6 @@ export default {
     this.alphas = this.catData.alphas
     this.cats = this.catData.cats
     this.cands = this.fileData.cands
-    // this.maxis = this.fileData.maxis
-    
-    EventBus.$on('updateMaxis', (index) => {
-      console.log('on rcvd', index)
-      this.idx = index
-      this.maxs.push(index)  
-      
-      // this.maxSet.add(index)  // need to toggle
-
-      // if not in set, add
-      // else remove
-
-      if (this.maxSet.has(index)) {
-        this.maxSet.delete(index)
-      } else {
-        this.maxSet.add(index)
-      }
-
-
-      // this.maxis.push(index)
-    })
   }
 }
 </script>
@@ -374,20 +362,16 @@ export default {
 
 .cell
   min-width 140px  // should be calculated somehow or flexboxed!
-  // display inline-block
+  display inline-block
   padding  .5em 0
   margin 0
-  min-height 40px
 
 .list
-  // @extend .cell
   min-width 140px  // should be calculated somehow or flexboxed!
   // display inline-block
   // padding  .5em 0
   margin 0
   background $blue
-  min-height 40px
-  
 
 #top
   background orange
@@ -428,26 +412,18 @@ export default {
 label
   // display none
 
-#exampleTable 
+#newcont 
   display flex
   // justify-content space-between
   background steelblue
-  width 800px
+  width 900px
   // flex-flow column
 
   >div
-    // background orange
+    background orange
     // flex-grow 1
-    // border 1px solid white
+    border 1px solid white
     flex-basis 160px
-
-.fade-enter-active, .fade-leave-active
-  transition all 1s
-
-.fade-enter, .fade-leave-to 
-  opacity 0
-  background blue
-
 
 </style>
 

@@ -1,14 +1,13 @@
 <template lang='pug'>
 
-
-  #links 
+  #sidebarLinks 
     //- icon(name='window-restore')
     //- button(@click='goFullScreen()') full screen
     ul
       li
         router-link(to='/' exact) home
       li 
-        router-link(to='/data' exact) get data
+        router-link(to='/data') get data
 
 
 </template>
@@ -34,7 +33,7 @@ export default {
 
 <style lang="stylus" scoped>
 
-#links 
+#sidebarLinks 
   padding-right 0.2rem
 
 ul
@@ -56,7 +55,7 @@ li
 .router-link-active 
   // background brown
   border-radius 5px
-  color $gd
+  color $gb
   cursor default
 
 // .router-link-active::after
