@@ -21,7 +21,7 @@
 import {EventBus} from '../../../main'
 
 export default {
-  props: ['rankable', 'cats'],
+  props: ['rankables', 'cats'],
   data() {
     return {
       tableMaxis: [],
@@ -37,7 +37,7 @@ export default {
   methods: {
     isRankable(i) {
       // console.log(i, this.rankable.includes(i))
-      return this.rankable.includes(i)
+      return this.rankables.includes(i)
     },
     changeMaxis: function(index) {
       // this.maxis.fish = this.maxis2

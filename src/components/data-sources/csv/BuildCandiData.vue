@@ -16,10 +16,10 @@
     //
     
     #rankables
-      .rankable rankable
+      .rankable rankable?
       .list(v-for='(cat, index) in cats') 
         label 
-        input(type='checkbox' :value='index' v-model='rankable' v-if='!isAlpha(index)')
+        input(type='checkbox' :value='index' v-model='rankables' v-if='!isAlpha(index)')
         .boxy(v-else)
     //
 
@@ -35,9 +35,10 @@
     transition(name='fade')
       #maxis(v-show='step > 0')
         TableMaxis(
-          v-bind:rankable='rankable'
+          v-bind:rankables='rankables'
           v-bind:cats='cats'
         )
+    //
 
     transition(name='fade')
       #ID(v-show='step > 1')
@@ -75,7 +76,7 @@
       button(@click='checkID') OK
     //
 
-    p rankable {{rankable}}
+    p rankables {{rankables}}
     p maxi {{maxis}}
     p ID {{ID}}
   //
@@ -114,23 +115,28 @@ export default {
   methods: {
     checkRankables() {
       // must be at least two rankables
-      if (this.rankable.length > 1) {
+      if (this.rankables.length > 1) {
         this.step = 1
+        this.makeMaxBooleans()
       } else {
         alert('not enough rankables - need at least two!')
       }
     },   
     isRankable(i) {
-      return this.rankable.includes(i)
+      return this.rankables.includes(i)
     },
     isAlpha(i) {
       return this.alphas.has(i)
     },
     checkMaxis() {
         // this.catData.maxis = this.maxi
+        
         this.step = 2
-        var rankables = this.rankable
+        var rankables = this.rankables
         var maxis = this.maxis
+        // this.makeMaxBooleans(rankables)
+
+
         // first need to make sure maxi is in rankable
         for (var max of maxis) {
           if (!rankables.includes(max)) {
@@ -316,13 +322,35 @@ export default {
       // console.log({cand})
       }
       
+    },
+    makeMaxBooleans() {
+      // dumb way
+      var rankables = this.rankables
+      var cats = this.cats
+      var catsL = cats.length       
+      // need to know cats length!
+      // could pass, or use categories object
+      // then extract fftt from categories instead
+      // no expense, because data not 'passed' - non-func paradigm here!
+      
+      
+      var rankL = rankables.length
+      for (var i=0; i<catsL; i++) {
+        if (rankables.includes(i)) {
+          this.maxBooleans.push(true)
+        } else {
+          this.maxBooleans.push(false)
+        }
+      }
+      console.log(this.maxBooleans)
+      
     }
   },
   data() {
     return {
       steps: ['rankable', 'maxi', 'ID'],
       step: '0',
-      rankable: [],
+      rankables: [],
       maxis: [],
       maxs: [],
       maxSet: new Set(),
@@ -331,12 +359,13 @@ export default {
       alphas: new Set(),
       cands: [],
       numberOfCats: -1,
-      idx: -1
+      idx: -1,
+      maxBooleans: []
     }
   },
   created() {
     this.catData = this.fileData.catData
-    this.rankable = this.catData.rankables 
+    this.rankables = this.catData.rankables 
     this.alphas = this.catData.alphas
     this.cats = this.catData.cats
     this.cands = this.fileData.cands
