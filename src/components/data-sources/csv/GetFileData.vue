@@ -18,33 +18,95 @@ export default {
       fileContents: '',
       categories: [],
       candidates: [],
-      allCandidateStrings: []
+      allCandidateStrings: [],
+     
+      newCands: [],                       // cands based
+      newCrits: [],                       // crit (cat) based
+                                          // whole thing as 2D array? = headfuck?
     }
   },
   methods: {
     getFileData: function(evt) {
       var r,                  // file reader ? - rename it
           f,                  // file read in
-          parsedFileData         // boolean for file worthiness
+          parsedFileData,
+          rawCsvBigString         
+
+      //
 
       if (f = evt.target.files[0]) {    // conditional variable
         r = new FileReader()
         r.onload = e => {
-          this.fileContents = e.target.result
+        // this.fileContents = e.target.result
+        rawCsvBigString = e.target.result
 
-          if (this.fileIsGood()) {
-            parsedFileData = this.parseFile()
-            this.catData = parsedFileData.catData
-            this.candidates = parsedFileData.cands
+        var rawRows = rawCsvBigString.split('\n')
+        rawRows.pop()               // remove last empty row
+        // var unRawRows = rawRows.split(',')
+        
+        var rawHeaders = rawRows[0]
+        var rawRowsL  = rawRows.length
 
-            // stick data in store
-            this.$store.dispatch('setFileData', parsedFileData)
-            // and let them know it's done
-            EventBus.$emit('fileParsed', 'insert payload here')
-          } else {
-            alert('bad format')
-            // todo deal with it!
-          }
+        // check for headers()?
+        // get first row
+        // show it
+        // are these headers?
+          // yes -> cool
+          // no -> make some
+            // autoassign cat1, cat2
+            // offer edit of default
+            // where do i do this?
+            // here or in sep fn, or wait until example table???
+            // or is it essential for parsing to get rows/colums?
+            // deep thought for everything!!!!!!!!!!!
+
+
+
+        var rawFirstCand = rawRows[1]
+        console.log({rawFirstCand})
+        var cookedCand = rawFirstCand.split(',')
+        console.log({cookedCand})
+        
+        
+
+        // check for headers being alpha?
+        // so need to parse that row first, on its own?
+        var unrawHeaders = rawHeaders.split(',')
+        // at least one is alpha, or all?, or first only?
+        this.checkHeaders(unrawHeaders)
+
+
+        // check for errors!
+        // if ()
+
+        // now parse this as parsed rows/cands
+        // and columns too?
+
+        // rather than functionaly passing params,
+        // parse file can use this.
+        // so rawRows needs to this.rawRows, part of data
+        // rawString as this? easier to parse into columns?
+        // don't really see why
+
+        // console.log('rR', rawRows)
+        // // console.log('uRR', unRawRows)
+        // console.log('rH', rawHeaders)
+        // console.log('URH', unRawHeaders)
+        // console.log('rRL', rawRowsL)
+
+          // if (this.fileIsGood()) {
+          //   parsedFileData = this.parseFile()
+          //   this.catData = parsedFileData.catData
+          //   this.candidates = parsedFileData.cands
+
+          //   // stick data in store
+          //   this.$store.dispatch('setFileData', parsedFileData)
+          //   // and let them know it's done
+          //   EventBus.$emit('fileParsed', 'insert payload here')
+          // } else {
+          //   alert('bad format')
+          //   // todo deal with it!
+          // }
         } 
       r.readAsText(f)   // not sure how this works?
       } else {
@@ -148,7 +210,34 @@ export default {
       var catData = { cats, alphas, rankables, categories }
 
       return { catData, cands }
-    }    
+    },
+    checkHeaders: function(headers) {
+      console.log({headers})
+      // var percy = this.
+      // they're all gonna be strings, but maybe nor alpha - eg "123"
+      // headers.forEach()
+      var headersL = headers.length
+      
+      for (var i=0; i<headersL; i++) {
+        var header = headers[i]
+        console.log({header})        
+      }
+
+      headers.forEach(myFunction)
+      
+      function myFunction(item, index) {
+        console.log({item})
+        console.log({index})        
+      }
+
+      headers.forEach((item, index) => {
+        console.log({item})
+        console.log({index}) 
+      })
+      
+
+      // return all aplha, 1 alpha or no alphas?
+    }  
   }
 }
 

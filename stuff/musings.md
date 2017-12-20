@@ -10,7 +10,7 @@
 
 
 ## simple
-  + already liking it coz it's simple!
+  + already liking it coz it's simple! =>
   
 
   > so what's a simple data struct? DS

@@ -13,7 +13,7 @@
       .example example
       .list(v-for='score in cands[0].scores') 
         .example {{score.origScore}}
-    //
+    // 
     
     #rankables
       .rankable rankable?
@@ -92,15 +92,14 @@
 </template>
 
 
-
 <script>
 
 // todo - file getting too big -> subcomponentize?
 import {EventBus} from '../../../main'
-import TableMaxis from './TableMaxis'
+import TableMaxis from './TableMaxis';
 
 export default {
-  // get stuff from store!
+  // get stuff from store
   components: {
     TableMaxis
   },
@@ -112,11 +111,13 @@ export default {
       return this.fileData.cands[0]
     }
   },
+
+  
   methods: {
     checkRankables() {
       // must be at least two rankables
       if (this.rankables.length > 1) {
-        this.step = 1
+        this.step = 1 =>
         this.makeMaxBooleans()
       } else {
         alert('not enough rankables - need at least two!')
@@ -139,8 +140,8 @@ export default {
 
         // first need to make sure maxi is in rankable
         for (var max of maxis) {
-          if (!rankables.includes(max)) {
-            alert('maxi not in rank')
+          if (!rankables.includes(max)) { 
+            alert('maxi not in rank') ->
             // todo deal with it!
           }
         }        
@@ -274,7 +275,7 @@ export default {
       
       var ID = this.ID
       this.catData.ID = ID
-      this.step = 3
+      this.step = 3 =>
       if (ID != null) {
         var IDname = this.catData.cats[ID]
         // var candID = 
@@ -339,7 +340,7 @@ export default {
         if (rankables.includes(i)) {
           this.maxBooleans.push(true)
         } else {
-          this.maxBooleans.push(false)
+          this.maxBooleans.push(false)  //TODO: foo
         }
       }
       console.log(this.maxBooleans)
@@ -381,7 +382,7 @@ export default {
       // if not in set, add
       // else remove
 
-      if (this.maxSet.has(index)) {
+      if (this.maxSet.has(index)) { 
         this.maxSet.delete(index)
       } else {
         this.maxSet.add(index)
@@ -399,6 +400,7 @@ export default {
 
 #cont 
   background #eee
+  borde
 
 
 .cell
@@ -437,7 +439,8 @@ export default {
   @extend .cell
   padding-left: 1em
   background #ccc
-  
+ 
+
 .rankable
   @extend .cell
   background #456
@@ -479,4 +482,3 @@ label
 
 
 </style>
-
