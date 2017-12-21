@@ -3,7 +3,6 @@
   #app       
     TheSidebar
     #page-content
-      //- transition(name='fade')
       router-view
   
 </template>

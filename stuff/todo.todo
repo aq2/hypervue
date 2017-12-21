@@ -14,7 +14,7 @@ next:
     
   .  
   ☐ custom checkbox (component!) that covers whole cell
-    
+  ☐ candidate component?
   ☐ pareto
 .
 
@@ -24,6 +24,11 @@ data: @normal
   ☐ retrieve data from firebase @normal
 .
 
+js learn:
+  ☐ destructuring
+  ☐ higher order fns
+
+
 later:  
   ☐ deal with maxis @low
   ☐ css!
@@ -32,6 +37,7 @@ later:
   ☐ slots for changing contents?
   ☐ use flexbox plus vh/vw
   ☐ header
+  ☐ hover effects on choosedatasouorce
 
 lappy:
   ☐ sort out git for better sync to lappy

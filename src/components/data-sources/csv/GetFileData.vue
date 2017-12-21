@@ -15,10 +15,10 @@ import {EventBus} from '../../../main'
 export default {
   methods: {
     getFileData: function(evt) {
-      var file = evt.target.files[0]
+      const file = evt.target.files[0]
       
       if (file) { 
-        var reader = new FileReader()
+        const reader = new FileReader()
         reader.onload = e => { this.processFile(e.target.result) } 
         reader.readAsText(file)
       } else {
@@ -26,17 +26,13 @@ export default {
       }
     }, 
     
-
     processFile: function(file) {
-      var candidates = []
-      var alphas = new Set()
-      var rankables = []
-      
-      var lines = file.trim()       // remove last empty line
+      const lines = file
+                      .trim()       // remove last empty line
                       .split('\n')                    
                       .map(line => line.split(','))   
                         
-      var dimensions = lines[0]
+      const dimensions = lines[0]
 
       if (lines.length < 3 || this.badHeaders(dimensions)) {
         // todo deal with it properly
@@ -44,36 +40,45 @@ export default {
         return false
       }
 
-      var dimsL = dimensions.length
-      var stringedValues = lines.slice(1)    // first line is headers
-      var candsL = stringedValues.length
-      
-      // todo replace with higher order functions once understood better
-      for (var c=0; c<candsL; c++) {
-        var cand = []
-        for(var d=0; d<dimsL; d++) {
-          var value = stringedValues[c][d]
-          if (isNaN(value)) {
-            alphas.add(d)
-            value.trim()
-          } else {
-            rankables.push(d)
-            value = Number(value)
-          }
-          cand.push(value) 
-        }
-        candidates.push(cand)
-      }
+      const stringedValues = lines.slice(1)    // first line is headers
+            
+      const {alphas, rankables, candidates} = this.deStringValues(stringedValues)
 
-      var parsedData = {dimensions, alphas, candidates}
+      const parsedData = {dimensions, alphas, candidates}
+      // stick it in store
       this.$store.dispatch('setFileData', parsedData)
       // and let them know it's done
       EventBus.$emit('fileParsed', 'insert payload here')
     },
 
 
+    deStringValues: function(stringedValues) {
+      var rankables = []
+      var candidates = []
+      var alphas = new Set()
+      
+      stringedValues.forEach((line, i) => {
+        let cand = []
+        line.forEach(value => {
+          isNaN(value) ? (
+            alphas.add(i),
+            value.trim()
+          ) : (
+            rankables.push(i), // todo need?
+            value=Number(value)
+          )
+          
+          cand.push(value) 
+        })
+        candidates.push(cand)
+      })
+
+      return {alphas, rankables, candidates}
+    },
+
+
     badHeaders: function(headers) {
-      var numericValues = headers.filter((h) => { return !isNaN(h) })
+      const numericValues = headers.filter((h) => { return !isNaN(h) })
       // should this be a reduce? reduces down to true false
       return (numericValues === 0)
     }   
