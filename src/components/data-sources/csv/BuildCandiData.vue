@@ -96,7 +96,7 @@
 
 // todo - file getting too big -> subcomponentize?
 import {EventBus} from '../../../main'
-import TableMaxis from './TableMaxis';
+import TableMaxis from './TableMaxis'
 
 export default {
   // get stuff from store
@@ -117,7 +117,7 @@ export default {
     checkRankables() {
       // must be at least two rankables
       if (this.rankables.length > 1) {
-        this.step = 1 =>
+        this.step = 1
         this.makeMaxBooleans()
       } else {
         alert('not enough rankables - need at least two!')
@@ -141,7 +141,7 @@ export default {
         // first need to make sure maxi is in rankable
         for (var max of maxis) {
           if (!rankables.includes(max)) { 
-            alert('maxi not in rank') ->
+            alert('maxi not in rank')
             // todo deal with it!
           }
         }        
@@ -275,7 +275,7 @@ export default {
       
       var ID = this.ID
       this.catData.ID = ID
-      this.step = 3 =>
+      this.step = 3
       if (ID != null) {
         var IDname = this.catData.cats[ID]
         // var candID = 
@@ -400,7 +400,6 @@ export default {
 
 #cont 
   background #eee
-  borde
 
 
 .cell

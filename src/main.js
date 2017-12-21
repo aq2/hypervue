@@ -9,7 +9,6 @@ const router = new VueRouter({
   routes: Routes
 })
 
-
 // vuex datastore
 import {store} from './store'
 
@@ -20,7 +19,6 @@ Vue.use(VueResource)
 // firebase
 import VueFire from 'vuefire'
 Vue.use(VueFire)
-
 
 // awesome icons
 // cheaper to import them as you need them
