@@ -1,7 +1,7 @@
 <template lang="pug">
 
   #welcome
-    h1 Welcome to HyperDViz
+    //- h1 Welcome to HyperDViz
     icon(name='bar-chart' scale=8)
     icon(name='area-chart' scale=8)
     icon(name='line-chart' scale=8)

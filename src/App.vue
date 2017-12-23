@@ -1,20 +1,20 @@
 <template lang='pug'>
 
 #app       
-  TheSidebar
-  #page-content
-    router-view
-    #full(@click='toggleFullScreen(this)' class='tooltip2')
-      span(class='tooltiptext2') toggle fullscreen
-      icon(name='window-restore' scale=2)
-
-
+  TheHeader
+  #page
+    #sid
+      TheSidebar
+    #main  
+      router-view
+    
 </template>
 
 
 <script>
 
 import TheSidebar from './components/sidebar/Sidebar.vue'
+import TheHeader from './components/header/Header.vue'
 
 // Initialize Firebase
 let config = {
@@ -37,7 +37,8 @@ export default {
     massages: messagesRef   // qq
   },
   components: {
-    TheSidebar
+    TheSidebar,
+    TheHeader
   },
   methods: {
     // todo fugly! copyPasta
@@ -67,33 +68,29 @@ export default {
       }
     }
   }
-
 }
-
-
 
 </script>
 
 
 <style lang="stylus">
 
-#app
-  display flex
+html 
+  box-sizing border-box
+  
+// *, *:before, *:after
+//   box-sizing inherit
+
+body 
   margin 0
+  background $g4
 
-#page-content
-  padding 0 1rem
+#page
+  display flex
   min-width 800px
+  // background blue
 
-#full 
-  position absolute
-  top .55rem
-  right .55rem
-  cursor pointer
-  color $g8
-
-  &:hover
-    cursor pointer
-    color $gb
+#main  
+  padding 1rem
 
 </style>
