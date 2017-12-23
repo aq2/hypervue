@@ -86,6 +86,14 @@ li
   text-align center
   flex-grow 1
   max-width 300px
+  border 2px solid blue
+  animation throb linear 2s infinite
+
+li:hover
+  background green
+
+#links  
+
 
 a
   padding 2em 0

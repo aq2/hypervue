@@ -32,32 +32,35 @@ export default {
                       .split('\n')                    
                       .map(line => line.split(','))   
                         
-      const dimensions = lines[0]
+      const dimensions = lines[0]   // used to be 'categories'
 
+      // check valid file format/contents
       if (lines.length < 3 || this.badHeaders(dimensions)) {
         // todo deal with it properly
         alert('bad file format')
         return false
       }
 
-      const stringedValues = lines.slice(1)    // first line is headers
-            
-      const {alphas, rankables, candidates} = this.deStringValues(stringedValues)
-
-      const parsedData = {dimensions, alphas, candidates}
-      // stick it in store
+      // parse the raw file data
+      const rawCands = lines.slice(1)    // remove first headers line
+      const {candidates, alphas, rankables} = this.deStringVals(rawCands)
+      const parsedData = {dimensions, candidates, alphas, rankables}
+      
+      // stick data in store
       this.$store.dispatch('setFileData', parsedData)
+      
       // and let them know it's done
       EventBus.$emit('fileParsed', 'insert payload here')
     },
 
 
-    deStringValues: function(stringedValues) {
-      var rankables = []
-      var candidates = []
-      var alphas = new Set()
+    deStringVals: function(rawStringedCandidates) {
+      let rankables = []
+      let candidates = []
+      let alphas = new Set()
       
-      stringedValues.forEach((line, i) => {
+      // use fancier higher-order functions like map/reduce?
+      rawStringedCandidates.forEach((line, i) => {
         let cand = []
         line.forEach(value => {
           isNaN(value) ? (
@@ -66,14 +69,15 @@ export default {
           ) : (
             rankables.push(i), // todo need?
             value=Number(value)
-          )
-          
+          )          
           cand.push(value) 
         })
         candidates.push(cand)
       })
 
-      return {alphas, rankables, candidates}
+      
+
+      return {candidates, alphas, rankables}
     },
 
 
@@ -91,7 +95,7 @@ export default {
 <style lang="stylus" scoped>
 
 input
-  background #36b
+  background #36b     // todo replace with global color variable
 
 #browseFile 
   opacity 0
@@ -103,17 +107,17 @@ input
   position absolute
 
 label 
-  color white
+  color white           // todo - see above
   padding .5em
   cursor pointer
   font-size 1.2em
-  background #36b
-  border-radius 5px
+  background #36b     // todo - see above
+  border-radius 5px     // rems  - mixin, global mixin>
   display inline-block
   border 1px solid transparent
 
 label:hover
-  background #47c
+  background #47c     // todo - see above
   border 1px solid darkblue
 
 .icon

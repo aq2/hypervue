@@ -1,10 +1,14 @@
 <template lang='pug'>
 
-  #app       
-    TheSidebar
-    #page-content
-      router-view
-  
+#app       
+  TheSidebar
+  #page-content
+    router-view
+    #full(@click='toggleFullScreen(this)' class='tooltip2')
+      span(class='tooltiptext2') toggle fullscreen
+      icon(name='window-restore' scale=2)
+
+
 </template>
 
 
@@ -23,7 +27,7 @@ let config = {
 }
 
 import Firebase from 'firebase'
-let app = Firebase.initializeApp(config);
+let app = Firebase.initializeApp(config)
 let db = app.database()
 let messagesRef = db.ref('massages')
 
@@ -34,8 +38,39 @@ export default {
   },
   components: {
     TheSidebar
+  },
+  methods: {
+    // todo fugly! copyPasta
+    toggleFullScreen(elem) {
+      elem = elem || document.documentElement
+      if (!document.fullscreenElement && !document.mozFullScreenElement &&
+        !document.webkitFullscreenElement && !document.msFullscreenElement) {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen()
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen()
+        } else if (elem.mozRequestFullScreen) {
+          elem.mozRequestFullScreen()
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen()
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen()
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen()
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen()
+        }
+      }
+    }
   }
+
 }
+
+
 
 </script>
 
@@ -49,5 +84,16 @@ export default {
 #page-content
   padding 0 1rem
   min-width 800px
+
+#full 
+  position absolute
+  top .55rem
+  right .55rem
+  cursor pointer
+  color $g8
+
+  &:hover
+    cursor pointer
+    color $gb
 
 </style>

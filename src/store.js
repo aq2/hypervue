@@ -4,16 +4,15 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+  
+  // actual contents of the store 
   state: {
-    myCnter: 0,
     cats: [],
     fileData: {}
   },
+
+  // components get stored data through these 
   getters: {
-    getCnter: state => {
-      var count = state.myCnter
-      return count
-    },
     getCats: state => {
       return state.cats
     },
@@ -21,11 +20,10 @@ export const store = new Vuex.Store({
       return state.fileData
     }
   },
-  mutations: {
-    incCntMut: (state, payload) => {
-      state.myCnter += payload
-    },
 
+  // actions call these mutators
+  // don't call directly!
+  mutations: {
     mutateCats: (state, payload) => {
       state.cats = payload
     },
@@ -33,14 +31,10 @@ export const store = new Vuex.Store({
       state.fileData = payload
     }
   },
-  // qq these are the actions that should be dispatched
+
+  // actions (that call mutations) dispatched by component events
   // eg. this.$store.dispatch(actionName, payload)
   actions: {
-    incCntAct: (context, payload) => {
-      setTimeout(function() {
-        context.commit('incCntMut', payload)
-      }, 800)
-    },
     setCats: (context, payload) => {
       context.commit('mutateCats', payload)
     },

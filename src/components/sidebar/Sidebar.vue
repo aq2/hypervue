@@ -1,23 +1,18 @@
 <template lang='pug'>
  
   #sidebar 
-    #toggle(@click='toggle'  class='tooltip') 
+    #toggle(@click='toggle' class='tooltip') 
       span(class='tooltiptext') click to toggle sidebar
-      icon(v-if='open' name='chevron-circle-left')
-      icon(v-else name='chevron-circle-right')
+      icon(v-if='open' name='chevron-circle-left' scale=2)
+      icon(v-else name='chevron-circle-right' scale=2)
       br
-    //- #fullscreen(@click='goFullScreen()')
-      icon(name='window-restore')
     TheSidebarLinks(v-show='open')
-
-
 
 </template>
 
 
 <script>
 
-// import {EventBus} from '../../main'
 import TheSidebarLinks from './SidebarLinks'
 
 // todo find out how to import $
@@ -38,27 +33,7 @@ export default {
     toggle: function() {
       this.open = !this.open
       let sid = $('#sidebar')
-      sid.style.width = sid.offsetWidth >= 30 ? '25px' : '150px'
-    },
-    openSidebar: function() {
-      // console.log('opened')
-      let sid = $('#sidebar')
-      sid.style.width = '150px'
-      this.open = true
-    },
-    closeSidebar: function() {
-      let sid = $('#sidebar')
-      sid.style.width = '25px'
-      this.open = false
-    },
-    goFullScreen() {
-      var el = document.documentElement,
-        rfs = el.requestFullScreen
-          || el.webkitRequestFullScreen
-          || el.mozRequestFullScreen
-          || el.msRequestFullscreen
-
-      rfs.call(el)
+      sid.style.width = sid.offsetWidth >= 50 ? '42px' : '150px'
     }
   }
 }
@@ -69,23 +44,23 @@ export default {
 <style lang='stylus' scoped>
 
 #sidebar
-  border 1px solid $g3
   background $g3
   transition .1s all ease-out
   box-sizing border-box
-  width 150px
+  // width 150px
   height 100vh
   margin 0
-  border-right 1px solid $g2
-  // padding .25rem
+  padding 0
+  border-right 2px solid $g2
 
 #toggle
-  color #789
-  text-align left
+  color $g8
   width 80px
-  padding-left .15rem
+  padding .45rem 0 0 .25rem
+  margin 0
 
-#toggle:hover
-  cursor pointer
+  &:hover
+    cursor pointer
+    color $gb
 
 </style>

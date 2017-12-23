@@ -1,19 +1,19 @@
 button
-  background: $blue
-  border 1px solid transparent
-  padding .5em
-  color $ga
-  border-radius 5px
-  box-sizing border-box
-  font-size 1.2em
-  transition .5s all ease
+  // background: $blue
+  //   border 1px solid transparent
+  // padding .5em
+  // color $ga
+  //   border-radius 5px
+  // box-sizing border-box
+  // font-size 1.2em
+  //   transition .5s all ease
   
 
 button:hover
-  background: $lightblue
-  cursor: pointer
-  color #ccc
-  border 1px solid darkblue
+  // background: $lightblue
+  // cursor: pointer
+  // color #ccc
+  // border 1px solid darkblue
 
 button
   .highlight
@@ -26,24 +26,3 @@ button
     animation flash linear 2s infinite
 
 
-/* Flash class and keyframe animation */
-.flashit
-    color $green
-    animation flash linear 2s infinite
-    font-size 24px
-    // border 1px solid $green
-
-.throbber
-    border 2px solid $green
-    animation throb linear 2s infinite
-    
-
-@keyframes flash
-    0% { opacity: 1; } 
-    50% { opacity: .2 } 
-    100% { opacity: 1; }
-
-@keyframes throb
-    0% { border-color: $green } 
-    50% { border-color: $blue } 
-    100% { border-color: $green }

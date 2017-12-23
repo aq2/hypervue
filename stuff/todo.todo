@@ -27,7 +27,8 @@ data: @normal
 js learn:
   ☐ destructuring
   ☐ higher order fns
-
+  ☐ stylus mixins
+  ☐ pug mixins
 
 later:  
   ☐ deal with maxis @low
@@ -36,8 +37,10 @@ later:
   ☐ word cloud map?
   ☐ slots for changing contents?
   ☐ use flexbox plus vh/vw
-  ☐ header
-  ☐ hover effects on choosedatasouorce
+  ☐ header?
+  ☐ hover effects on choosedatasource
+  ☐ replace all hard-coded stylus colors with global vars
+  ☐ replace all magic css vals in px -> rem, and vh/vw
 
 lappy:
   ☐ sort out git for better sync to lappy
