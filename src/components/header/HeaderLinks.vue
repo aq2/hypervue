@@ -25,18 +25,19 @@ ul
   list-style-type none
 
 li
-  heigth 50px
+  // height 50px
 
 a  
   // margin-bottom .68rem
   // text-align center
   max-width 140px
   // max-height 50px
+  background $g4
   
 
 .router-link-active
   color  $gb
-  background saturate($buttonColour, 20%)
-
+  // background saturate($buttonColour, 20%)
+  background $g5
 
 </style>

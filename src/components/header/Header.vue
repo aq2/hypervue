@@ -96,7 +96,8 @@ header
 
 #sidebar-toggle
   margin 0
-  padding 0.2rem
+  padding 4rem 1rem 0.2rem .2rem
+  // v-align bottom
 
 
 
