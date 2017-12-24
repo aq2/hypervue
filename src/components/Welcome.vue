@@ -9,9 +9,13 @@
 
     #text
       p it doesn't look like much yet, but it will be great!
-      p it's better to run this app in full-screen mode, toggled with F11
+      p it's better to run this app in full-screen mode, toggled with F11,
+      p or with the 
+        icon(name='window-restore' scale=2)
+        | button at top-right
       span you can also toggle the sidebar by clicking on  
-        icon(name='chevron-circle-left')
+        icon(name='chevron-circle-right' scale=2)
+        | top left
       br 
       br    
       p press the 'next page' button below to continue

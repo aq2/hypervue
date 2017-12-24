@@ -16,11 +16,11 @@
   #links
     ul 
       li
-        router-link(to='fb') 
+        router-link(to='data/fb') 
           icon(name='cloud' scale=4)
           p get dataset from firebase
       li
-        router-link(to='csv')
+        router-link(to='data/csv')
             icon(name='folder-open' scale=4)
             p get data from CSV file
   
@@ -94,6 +94,8 @@ li:hover
 
 #links  
 
+h1 
+  margin 0 0 1rem 0
 
 a
   padding 2em 0

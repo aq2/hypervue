@@ -5,12 +5,10 @@ header
     .tooltip 
       icon(v-if='sidebarOpen' name='chevron-circle-left' scale=2)
       icon(v-else name='chevron-circle-right' scale=2)
-
       span(class='tooltiptext tooltip-right') click to toggle sidebar
-  //- #headerLinks
-  //-   TheHeaderLinks
-  #newLinks
-    TheNewLinks
+  
+  #headerLinks
+    TheHeaderLinks
   
   #fullscreen-toggle(@click='toggleFullScreen' class='tooltip')
       span(class='tooltiptext tooltip-left') toggle fullscreen
@@ -21,17 +19,21 @@ header
 
 <script>
 
-// import TheHeaderLinks from './HeaderLinks'
-import TheNewLinks from './NewLinks'
+import TheHeaderLinks from './HeaderLinks'
 import {EventBus} from '../../main'
 
 export default {
+  data() {
+    return {
+      sidebarOpen: false
+    }
+  },
   components: {
-    // TheHeaderLinks,
-    TheNewLinks
+    TheHeaderLinks,
   },
   methods: {
     toggleSidebar: function() {
+      this.sidebarOpen = !this.sidebarOpen
      // sidebar listens for this event
      EventBus.$emit('sidebarToggled')
     },
@@ -72,24 +74,20 @@ export default {
 
 header 
   background $g3
-  height 100px
+  height 70px
   border-bottom 2px solid $g2
   display flex
 
-// #headerLinks
-  // width 200px
-
-#newLinks 
+#headerLinks 
   flex-grow 1
 
 #sidebar-toggle
   margin 0
-  padding 3rem 3rem 0 .5rem
-
+  padding 1rem 3rem 0 .5rem
 
 #fullscreen-toggle
   margin 0
-  padding 3rem .5rem 0 0
+  padding 1rem .5rem 0 0
 
 
 </style>

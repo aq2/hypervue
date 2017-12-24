@@ -1,43 +1,61 @@
-<template lang='pug'>
+<template lang="pug">
 
-#links 
-  ul
-    li
-      router-link(to='/' exact) home
-    li 
-      router-link(to='/data') get data
-    li 
-      router-link(to='/viz') choose viz
+#links  
+  router-link(to='/' id='home' exact)
+    icon(name='home' scale=3)
+    h1 HyperDViz
+
+  router-link(to='/data' id='data')
+    icon(name='database' scale=3)
+    h1 data source
+  
+  router-link(to='/viz' id='viz')
+    icon(name='area-chart' scale=4)
     
+    
+
 </template>
 
+
+<script>
+
+export default {
+ 
+}
+
+</script>
 
 
 <style lang="stylus" scoped>
 
 #links 
-  margin-top -1rem
-  // margin 0
-  
-ul
-  padding 0 
-  max-width 140px
-  list-style-type none
+  display flex
+  max-width 1000px
 
-li
-  // height 50px
+#links>div
+  display flex
+  transition all 1s
+  align-items baseline
 
-a  
-  // margin-bottom .68rem
-  // text-align center
-  max-width 140px
-  // max-height 50px
-  background $g4
-  
+a 
+  border-radius 0.5rem
+  display flex
+  color $g5
+  padding-left 1rem
+  max-height 70px
+
+h1 
+  display none
 
 .router-link-active
-  color  $gb
-  // background saturate($buttonColour, 20%)
-  background $g5
+  color  $ga
+  background $g3
+  flex-grow 1
+
+.router-link-active h1  
+  display inline-block
+  padding-left 1rem
+  // padding 0
+  margin 0
 
 </style>

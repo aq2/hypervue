@@ -9,6 +9,6 @@ export default [
   {path:'/', component:Welcome},
   {path:'/get', component:GetFile},
   {path:'/data', component:DataSource},
-  {path:'/csv', component:CSVSource},
-  {path:'/fb', component:FirebaseSource}
+  {path:'/data/csv', component:CSVSource},
+  {path:'/data/fb', component:FirebaseSource}
 ]

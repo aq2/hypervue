@@ -12,8 +12,8 @@
 
 <script>
 
-import TheSidebar from './components/sidebar/Sidebar.vue'
 import TheHeader from './components/header/Header.vue'
+import TheSidebar from './components/sidebar/Sidebar.vue'
 
 // Initialize Firebase
 let config = {
