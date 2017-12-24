@@ -1,18 +1,17 @@
 <template lang="pug">
   
 header
-  #sidebar-toggle(@click='toggle') 
+  #sidebar-toggle(@click='toggleSidebar') 
     .tooltip 
       icon(v-if='sidebarOpen' name='chevron-circle-left' scale=2)
       icon(v-else name='chevron-circle-right' scale=2)
 
       span(class='tooltiptext tooltip-right') click to toggle sidebar
-  #headerLinks
-    TheHeaderLinks
-  #pageicon
-    icon(name='home' scale=5)
-  #title
-    h1 HyperDViz
+  //- #headerLinks
+  //-   TheHeaderLinks
+  #newLinks
+    TheNewLinks
+  
   #fullscreen-toggle(@click='toggleFullScreen' class='tooltip')
       span(class='tooltiptext tooltip-left') toggle fullscreen
       icon(name='window-restore' scale=2)
@@ -22,23 +21,19 @@ header
 
 <script>
 
-import TheHeaderLinks from './HeaderLinks'
+// import TheHeaderLinks from './HeaderLinks'
+import TheNewLinks from './NewLinks'
+import {EventBus} from '../../main'
 
 export default {
   components: {
-    TheHeaderLinks
-  },
-  data() {
-    return {
-      sidebarOpen: false,
-      currentPage: 1
-    }
+    // TheHeaderLinks,
+    TheNewLinks
   },
   methods: {
-    toggle: function() {
-      this.sidebarOpen = !this.sidebarOpen
-      let sid = $('#sidebar')
-      sid.style.width = sid.offsetWidth >= 50 ? '12px' : '150px'
+    toggleSidebar: function() {
+     // sidebar listens for this event
+     EventBus.$emit('sidebarToggled')
     },
     // todo fugly! copyPasta
     toggleFullScreen: function() {
@@ -66,7 +61,6 @@ export default {
         }
       }
     }
-
   
   }
 }
@@ -74,31 +68,28 @@ export default {
 </script>
 
 
-
 <style lang="stylus" scoped>
 
 header 
   background $g3
-  height 120px
+  height 100px
   border-bottom 2px solid $g2
   display flex
 
-#headerLinks
-  // background lime
-  width 200px
+// #headerLinks
+  // width 200px
 
-#pageicon 
-  // background green
-
-#title
-  // background blue
+#newLinks 
   flex-grow 1
 
 #sidebar-toggle
   margin 0
-  padding 4rem 1rem 0.2rem .2rem
-  // v-align bottom
+  padding 3rem 3rem 0 .5rem
 
+
+#fullscreen-toggle
+  margin 0
+  padding 3rem .5rem 0 0
 
 
 </style>

@@ -3,8 +3,7 @@
 #app       
   TheHeader
   #page
-    #sid
-      TheSidebar
+    TheSidebar
     #main  
       router-view
     
@@ -78,8 +77,8 @@ export default {
 html 
   box-sizing border-box
   
-// *, *:before, *:after
-//   box-sizing inherit
+*, *:before, *:after
+  box-sizing inherit
 
 body 
   margin 0

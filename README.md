@@ -1,6 +1,6 @@
 # dvz-vue
 
-> A Vue.js project
+> HyperDViz - my first Vue.js project
 
 ## Build Setup
 
