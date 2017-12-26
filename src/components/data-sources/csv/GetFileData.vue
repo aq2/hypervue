@@ -15,8 +15,7 @@ import {EventBus} from '../../../main'
 export default {
   methods: {
     getFileData: function(evt) {
-      const file = evt.target.files[0]
-      
+      const file = evt.target.files[0]      
       if (file) { 
         const reader = new FileReader()
         reader.onload = e => { this.processFile(e.target.result) } 
@@ -45,7 +44,7 @@ export default {
       const rawCands = lines.slice(1)    // remove first headers line
       const {candidates, alphas, rankables} = this.deStringVals(rawCands)
       const parsedData = {dimensions, candidates, alphas, rankables}
-      
+
       // stick data in store
       this.$store.dispatch('setFileData', parsedData)
       
@@ -55,29 +54,32 @@ export default {
 
 
     deStringVals: function(rawStringedCandidates) {
-      let rankables = []
       let candidates = []
-      let alphas = new Set()
+      let rankables = []
+      let alphas = []
       
       // use fancier higher-order functions like map/reduce?
-      rawStringedCandidates.forEach((line, i) => {
+      rawStringedCandidates.forEach(line => {
         let cand = []
-        line.forEach(value => {
-          isNaN(value) ? (
-            alphas.add(i),
+        line.forEach((value, v) => {
+          if (isNaN(value)) {
+            if (!alphas.includes(v)) {
+              alphas.push(v)
+            }
             value.trim()
-          ) : (
-            rankables.push(i), // todo need?
-            value=Number(value)
-          )          
+          } else {
+            if (!rankables.includes(v)) {
+              rankables.push(v)
+            }
+            value = Number(value)
+          }
+
           cand.push(value) 
         })
         candidates.push(cand)
       })
-
       
-
-      return {candidates, alphas, rankables}
+     return {candidates, alphas, rankables}
     },
 
 

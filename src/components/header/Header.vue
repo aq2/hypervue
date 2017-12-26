@@ -19,8 +19,8 @@ header
 
 <script>
 
-import TheHeaderLinks from './HeaderLinks'
 import {EventBus} from '../../main'
+import TheHeaderLinks from './HeaderLinks'
 
 export default {
   data() {
@@ -34,8 +34,8 @@ export default {
   methods: {
     toggleSidebar: function() {
       this.sidebarOpen = !this.sidebarOpen
-     // sidebar listens for this event
-     EventBus.$emit('sidebarToggled')
+      // sidebar listens for this event
+      EventBus.$emit('sidebarToggled')
     },
     // todo fugly! copyPasta
     toggleFullScreen: function() {

@@ -5,45 +5,49 @@
   #exampleTable
     #catNames
       .catName category
-      .list(v-for='cat in cats') 
+      .list(v-for='cat in dims') 
         .catName {{cat}}
     //
 
     #exampleData
       .example example
-      .list(v-for='score in cands[0].scores') 
-        .example {{score.origScore}}
+      .list(v-for='score in cands[0]') 
+        .example {{score}}
     // 
     
-    #rankables
+    // qq - subcomponentize! job i've been putting off for days
+    //- #rankables
       .rankable rankable?
-      .list(v-for='(cat, index) in cats') 
+      .list(v-for='(dim, index) in dims') 
         label 
         input(type='checkbox' :value='index' v-model='rankables' v-if='!isAlpha(index)')
         .boxy(v-else)
     //
 
-    //- #maxis(v-show='step > 0')
+    // load rankables sub-comp, passing in props
+    Rankables(:rankables='rankables' :dims='dims' :alphas='alphas')
+
+    #maxis(v-show='step > 0')
       .maxi maxis
-      .list(v-for='(cat, index) in cats') 
+      .list(v-for='(cat, index) in dims') 
         label 
-        input(type='checkbox' :value='index' v-model='maxi' v-if='isRankable(index)')
+        input(type='checkbox' :value='index' v-model='maxis' v-if='isRankable(index)')
         .boxy(v-else)
     //
 
-    // qq
-    transition(name='fade')
-      #maxis(v-show='step > 0')
-        TableMaxis(
-          v-bind:rankables='rankables'
-          v-bind:cats='cats'
-        )
-    //
+    //- // qq
+    //- transition(name='fade')
+    //-   #maxis(v-show='step > 0')
+    //-     TableMaxis(
+    //-       v-bind:rankables='rankables'
+    //-       v-bind:dims='dims'
+    //-     )
+    //- //
 
     transition(name='fade')
       #ID(v-show='step > 1')
         .id ID
-        .list(v-for='(cat, index) in cats') 
+        .list(v-for='(cat, index) in dims') 
           label 
           input(type='radio' :value='index' v-model='ID')
           .boxy
@@ -77,7 +81,7 @@
     //
 
     p rankables {{rankables}}
-    p maxi {{maxis}}
+    p maxis {{maxis}}
     p ID {{ID}}
   //
 
@@ -88,6 +92,7 @@
   p maxSet {{...maxSet}}
   p maxSetAry {{Array.from(maxSet)}}
   p maxSetsize {{maxSet.size}}
+//
 
 </template>
 
@@ -97,18 +102,17 @@
 // todo - file getting too big -> subcomponentize?
 import {EventBus} from '../../../main'
 import TableMaxis from './TableMaxis'
+import Rankables from './Rankables'
 
 export default {
   // get stuff from store
   components: {
-    TableMaxis
+    TableMaxis,
+    Rankables
   },
   computed: {
     fileData() {
       return this.$store.getters.getFileData
-    },
-    exampleData() {
-      return this.fileData.cands[0]
     }
   },
 
@@ -127,7 +131,7 @@ export default {
       return this.rankables.includes(i)
     },
     isAlpha(i) {
-      return this.alphas.has(i)
+      return this.alphas.includes(i)
     },
     checkMaxis() {
         // this.catData.maxis = this.maxi
@@ -148,11 +152,11 @@ export default {
         
         // qq JUST DONE MONSTER SESH
         // this.buildRankableScoresForCandidates()
-        this.findRankingsForCandidates()
+        // this.findRankingsForCandidates()
 
         // normalise all the rankables!
-        this.buildNormalisedScoresForCategories()
-        this.buildNormalisedScoresForCandidates() 
+        // this.buildNormalisedScoresForCategories()
+        // this.buildNormalisedScoresForCandidates() 
         // qq
 
     },
@@ -160,13 +164,13 @@ export default {
       // todo componentize - it will be handy for ron
       // also split into smaller functions - bit of a head fuck
       // should deal with maxis somewhere - or wait for normalize?
-      var catData = this.catData
-      var rankables = catData.rankables
+      // var catData = this.catData
+      var rankables = this.rankables
       var ranksL = rankables.length
-      var categories = catData.categories
-      var catsL = categories.length
-      var allIndexedRankables = []
-      var alphas = catData.alphas      
+      var dimensions = this.dimensions
+      var dimsL = dimensions.length
+      var allIndexedRankables = []        // qq what?
+      var alphas = this.alphas      
       var alphasL = alphas.size
       this.ID = alphas.keys().next().value
       // console.log({myID})
@@ -177,20 +181,21 @@ export default {
       }
 
       // for each rankable category
+      // mega reduce or summat!
       for (var r=0; r<ranksL; r++) {
         var indexedRankable = []        
-        var scores = categories[rankables[r]].values
+        var scores = dimensions[rankables[r]].values
 
         // build new array of [{index:0, value:6}, ... {index:3, value:4}]
-        for (var cat = 0; cat<catsL; cat++) {
+        for (var cat = 0; cat<dimsL; cat++) {
           indexedRankable.push({index: cat, value: scores[cat]})
         }
         
         // then sort that by value
         indexedRankable.sort(function(a,b) {return a.value - b.value})
         // min = sorted[0], max = sorted[last]        
-        categories[rankables[r]].min = indexedRankable[0].value
-        categories[rankables[r]].max = indexedRankable[catsL-1].value
+        dimensions[rankables[r]].min = indexedRankable[0].value
+        dimensions[rankables[r]].max = indexedRankable[dimsL-1].value
 
         allIndexedRankables.push(indexedRankable)
       } 
@@ -216,11 +221,11 @@ export default {
     },
     buildNormalisedScoresForCategories() {
       var categories = this.catData.categories
-      var catsL = categories.length
+      var dimsL = categories.length
       var normed
 
       // for all categories
-      for (var c=0; c<catsL; c++) {
+      for (var c=0; c<dimsL; c++) {
         var cat = categories[c]
         // if rankable
         if (cat.rankable) {
@@ -248,16 +253,16 @@ export default {
     buildNormalisedScoresForCandidates() {
       var cands = this.cands
       var candsL = cands.length
-      var cats = this.catData.categories
-      var catsL = cats.length
+      var dims = this.catData.categories
+      var dimsL = dims.length
       
       // for all candidates
       for (var c=0; c<candsL; c++) {
         var cand = cands[c]
       
-        // for all rankable cats
-        for (var i=0; i<catsL; i++) {
-          var cat = cats[i]
+        // for all rankable dims
+        for (var i=0; i<dimsL; i++) {
+          var cat = dims[i]
           if (cat.rankable) {
             // get normalised score
             var norm = cat.normalised[c]
@@ -274,19 +279,19 @@ export default {
       // alert('checkID')
       
       var ID = this.ID
-      this.catData.ID = ID
+      this.ID = ID
       this.step = 3
       if (ID != null) {
-        var IDname = this.catData.cats[ID]
+        var IDname = this.dimensions[ID]
         // var candID = 
         // console.log({IDname})
         
         // makeIDforCands
-        this.makeIDforCands(ID)
+        // this.makeIDforCands(ID)
         // catDataID? - already set somehow ??
         
-        // makeIDforCats qq
-        this.makeIDforCats(ID)
+        // makeIDfordims qq
+        // this.makeIDfordims(ID)
         
         // EventBus.$emit('dataBuilt')
 
@@ -296,11 +301,11 @@ export default {
       }
       
     },
-    makeIDforCats(ID) {
+    makeIDfordims(ID) {
       var categories = this.catData.categories
-      var catsL = categories.length 
+      var dimsL = categories.length 
       // for each category
-      for (var c=0; c<catsL; c++) {
+      for (var c=0; c<dimsL; c++) {
         // set cat.ID to true or false
         var cat = categories[c]
           if (c == ID) {
@@ -327,16 +332,16 @@ export default {
     makeMaxBooleans() {
       // dumb way
       var rankables = this.rankables
-      var cats = this.cats
-      var catsL = cats.length       
-      // need to know cats length!
+      var dims = this.dims
+      var dimsL = dims.length       
+      // need to know dims length!
       // could pass, or use categories object
       // then extract fftt from categories instead
       // no expense, because data not 'passed' - non-func paradigm here!
       
       
       var rankL = rankables.length
-      for (var i=0; i<catsL; i++) {
+      for (var i=0; i<dimsL; i++) {
         if (rankables.includes(i)) {
           this.maxBooleans.push(true)
         } else {
@@ -347,6 +352,7 @@ export default {
       
     }
   },
+  
   data() {
     return {
       steps: ['rankable', 'maxi', 'ID'],
@@ -356,20 +362,32 @@ export default {
       maxs: [],
       maxSet: new Set(),
       ID: null,
-      catData: {},
-      alphas: new Set(),
+      // alphas: new Set(),
+      alphas: [],
+      // alphaSpread2: [...this.alphas],
       cands: [],
-      numberOfCats: -1,
+      numberOfDims: -1,
       idx: -1,
-      maxBooleans: []
+      maxBooleans: [],
+      dimensions: []
     }
   },
+  
   created() {
-    this.catData = this.fileData.catData
-    this.rankables = this.catData.rankables 
-    this.alphas = this.catData.alphas
-    this.cats = this.catData.cats
-    this.cands = this.fileData.cands
+    // this.catData = this.fileData.catData
+    var data = this.fileData
+    this.rankables = data.rankables 
+    this.alphas = data.alphas
+    this.dims = data.dimensions
+    this.cands = data.candidates
+
+    // qq convert alphas and rankables arrays to sets
+    // then convert back later?
+
+
+    // console.log([...this.alphas])
+
+
     // this.maxis = this.fileData.maxis
     
     EventBus.$on('updateMaxis', (index) => {

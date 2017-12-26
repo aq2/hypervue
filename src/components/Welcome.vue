@@ -10,12 +10,12 @@
     #text
       p it doesn't look like much yet, but it will be great!
       p it's better to run this app in full-screen mode, toggled with F11,
-      p or with the 
+      p or with the &nbsp;
         icon(name='window-restore' scale=2)
-        | button at top-right
-      span you can also toggle the sidebar by clicking on  
+        | &nbsp; button at top-right
+      span you can also toggle the sidebar by clicking on &nbsp; 
         icon(name='chevron-circle-right' scale=2)
-        | top left
+        | &nbsp; top left
       br 
       br    
       p press the 'next page' button below to continue
@@ -49,6 +49,11 @@
   // border 2px solid yellow
   // animation throb linear 2s infinite
 
+.fade-enter-active, .fade-leave-active
+  transition all 1s
 
+.fade-enter, .fade-leave-to 
+  opacity 0
+  background blue
 
 </style>

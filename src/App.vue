@@ -36,8 +36,8 @@ export default {
     massages: messagesRef   // qq
   },
   components: {
-    TheSidebar,
-    TheHeader
+    TheHeader,
+    TheSidebar
   },
   methods: {
     // todo fugly! copyPasta
@@ -87,7 +87,6 @@ body
 #page
   display flex
   min-width 800px
-  // background blue
 
 #main  
   padding 1rem
