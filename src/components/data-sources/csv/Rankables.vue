@@ -10,9 +10,39 @@
 
 </template>
 
+// qq make it possible to rank alphas
+
+
+
 // qq avoid mutating props directly it sez
 // send an event instead?
 // making it simple it complicated!
+// yeah event, but how...
+// when checkbox toggled, event sent + local state updated
+// parent listens and does what's needed
+
+// going to use maps now, i think!
+// when to make maps??
+// could do it right back then at getfileData
+// or do it here on created
+// or in rankables sub comp?
+
+// this needs:
+  //  for each rankable, calc total, min, max, mean  
+  //  for each candidate, for each rankable,
+    // find normalised score and ranking
+
+  // OR??
+
+  //  for each rankable,
+    // calc total, min, max, mean, sd?
+    // for each candidate
+      // find ranking and add norm score ann ranking
+
+  // done all this before!
+  // could copypasta or use nifty HOFs!
+
+  
 
 
 <script>
@@ -37,8 +67,10 @@ export default {
   methods: {
     isAlpha: function (i) {
       return this.alphas.includes(i)
-
     }
+
+    // need normalize/ranking methods here
+
   },
 
 

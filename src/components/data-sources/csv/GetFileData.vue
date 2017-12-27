@@ -32,7 +32,7 @@ export default {
                       .map(line => line.split(','))   
                         
       const dimensions = lines[0]   // used to be 'categories'
-
+      
       // check valid file format/contents
       if (lines.length < 3 || this.badHeaders(dimensions)) {
         // todo deal with it properly
@@ -45,11 +45,55 @@ export default {
       const {candidates, alphas, rankables} = this.deStringVals(rawCands)
       const parsedData = {dimensions, candidates, alphas, rankables}
 
+      // 1 - qq could start make fancy dims now?
+      let dimensionsMap = new Map()
+
+      dimensions.forEach((dim, index) => {
+        let dimMap = new Map()
+        dimMap.set('nom', dimensions[index])
+        dimMap.set('alpha', alphas.includes(index))
+        dimMap.set('rankables', rankables.includes(index))
+        dimMap.set('ID', (index == alphas[0]))
+        dimensionsMap.set(dim, dimMap)
+      })
+      
+      // 2 - qq okay, what about fancy candidates?
+      let candsMap = new Map()
+
+      // find first alpha dim => temp key until confirmed later
+      let dimsRA = [...dimensionsMap]
+        
+      let foundIndex = dimsRA.findIndex((dim) => {
+        return dim[1].get('alpha')
+      })
+      // console.log('foundI', foundIndex)
+
+      candidates.forEach(cand => {
+        let candMap = new Map()
+        candMap.set('notYetID', cand[foundIndex].trim())
+        
+        cand.forEach((dim, j) => {
+          candMap.set(dimensions[j], cand[j])
+        })
+
+        // this is where the 'key' is assigned...
+        // this may change later if id changes!
+        candsMap.set(cand[foundIndex].trim(), candMap)
+      })
+      console.log(...candsMap)
+
+      // qq beginning to think that this is getting too long
+      // should it go into rankables? or some other componetns?
+      // ie don't do all this here, but later
+      // or do it here in a subcomp
+      // and resue subcomp later if id changes...
+      
+      // here qq
       // stick data in store
-      this.$store.dispatch('setFileData', parsedData)
+      // this.$store.dispatch('setFileData', parsedData)
       
       // and let them know it's done
-      EventBus.$emit('fileParsed', 'insert payload here')
+      // EventBus.$emit('fileParsed', 'insert payload here')
     },
 
 

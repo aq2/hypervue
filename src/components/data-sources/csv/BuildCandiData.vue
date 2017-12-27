@@ -36,12 +36,12 @@
     //
 
     //- // qq
-    //- transition(name='fade')
-    //-   #maxis(v-show='step > 0')
-    //-     TableMaxis(
-    //-       v-bind:rankables='rankables'
-    //-       v-bind:dims='dims'
-    //-     )
+      //- transition(name='fade')
+      //-   #maxis(v-show='step > 0')
+      //-     TableMaxis(
+      //-       v-bind:rankables='rankables'
+      //-       v-bind:dims='dims'
+      //-     )
     //- //
 
     transition(name='fade')
@@ -85,13 +85,14 @@
     p ID {{ID}}
   //
 
-  hr
-  p idx {{idx}}
-  p maxs {{maxs}}
-  p maxis {{maxis}}
-  p maxSet {{...maxSet}}
-  p maxSetAry {{Array.from(maxSet)}}
-  p maxSetsize {{maxSet.size}}
+  #feedback
+    hr
+    p idx {{idx}}
+    p maxs {{maxs}}
+    p maxis {{maxis}}
+    p maxSet {{...maxSet}}
+    p maxSetAry {{Array.from(maxSet)}}
+    p maxSetsize {{maxSet.size}}
 //
 
 </template>
@@ -119,12 +120,12 @@ export default {
   
   methods: {
     checkRankables() {
-      // must be at least two rankables
-      if (this.rankables.length > 1) {
+      // must be at least one rankables ?? oh rly?
+      if (this.rankables.length > 0) {
         this.step = 1
         this.makeMaxBooleans()
       } else {
-        alert('not enough rankables - need at least two!')
+        alert('not enough rankables - need at least one!')
       }
     },   
     isRankable(i) {
@@ -352,7 +353,7 @@ export default {
       
     }
   },
-  
+
   data() {
     return {
       steps: ['rankable', 'maxi', 'ID'],
