@@ -12,13 +12,23 @@
 <script>
 import {EventBus} from '../../../main'
 
+// qq import what?
+// helper functions for stats?
+// stats = dim: min/max/etc + cands: norm and rankings
+// may want to reuse these later - oh rly?
+// when? only if maxi toggled? cand removed?
+// so have importable module
+// one module or little subs :)
+// just one, then cherry pick which to import
+
+
 export default {
   methods: {
     getFileData: function(evt) {
       const file = evt.target.files[0]      
       if (file) { 
         const reader = new FileReader()
-        reader.onload = e => { this.processFile(e.target.result) } 
+        reader.onload = e => {this.processFile(e.target.result)} 
         reader.readAsText(file)
       } else {
         alert('failed to load file')
@@ -31,10 +41,10 @@ export default {
                       .split('\n')                    
                       .map(line => line.split(','))   
                         
-      const dimensions = lines[0]   // used to be 'categories'
+      const dimNames = lines[0]   // used to be 'categories'
       
       // check valid file format/contents
-      if (lines.length < 3 || this.badHeaders(dimensions)) {
+      if (lines.length < 3 || this.badHeaders(dimNames)) {
         // todo deal with it properly
         alert('bad file format')
         return false
@@ -43,21 +53,24 @@ export default {
       // parse the raw file data
       const rawCands = lines.slice(1)    // remove first headers line
       const {candidates, alphas, rankables} = this.deStringVals(rawCands)
-      const parsedData = {dimensions, candidates, alphas, rankables}
+      // const parsedData = {dimensions, candidates, alphas, rankables}
 
       // 1 - qq could start make fancy dims now?
       let dimensionsMap = new Map()
 
-      dimensions.forEach((dim, index) => {
+      dimNames.forEach((dimName, index) => {
         let dimMap = new Map()
-        dimMap.set('nom', dimensions[index])
+        dimMap.set('dimName', dimNames[index])
         dimMap.set('alpha', alphas.includes(index))
         dimMap.set('rankables', rankables.includes(index))
-        dimMap.set('ID', (index == alphas[0]))
-        dimensionsMap.set(dim, dimMap)
+        dimMap.set('ID', (index == alphas[0]))  // true if first alpha dim
+        dimensionsMap.set(dimName, dimMap)
       })
+      console.log(dimensionsMap)
       
-      // 2 - qq okay, what about fancy candidates?
+      
+      // // 2 - qq okay, what about fancy candidates?
+      // // don't do this until we know ID!
       let candsMap = new Map()
 
       // find first alpha dim => temp key until confirmed later
@@ -73,7 +86,7 @@ export default {
         candMap.set('notYetID', cand[foundIndex].trim())
         
         cand.forEach((dim, j) => {
-          candMap.set(dimensions[j], cand[j])
+          candMap.set(dimNames[j], cand[j])
         })
 
         // this is where the 'key' is assigned...
@@ -82,18 +95,13 @@ export default {
       })
       console.log(...candsMap)
 
-      // qq beginning to think that this is getting too long
-      // should it go into rankables? or some other componetns?
-      // ie don't do all this here, but later
-      // or do it here in a subcomp
-      // and resue subcomp later if id changes...
-      
-      // here qq
+        
       // stick data in store
-      // this.$store.dispatch('setFileData', parsedData)
+      const storeData = {candidates, dimensionsMap }
+      this.$store.dispatch('setFileData', storeData)
       
       // and let them know it's done
-      // EventBus.$emit('fileParsed', 'insert payload here')
+      EventBus.$emit('fileParsed', 'insert payload here')
     },
 
 

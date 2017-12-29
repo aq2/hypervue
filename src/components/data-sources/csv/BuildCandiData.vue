@@ -111,9 +111,13 @@ export default {
     TableMaxis,
     Rankables
   },
+  
   computed: {
     fileData() {
       return this.$store.getters.getFileData
+    },
+    getDimMap() {
+      return [...this.dimensionsMap] 
     }
   },
 
@@ -370,17 +374,24 @@ export default {
       numberOfDims: -1,
       idx: -1,
       maxBooleans: [],
-      dimensions: []
+      dimensions: [],
+      dimensionsMap: new Map()
     }
   },
   
   created() {
     // this.catData = this.fileData.catData
     var data = this.fileData
-    this.rankables = data.rankables 
-    this.alphas = data.alphas
-    this.dims = data.dimensions
-    this.cands = data.candidates
+    
+    this.rankables = data.rankables // nope
+    
+    this.alphas = data.alphas // nope
+    
+    this.dims = data.dimensions // nope - MAP
+
+    this.dimensionsMap = data.dimensionsMap
+    
+  this.cands = data.candidates  // yep
 
     // qq convert alphas and rankables arrays to sets
     // then convert back later?

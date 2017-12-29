@@ -9,7 +9,7 @@
 <script>
 
 // import TheSidebarLinks from './SidebarLinks'
-import {$} from '../../helpers'
+import {$} from '../../modules/helpers'
 import {EventBus} from '../../main'
 
 

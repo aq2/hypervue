@@ -96,8 +96,6 @@ export default {
   min-height 40px
 
 
-
-
 .list
   // @extend .cell
   min-width 140px  // should be calculated somehow or flexboxed!
