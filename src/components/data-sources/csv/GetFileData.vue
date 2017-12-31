@@ -45,11 +45,12 @@ export default {
       const {candidates, alphas} = this.deStringVals(rawCands)
                   
       // stick data in store
-      const storeData = {dimNames, candidates, alphas}
-      this.$store.dispatch('setFileData', storeData)
+      this.$store.dispatch('setDimNames', dimNames)
+      this.$store.dispatch('setCands', candidates)
+      this.$store.dispatch('setAlphas', alphas)
       
       // and let them know it's done
-      EventBus.$emit('fileParsed', 'insert payload here')
+      EventBus.$emit('fileParsed')
     },
 
 

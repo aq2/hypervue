@@ -19,7 +19,8 @@
     Rankables(:dimNames='dimNames' :alphas='alphas')
 
     // load maxis sub-comp, passing in props
-    Maxis(:dimNames='dimNames' :crits='crits' v-show='step>0')
+    transition(name='fade') 
+      Maxis(:dimNames='dimNames' :crits='crits' v-show='step>0')
 
     transition(name='fade')
       #ID(v-show='step > 1')
@@ -54,7 +55,7 @@
       p this name will be used to identify candidates
       p so chose an alpha-numeric name
       p press OK when done
-      button(@click='buildData') OK
+      button(@click='gotID') OK
     //
 
     p crits {{crits}}
@@ -69,55 +70,51 @@
 
 <script>
 
-// todo - file getting too big -> subcomponentize?
 import {EventBus} from '../../../main'
 import Maxis from './Maxis'
 import Rankables from './Rankables'
+import BuildCandiData from '../../builders/BuildCandiData'
+import BuildDimData from '../../builders/BuildDimData'
+
 
 export default {
   data() {
     return {
       steps: ['rankable', 'maxi', 'ID'],
       step: '0',
-      rankables: [],
       maxis: [],
       ID: null,
-      alphas: [],
-      cands: [],
-      numberOfDims: -1,
-      idx: -1,
-      maxBooleans: [],
-      dimensions: [],
-      dimNames: [],
       crits: []
     }
   },
 
   components: {
     Maxis,
-    Rankables
+    Rankables,
+    BuildCandiData,
+    BuildDimData
   },
   
   computed: {
-    fileData() {
-      return this.$store.getters.getFileData
+    alphas() {
+      return this.$store.getters.getAlphas
+    },
+    cands() {
+      return this.$store.getters.getCands
+    },
+    dimNames() {
+      return this.$store.getters.getDimNames
     }
   },
   
   methods: {
     checkRankables() {
       // must be at least two crits
-      if (this.crits.length > 0) {
+      if (this.crits.length > 1) {
         this.step = 1
       } else {
         alert('not enough rankables - need at least one!')
       }
-    },   
-    isRankable(i) {
-      return this.rankables.includes(i)
-    },
-    isAlpha(i) {
-      return this.alphas.includes(i)
     },
     checkMaxis() {
         this.step = 2
@@ -143,7 +140,18 @@ export default {
 
     },
 
-    buildData() {},
+    gotID() {
+      this.step = 3      
+      // var IDname = this.dimensions[ID]
+      
+      // stick something in store? what's new?
+      // crits, maxis, ID
+      
+      // send IDgot event
+      // EventBus.$emit('dataBuilt')
+
+      // buildData listens and respoinds
+    },
 
     findRankingsForCandidates() {
       // todo componentize - it will be handy for ron
@@ -260,29 +268,7 @@ export default {
 
       }
     },
-    checkID() {
-      // alert('checkID')
-      
-      var ID = this.ID
-      // this.ID = ID
-      this.step = 3
-      
-      var IDname = this.dimensions[ID]
-      
-      
-
-      // makeIDforCands
-      // this.makeIDforCands(ID)
-      // catDataID? - already set somehow ??
-      
-      // makeIDfordims qq
-      // this.makeIDfordims(ID)
-      
-        // EventBus.$emit('dataBuilt')
-
-      
-      
-    },
+    
     makeIDfordims(ID) {
       var categories = this.catData.categories
       var dimsL = categories.length 
@@ -315,12 +301,8 @@ export default {
 
     
   created() {
-    var data = this.fileData
-    this.alphas = data.alphas 
-    this.dimNames = data.dimNames 
     this.dimNames.forEach((d, i) => {if(!this.alphas.includes(i)) {this.crits.push(i)}  })
     
-    this.cands = data.candidates
     this.ID = this.alphas[0]
 
     // todo fugly - use Sets?
@@ -334,19 +316,20 @@ export default {
       }
     })
 
+    // todo repeated code?    
     EventBus.$on('updateMaxis', (i) => {
-        console.log('maxed', i)
-      if (this.maxis.includes(i)) {
-        var iI = this.maxis.indexOf(i)
-        this.maxis.splice(iI, 1)
+      const maxs = this.maxis
+      if (maxs.includes(i)) {
+        maxs.splice(maxs.indexOf(i), 1)
       } else {
-        this.maxis.push(i)
-        this.maxis.sort()
+        maxs.push(i)
+        maxs.sort()   // need sorting? not really
       }
+      this.maxis = maxs
     })
-
   }
 }
+
 </script>
 
 
@@ -357,7 +340,6 @@ export default {
 
 .cell
   min-width 140px  // should be calculated somehow or flexboxed!
-  // display inline-block
   padding  .5em 0
   margin 0
   min-height 40px
@@ -365,8 +347,6 @@ export default {
 .list
   // @extend .cell
   min-width 140px  // should be calculated somehow or flexboxed!
-  // display inline-block
-  // padding  .5em 0
   margin 0
   background $blue
   min-height 40px
@@ -420,13 +400,10 @@ label
   // flex-flow column
 
   >div
-    // background orange
-    // flex-grow 1
-    // border 1px solid white
     flex-basis 160px
 
 .fade-enter-active, .fade-leave-active
-  transition all 1s
+  transition all 0.5s
 
 .fade-enter, .fade-leave-to 
   opacity 0

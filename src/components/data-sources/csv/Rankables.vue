@@ -2,9 +2,10 @@
 
 #rankables
   .rankable rankable?
-  .list(v-for='(dimName, index) in dimNames') 
+  .list(v-for='(dimName, i) in dimNames') 
     label 
-    input(type='checkbox' :value='index' @click='changeCrits(index)' v-model='crits')
+    input(type='checkbox' :value='i' @click='changeCrits(i)' v-model='crits' v-if='!isAlpha(i)')
+    //- input(type='checkbox' :value='i' @click='changeCrits(i)' v-model='crits' v-if='!alphas.includes(i)')
 
 </template>
 
@@ -23,8 +24,11 @@ export default {
     dimNames: { type: Array }, 
     alphas: { type: Array }
   },
-
+  
   methods: {
+    isAlpha: function(i) {
+      return this.alphas.includes(i)
+    },
     changeCrits: function (i) {
       EventBus.$emit('updateCrits', i)
     }
@@ -32,7 +36,7 @@ export default {
 
   created() {
     this.dimNames.forEach((dim, i) => {
-      if (!this.alphas.includes(i)) {this.crits.push(i)}
+      if (!this.isAlpha(i)) {this.crits.push(i)}
     })
    } 
 }
