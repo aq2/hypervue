@@ -1,10 +1,10 @@
 <template lang="pug">
 
 #rankables
-  .rankable rankable?
+  .maxi maxi?
   .list(v-for='(dimName, index) in dimNames') 
     label 
-    input(type='checkbox' :value='index' @click='changeCrits(index)' v-model='crits')
+    input(type='checkbox' :value='index' @click='changeMaxis(index)' v-model='maxis' v-if='isRankable(index)')
 
 </template>
 
@@ -15,26 +15,24 @@ import {EventBus} from '../../../main'
 export default {
   data() {
     return {
-      crits: []
+      maxis: []
     }
   },
 
   props: {
     dimNames: { type: Array }, 
-    alphas: { type: Array }
+    crits: {type: Array}
   },
 
   methods: {
-    changeCrits: function (i) {
-      EventBus.$emit('updateCrits', i)
-    }
-  },
+    changeMaxis: function (i) {
+      EventBus.$emit('updateMaxis', i)
+    },
+    isRankable(i) {
+      return this.crits.includes(i)
+    },
+  }
 
-  created() {
-    this.dimNames.forEach((dim, i) => {
-      if (!this.alphas.includes(i)) {this.crits.push(i)}
-    })
-   } 
 }
 
 </script>
@@ -61,7 +59,7 @@ export default {
   min-height 40px
 
 
-.rankable
+.maxi
   @extend .cell
   background #456
   text-align center

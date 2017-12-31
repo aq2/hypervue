@@ -12,34 +12,23 @@
 <script>
 import {EventBus} from '../../../main'
 
-// qq import what?
-// helper functions for stats?
-// stats = dim: min/max/etc + cands: norm and rankings
-// may want to reuse these later - oh rly?
-// when? only if maxi toggled? cand removed?
-// so have importable module
-// one module or little subs :)
-// just one, then cherry pick which to import
-
-
 export default {
   methods: {
     getFileData: function(evt) {
       const file = evt.target.files[0]      
       if (file) { 
-        const reader = new FileReader()
-        reader.onload = e => {this.processFile(e.target.result)} 
-        reader.readAsText(file)
+        const rdr = new FileReader()
+        rdr.onload = e => {this.processFile(e.target.result)} 
+        rdr.readAsText(file)
       } else {
         alert('failed to load file')
       }
     }, 
     
     processFile: function(file) {
-      const lines = file
-                      .trim()       // remove last empty line
-                      .split('\n')                    
-                      .map(line => line.split(','))   
+      const lines = file.trim()       // remove last empty line
+                        .split('\n')                    
+                        .map(line => line.split(','))   
                         
       const dimNames = lines[0]   // used to be 'categories'
       
@@ -50,54 +39,14 @@ export default {
         return false
       }
 
-      // parse the raw file data
+      // parse the raw candidates from file
       const rawCands = lines.slice(1)    // remove first headers line
-      const {candidates, alphas, rankables} = this.deStringVals(rawCands)
-      // const parsedData = {dimensions, candidates, alphas, rankables}
-
-      // 1 - qq could start make fancy dims now?
-      let dimensionsMap = new Map()
-
-      dimNames.forEach((dimName, index) => {
-        let dimMap = new Map()
-        dimMap.set('dimName', dimNames[index])
-        dimMap.set('alpha', alphas.includes(index))
-        dimMap.set('rankables', rankables.includes(index))
-        dimMap.set('ID', (index == alphas[0]))  // true if first alpha dim
-        dimensionsMap.set(dimName, dimMap)
-      })
-      console.log(dimensionsMap)
-      
-      
-      // // 2 - qq okay, what about fancy candidates?
-      // // don't do this until we know ID!
-      let candsMap = new Map()
-
-      // find first alpha dim => temp key until confirmed later
-      let dimsRA = [...dimensionsMap]
-        
-      let foundIndex = dimsRA.findIndex((dim) => {
-        return dim[1].get('alpha')
-      })
-      // console.log('foundI', foundIndex)
-
-      candidates.forEach(cand => {
-        let candMap = new Map()
-        candMap.set('notYetID', cand[foundIndex].trim())
-        
-        cand.forEach((dim, j) => {
-          candMap.set(dimNames[j], cand[j])
-        })
-
-        // this is where the 'key' is assigned...
-        // this may change later if id changes!
-        candsMap.set(cand[foundIndex].trim(), candMap)
-      })
-      console.log(...candsMap)
-
+      const {candidates, alphas} = this.deStringVals(rawCands)
+     
+      // could start making fancy dims? or leave it till l8r ??
         
       // stick data in store
-      const storeData = {candidates, dimensionsMap }
+      const storeData = {dimNames, candidates, alphas}
       this.$store.dispatch('setFileData', storeData)
       
       // and let them know it's done
@@ -107,12 +56,12 @@ export default {
 
     deStringVals: function(rawStringedCandidates) {
       let candidates = []
-      let rankables = []
       let alphas = []
       
       // use fancier higher-order functions like map/reduce?
-      rawStringedCandidates.forEach(line => {
+      rawStringedCandidates.forEach((line) => {
         let cand = []
+        
         line.forEach((value, v) => {
           if (isNaN(value)) {
             if (!alphas.includes(v)) {
@@ -120,18 +69,14 @@ export default {
             }
             value.trim()
           } else {
-            if (!rankables.includes(v)) {
-              rankables.push(v)
-            }
             value = Number(value)
           }
-
           cand.push(value) 
         })
+        
         candidates.push(cand)
       })
-      
-     return {candidates, alphas, rankables}
+      return {candidates, alphas}
     },
 
 

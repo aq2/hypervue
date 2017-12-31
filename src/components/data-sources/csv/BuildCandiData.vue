@@ -5,7 +5,7 @@
   #exampleTable
     #catNames
       .catName category
-      .list(v-for='cat in dims') 
+      .list(v-for='cat in dimNames') 
         .catName {{cat}}
     //
 
@@ -15,39 +15,16 @@
         .example {{score}}
     // 
     
-    // qq - subcomponentize! job i've been putting off for days
-    //- #rankables
-      .rankable rankable?
-      .list(v-for='(dim, index) in dims') 
-        label 
-        input(type='checkbox' :value='index' v-model='rankables' v-if='!isAlpha(index)')
-        .boxy(v-else)
-    //
-
     // load rankables sub-comp, passing in props
-    Rankables(:rankables='rankables' :dims='dims' :alphas='alphas')
+    Rankables(:dimNames='dimNames' :alphas='alphas')
 
-    #maxis(v-show='step > 0')
-      .maxi maxis
-      .list(v-for='(cat, index) in dims') 
-        label 
-        input(type='checkbox' :value='index' v-model='maxis' v-if='isRankable(index)')
-        .boxy(v-else)
-    //
-
-    //- // qq
-      //- transition(name='fade')
-      //-   #maxis(v-show='step > 0')
-      //-     TableMaxis(
-      //-       v-bind:rankables='rankables'
-      //-       v-bind:dims='dims'
-      //-     )
-    //- //
+    // load maxis sub-comp, passing in props
+    Maxis(:dimNames='dimNames' :crits='crits' v-show='step>0')
 
     transition(name='fade')
       #ID(v-show='step > 1')
         .id ID
-        .list(v-for='(cat, index) in dims') 
+        .list(v-for='(cat, index) in dimNames') 
           label 
           input(type='radio' :value='index' v-model='ID')
           .boxy
@@ -80,7 +57,7 @@
       button(@click='checkID') OK
     //
 
-    p rankables {{rankables}}
+    p crits {{crits}}
     p maxis {{maxis}}
     p ID {{ID}}
   //
@@ -88,11 +65,7 @@
   #feedback
     hr
     p idx {{idx}}
-    p maxs {{maxs}}
     p maxis {{maxis}}
-    p maxSet {{...maxSet}}
-    p maxSetAry {{Array.from(maxSet)}}
-    p maxSetsize {{maxSet.size}}
 //
 
 </template>
@@ -102,32 +75,45 @@
 
 // todo - file getting too big -> subcomponentize?
 import {EventBus} from '../../../main'
-import TableMaxis from './TableMaxis'
+import Maxis from './Maxis'
 import Rankables from './Rankables'
 
 export default {
-  // get stuff from store
+  data() {
+    return {
+      steps: ['rankable', 'maxi', 'ID'],
+      step: '0',
+      rankables: [],
+      maxis: [],
+      ID: null,
+      alphas: [],
+      cands: [],
+      numberOfDims: -1,
+      idx: -1,
+      maxBooleans: [],
+      dimensions: [],
+      dimNames: [],
+      crits: []
+    }
+  },
+
   components: {
-    TableMaxis,
+    Maxis,
     Rankables
   },
   
   computed: {
     fileData() {
       return this.$store.getters.getFileData
-    },
-    getDimMap() {
-      return [...this.dimensionsMap] 
     }
   },
-
   
   methods: {
     checkRankables() {
-      // must be at least one rankables ?? oh rly?
-      if (this.rankables.length > 0) {
+      // must be at least two crits
+      if (this.crits.length > 0) {
         this.step = 1
-        this.makeMaxBooleans()
+        // this.makeMaxBooleans()
       } else {
         alert('not enough rankables - need at least one!')
       }
@@ -139,17 +125,13 @@ export default {
       return this.alphas.includes(i)
     },
     checkMaxis() {
-        // this.catData.maxis = this.maxi
-        
         this.step = 2
-        var rankables = this.rankables
+        var crits = this.crits
         var maxis = this.maxis
-        // this.makeMaxBooleans(rankables)
-
 
         // first need to make sure maxi is in rankable
         for (var max of maxis) {
-          if (!rankables.includes(max)) { 
+          if (!crits.includes(max)) { 
             alert('maxi not in rank')
             // todo deal with it!
           }
@@ -358,69 +340,39 @@ export default {
     }
   },
 
-  data() {
-    return {
-      steps: ['rankable', 'maxi', 'ID'],
-      step: '0',
-      rankables: [],
-      maxis: [],
-      maxs: [],
-      maxSet: new Set(),
-      ID: null,
-      // alphas: new Set(),
-      alphas: [],
-      // alphaSpread2: [...this.alphas],
-      cands: [],
-      numberOfDims: -1,
-      idx: -1,
-      maxBooleans: [],
-      dimensions: [],
-      dimensionsMap: new Map()
-    }
-  },
-  
+    
   created() {
-    // this.catData = this.fileData.catData
     var data = this.fileData
+    this.alphas = data.alphas 
+    this.dimNames = data.dimNames 
+    this.dimNames.forEach((d, i) => {if(!this.alphas.includes(i)) {this.crits.push(i)}  })
     
-    this.rankables = data.rankables // nope
-    
-    this.alphas = data.alphas // nope
-    
-    this.dims = data.dimensions // nope - MAP
+    this.cands = data.candidates
+    this.ID = this.alphas[0]
 
-    this.dimensionsMap = data.dimensionsMap
-    
-  this.cands = data.candidates  // yep
-
-    // qq convert alphas and rankables arrays to sets
-    // then convert back later?
-
-
-    // console.log([...this.alphas])
-
-
-    // this.maxis = this.fileData.maxis
-    
-    EventBus.$on('updateMaxis', (index) => {
-      console.log('on rcvd', index)
-      this.idx = index
-      this.maxs.push(index)  
-      
-      // this.maxSet.add(index)  // need to toggle
-
-      // if not in set, add
-      // else remove
-
-      if (this.maxSet.has(index)) { 
-        this.maxSet.delete(index)
+    // todo fugly - use Sets?
+    EventBus.$on('updateCrits', (i) => {
+      if (this.crits.includes(i)) {
+        var iI = this.crits.indexOf(i)
+        this.crits.splice(iI, 1)
       } else {
-        this.maxSet.add(index)
+        this.crits.push(i)
+        this.crits.sort()
       }
-
-
-      // this.maxis.push(index)
     })
+
+    EventBus.$on('updateMaxis', (i) => {
+        console.log('maxed', i)
+      if (this.maxis.includes(i)) {
+        var iI = this.maxis.indexOf(i)
+        this.maxis.splice(iI, 1)
+      } else {
+        this.maxis.push(i)
+        this.maxis.sort()
+      }
+    })
+
+
   }
 }
 </script>
