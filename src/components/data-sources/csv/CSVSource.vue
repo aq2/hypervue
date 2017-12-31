@@ -21,8 +21,7 @@
     //
   
     // does this need to be in its own div?
-    //- #build(v-if='fileGot') 
-    BuildCandiData(v-if='fileGot')
+    GetDimInfo(v-if='fileGot')
     
     SaveCSVtoFB(v-if='dataBuilt')
 
@@ -33,13 +32,13 @@
 
 import {EventBus} from '../../../main'
 import GetFileData from './GetFileData.vue'
-import BuildCandiData from './BuildCandiData.vue'
+import GetDimInfo from './GetDimInfo.vue'
 import SaveCSVToFB from './SaveCSVtoFB.vue'
 
 export default {
   components: {
     GetFileData,
-    BuildCandiData,
+    GetDimInfo,
     SaveCSVToFB
   },
   data() {
@@ -49,7 +48,7 @@ export default {
     }
   },
   created() {
-    EventBus.$on('fileParsed', (dataIfwanted) => {
+    EventBus.$on('fileParsed', () => {
       this.fileGot = true
     }),
     EventBus.$on('dataBuilt', () => {

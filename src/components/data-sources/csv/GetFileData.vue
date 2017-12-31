@@ -26,11 +26,12 @@ export default {
     }, 
     
     processFile: function(file) {
-      const lines = file.trim()       // remove last empty line
-                        .split('\n')                    
-                        .map(line => line.split(','))   
+      const lines = file
+                      .trim()       // remove last empty line
+                      .split('\n')                    
+                      .map(line => line.split(','))   
                         
-      const dimNames = lines[0]   // used to be 'categories'
+      const dimNames = lines[0]
       
       // check valid file format/contents
       if (lines.length < 3 || this.badHeaders(dimNames)) {
@@ -42,9 +43,7 @@ export default {
       // parse the raw candidates from file
       const rawCands = lines.slice(1)    // remove first headers line
       const {candidates, alphas} = this.deStringVals(rawCands)
-     
-      // could start making fancy dims? or leave it till l8r ??
-        
+                  
       // stick data in store
       const storeData = {dimNames, candidates, alphas}
       this.$store.dispatch('setFileData', storeData)

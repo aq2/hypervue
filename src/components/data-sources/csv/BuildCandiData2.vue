@@ -32,7 +32,7 @@
 
   //
 
-  // - dynamic components? slots?
+  // - dynamic components? slots? could be part of maxis etc
   #instructions
     div(v-show='step == 0')
       p first, select orderable categories to include in rankings
@@ -62,10 +62,6 @@
     p ID {{ID}}
   //
 
-  #feedback
-    hr
-    p idx {{idx}}
-    p maxis {{maxis}}
 //
 
 </template>
@@ -113,7 +109,6 @@ export default {
       // must be at least two crits
       if (this.crits.length > 0) {
         this.step = 1
-        // this.makeMaxBooleans()
       } else {
         alert('not enough rankables - need at least one!')
       }
@@ -315,29 +310,7 @@ export default {
       // console.log({cand})
       }
       
-    },
-    makeMaxBooleans() {
-      // dumb way
-      var rankables = this.rankables
-      var dims = this.dims
-      var dimsL = dims.length       
-      // need to know dims length!
-      // could pass, or use categories object
-      // then extract fftt from categories instead
-      // no expense, because data not 'passed' - non-func paradigm here!
-      
-      
-      var rankL = rankables.length
-      for (var i=0; i<dimsL; i++) {
-        if (rankables.includes(i)) {
-          this.maxBooleans.push(true)
-        } else {
-          this.maxBooleans.push(false)  //TODO: foo
-        }
-      }
-      console.log(this.maxBooleans)
-      
-    }
+    }    
   },
 
     
@@ -372,7 +345,6 @@ export default {
       }
     })
 
-
   }
 }
 </script>
@@ -382,7 +354,6 @@ export default {
 
 #cont 
   background #eee
-
 
 .cell
   min-width 140px  // should be calculated somehow or flexboxed!
