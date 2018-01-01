@@ -7,60 +7,39 @@ export const store = new Vuex.Store({
   
   // actual contents of the store 
   state: {
-    // cats: [],
-    // fileData: {},
-    alphas: [],
+    catData: {},
     cands: [],
-    dimNames: []
   },
 
   // components get stored data through these 
   getters: {
-    getAlphas: state => {
-      return state.alphas
-    },
     getCands: state => {
       return state.cands
     },
-    getDimNames: state => {
-      return state.dimNames
-    },
-    // getFileData: state => {
-      // return state.fileData
-    // }
+    getCatData: state => {
+      return state.catData
+    }
   },
 
   // actions call these mutators
   // don't call directly!
   mutations: {
-    mutateAlphas: (state, payload) => {
-      state.alphas = payload
-    },
     mutateCands: (state, payload) => {
       state.cands = payload
     },
-    mutateDimNames: (state, payload) => {
-      state.dimNames = payload
-    },
-    // mutateFileData: (state, payload) => {
-      // state.fileData = payload
-    // }
+    mutateCatData: (state, payload) => {
+      state.catData = payload
+    }
   },
 
   // actions (that call mutations) dispatched by component events
   // eg. this.$store.dispatch(actionName, payload)
   actions: {
-    setAlphas: (context, payload) => {
-      context.commit('mutateAlphas', payload)
-    },
     setCands: (context, payload) => {
       context.commit('mutateCands', payload)
     },
-    setDimNames: (context, payload) => {
-      context.commit('mutateDimNames', payload)
-    },
-    // setFileData: (context, payload) => {
-      // context.commit('mutateFileData', payload)
-    // }
+    setCatData: (context, payload) => {
+      context.commit('mutateCatData', payload)
+    }
   }
 })

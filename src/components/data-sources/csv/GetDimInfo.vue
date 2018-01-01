@@ -22,6 +22,7 @@
     transition(name='fade') 
       Maxis(:dimNames='dimNames' :crits='crits' v-show='step>0')
 
+    // todo should be a sub-comp like above
     transition(name='fade')
       #ID(v-show='step > 1')
         .id ID
@@ -30,6 +31,9 @@
           input(type='radio' :value='index' v-model='ID')
           .boxy
     //
+
+  // todo too much data - wrap it in object or comp prop
+  BuildDimData(:catData='newCatData' :cands='cands' v-show='step > 2')
 
   //
 
@@ -76,7 +80,6 @@ import Rankables from './Rankables'
 import BuildCandiData from '../../builders/BuildCandiData'
 import BuildDimData from '../../builders/BuildDimData'
 
-
 export default {
   data() {
     return {
@@ -96,14 +99,25 @@ export default {
   },
   
   computed: {
-    alphas() {
-      return this.$store.getters.getAlphas
+    catData() {
+      return this.$store.getters.getCatData
     },
     cands() {
       return this.$store.getters.getCands
     },
+    alphas() {
+      return this.catData.alphas
+    },
     dimNames() {
-      return this.$store.getters.getDimNames
+      return this.catData.dimNames
+    },
+    newCatData() {
+      const alphas = this.alphas
+      const crits = this.crits
+      const dimNames = this.dimNames
+      const ID = this.ID
+      const maxis = this.maxis
+      return {alphas, crits, dimNames, ID, maxis }
     }
   },
   
@@ -139,18 +153,15 @@ export default {
         // qq
 
     },
-
     gotID() {
       this.step = 3      
-      // var IDname = this.dimensions[ID]
-      
-      // stick something in store? what's new?
-      // crits, maxis, ID
-      
-      // send IDgot event
-      // EventBus.$emit('dataBuilt')
+      this.$store.dispatch('setCatData', this.newCatData)
 
-      // buildData listens and respoinds
+      // send IDgot event
+      EventBus.$emit('catDataBuilt')
+
+      // buildDimData listens and responds
+      // then calls buildCandData
     },
 
     findRankingsForCandidates() {
@@ -267,8 +278,7 @@ export default {
         }
 
       }
-    },
-    
+    },  
     makeIDfordims(ID) {
       var categories = this.catData.categories
       var dimsL = categories.length 
@@ -301,7 +311,10 @@ export default {
 
     
   created() {
-    this.dimNames.forEach((d, i) => {if(!this.alphas.includes(i)) {this.crits.push(i)}  })
+    this.dimNames.forEach((d, i) => {
+      if(!this.alphas.includes(i)) {
+        this.crits.push(i)}  
+    })
     
     this.ID = this.alphas[0]
 
