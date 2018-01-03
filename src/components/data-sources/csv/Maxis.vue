@@ -36,12 +36,10 @@ export default {
       return this.crits.includes(i)
     },
     hi: function(i) {
-      var el = document.getElementById(i)
-      el.style.color = 'white'
+      document.getElementById(i).style.color = 'white'
     },
     unhi: function(i) {
-      var el = document.getElementById(i)
-      el.style.color = 'black'
+      document.getElementById(i).style.color = 'black'
     }
   }
 

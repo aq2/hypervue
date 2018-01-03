@@ -1,25 +1,23 @@
 <template lang='pug'> 
   
 #BuildCandidata
+  h1 category meta-data
   fieldset
-    legend(class='title') category meta-data
+    legend(class='title') please select
     #exampleTable
 
       #catNames
         fieldset
           legend category
-          .list(v-for='(dimName, i) in dimNames' :id='i') 
-            .catName {{dimName}}
+          .list(v-for='(dimName, i) in dimNames' :id='i') {{dimName}}
       //
 
       #exampleData
         fieldset
           legend example
           .list(v-for='(score,i) in cands[0]'
-            @mouseover='hi(i)' 
-            @mouseleave='unhi(i)'
-          ) 
-            .example {{score}}
+            @mouseover='hi(i)' @mouseleave='unhi(i)'
+          ) {{score}}
       // 
       
       // load rankables sub-comp, passing in props
@@ -34,8 +32,7 @@
         fieldset(id='idd')
           legend ID
           .list(v-for='(cat, i) in dimNames'
-            @mouseover='hi(i)' 
-            @mouseleave='unhi(i)'
+            @mouseover='hi(i)' @mouseleave='unhi(i)'
           ) 
             label 
               input(type='radio' :value='i' v-model='ID')
@@ -128,12 +125,10 @@ export default {
   
   methods: {
     hi: function(i) {
-      var el = document.getElementById(i)
-      el.style.color = 'white'
+      document.getElementById(i).style.color = 'white'
     },
     unhi: function(i) {
-      var el = document.getElementById(i)
-      el.style.color = 'black'
+      document.getElementById(i).style.color = 'black'
     },
     checkRankables() {
       // must be at least two crits
@@ -332,8 +327,6 @@ export default {
     
     this.ID = this.alphas[0]
 
-  
-
     // todo fugly - use Sets?
     EventBus.$on('updateCrits', (i) => {
       if (this.crits.includes(i)) {
@@ -378,10 +371,10 @@ export default {
   margin-right 0
   background $g5
 
-// #exampleTable > div:last-child fieldset legend
-//   // margin-right 0
-//   background red
-
+#catNames .list 
+  font-weight bold
+  transition 1s all
+  // speckly bug ??
 
 #instructions 
   margin 1rem 0
@@ -394,7 +387,6 @@ export default {
 <style lang="stylus">
 
 #exampleTable > div:last-child fieldset legend
-  margin-right 0
   background $g8
 
 </style>
