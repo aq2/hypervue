@@ -20,9 +20,6 @@
       br    
       p press the 'next page' button below to continue
 
-    //- #test
-      p aha
-
     #link
       router-link(to='/data' class='throb') next page
 
@@ -49,11 +46,7 @@
   // border 2px solid yellow
   // animation throb linear 2s infinite
 
-.fade-enter-active, .fade-leave-active
-  transition all 1s
-
-.fade-enter, .fade-leave-to 
-  opacity 0
+a  
   background blue
 
 </style>

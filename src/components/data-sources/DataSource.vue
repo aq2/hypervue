@@ -85,7 +85,7 @@ li
   transition 0.5s all ease
   text-align center
   flex-grow 1
-  max-width 300px
+  // width 300px
   border 2px solid blue
   animation throb linear 2s infinite
 
@@ -99,6 +99,7 @@ h1
 
 a
   padding 2em 0
+  width 300px
 
 
 </style>

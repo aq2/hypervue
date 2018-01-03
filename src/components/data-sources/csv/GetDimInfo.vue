@@ -1,40 +1,48 @@
 <template lang='pug'> 
   
 #BuildCandidata
-  h2 category meta data
-  #exampleTable
-    #catNames
-      .catName category
-      .list(v-for='dimName in dimNames') 
-        .catName {{dimName}}
-    //
+  fieldset
+    legend(class='title') category meta-data
+    #exampleTable
 
-    #exampleData
-      .example example
-      .list(v-for='score in cands[0]') 
-        .example {{score}}
-    // 
-    
-    // load rankables sub-comp, passing in props
-    Rankables(:dimNames='dimNames' :alphas='alphas')
+      #catNames
+        fieldset
+          legend category
+          .list(v-for='(dimName, i) in dimNames' :id='i') 
+            .catName {{dimName}}
+      //
 
-    // load maxis sub-comp, passing in props
-    transition(name='fade') 
-      Maxis(:dimNames='dimNames' :crits='crits' v-show='step>0')
+      #exampleData
+        fieldset
+          legend example
+          .list(v-for='(score,i) in cands[0]'
+            @mouseover='hi(i)' 
+            @mouseleave='unhi(i)'
+          ) 
+            .example {{score}}
+      // 
+      
+      // load rankables sub-comp, passing in props
+      #rankables
+        Rankables(:dimNames='dimNames' :alphas='alphas' :step='step')
 
-    // todo should be a sub-comp like above
-    transition(name='fade')
-      #ID(v-show='step > 1')
-        .id ID
-        .list(v-for='(cat, index) in dimNames') 
-          label 
-          input(type='radio' :value='index' v-model='ID')
-          .boxy
-    //
+      // load maxis sub-comp, passing in props
+      #maxis(v-if='step>0')
+        Maxis(:dimNames='dimNames' :crits='crits')
 
-  // todo too much data - wrap it in object or comp prop
+      #ID(v-if='step > 1')
+        fieldset(id='idd')
+          legend ID
+          .list(v-for='(cat, i) in dimNames'
+            @mouseover='hi(i)' 
+            @mouseleave='unhi(i)'
+          ) 
+            label 
+              input(type='radio' :value='i' v-model='ID')
+              span(class='checkmark radio')
+      //
+
   BuildDimData(:catData='newCatData' :cands='cands' v-show='step > 2')
-
   //
 
   // - dynamic components? slots? could be part of maxis etc
@@ -57,14 +65,11 @@
     div(v-show='step == 2')
       p now select a category to use as an identifier
       p this name will be used to identify candidates
-      p so chose an alpha-numeric name
+      p so it's best to chose an alpha-numeric name
       p press OK when done
       button(@click='gotID') OK
     //
 
-    p crits {{crits}}
-    p maxis {{maxis}}
-    p ID {{ID}}
   //
 
 //
@@ -122,6 +127,14 @@ export default {
   },
   
   methods: {
+    hi: function(i) {
+      var el = document.getElementById(i)
+      el.style.color = 'white'
+    },
+    unhi: function(i) {
+      var el = document.getElementById(i)
+      el.style.color = 'black'
+    },
     checkRankables() {
       // must be at least two crits
       if (this.crits.length > 1) {
@@ -129,6 +142,7 @@ export default {
       } else {
         alert('not enough rankables - need at least one!')
       }
+      
     },
     checkMaxis() {
         this.step = 2
@@ -141,7 +155,7 @@ export default {
             alert('maxi not in rank')
             // todo deal with it!
           }
-        }        
+        }
         
         // qq JUST DONE MONSTER SESH
         // this.buildRankableScoresForCandidates()
@@ -318,6 +332,8 @@ export default {
     
     this.ID = this.alphas[0]
 
+  
+
     // todo fugly - use Sets?
     EventBus.$on('updateCrits', (i) => {
       if (this.crits.includes(i)) {
@@ -348,79 +364,37 @@ export default {
 
 <style lang="stylus" scoped>
 
-#cont 
-  background #eee
-
-.cell
-  min-width 140px  // should be calculated somehow or flexboxed!
-  padding  .5em 0
-  margin 0
-  min-height 40px
-
-.list
-  // @extend .cell
-  min-width 140px  // should be calculated somehow or flexboxed!
-  margin 0
-  background $blue
-  min-height 40px
-  
-
-#top
-  background orange
-  padding 0
-  margin 0
-  
-.catName
-  @extend .cell  // qq css inheritance!
-  background steelblue
-  padding-left 10px
-  font-weight bold
-  
-.boxy
-  @extend .cell
-  text-align center
-
-.example
-  @extend .cell
-  padding-left: 1em
-  background #ccc
- 
-
-.rankable
-  @extend .cell
-  background #456
-  text-align center
-
-.maxi 
-  @extend .cell
-  background #789
-  text-align center
-
-.id
-  @extend .cell
-  background #9ab
-  text-align center
-
-
-label
-  // display none
+@import 'inputs'
 
 #exampleTable 
   display flex
+  padding 1rem 0
   // justify-content space-between
-  background steelblue
-  width 800px
-  // flex-flow column
-
+  
   >div
     flex-basis 160px
 
-.fade-enter-active, .fade-leave-active
-  transition all 0.5s
+#exampleTable > div:last-child fieldset
+  margin-right 0
+  background $g5
 
-.fade-enter, .fade-leave-to 
-  opacity 0
-  background blue
+// #exampleTable > div:last-child fieldset legend
+//   // margin-right 0
+//   background red
 
+
+#instructions 
+  margin 1rem 0
+  background $g5
+  padding 0.5rem 1rem
+
+
+</style>
+
+<style lang="stylus">
+
+#exampleTable > div:last-child fieldset legend
+  margin-right 0
+  background $g8
 
 </style>

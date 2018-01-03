@@ -74,7 +74,7 @@ export default {
 
 header 
   background $g3
-  height 70px
+  height 74px
   border-bottom 2px solid $g2
   display flex
 

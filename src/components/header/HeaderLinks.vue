@@ -41,7 +41,7 @@ export default {
 a 
   border-radius 0.5rem
   display flex
-  color $g5
+  color darkblue
   padding-left 1rem
   max-height 70px
 
@@ -49,7 +49,7 @@ h1
   display none
 
 .router-link-active
-  color  $ga
+  color lime
   background $g3
   flex-grow 1
 
@@ -65,7 +65,7 @@ h1
 
 .fade-enter, .fade-leave-to 
   opacity 0
-  background blue
+  // background blue
 
 
 </style>

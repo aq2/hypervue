@@ -1,10 +1,14 @@
 <template lang="pug">
 
-#rankables
-  .maxi maxi?
-  .list(v-for='(dimName, index) in dimNames') 
-    label 
-    input(type='checkbox' :value='index' @click='changeMaxis(index)' v-model='maxis' v-if='isRankable(index)')
+fieldset(id='max')
+  legend maxis
+  .list(v-for='(dimName, i) in dimNames'
+    @mouseover='hi(i)' 
+    @mouseleave='unhi(i)') 
+    label(v-if='isRankable(i)')
+      input(type='checkbox' :value='i' @click='changeMaxis(i)' v-model='maxis')
+      span(class='checkmark')
+    //- .boxy(v-else)
 
 </template>
 
@@ -31,6 +35,14 @@ export default {
     isRankable(i) {
       return this.crits.includes(i)
     },
+    hi: function(i) {
+      var el = document.getElementById(i)
+      el.style.color = 'white'
+    },
+    unhi: function(i) {
+      var el = document.getElementById(i)
+      el.style.color = 'black'
+    }
   }
 
 }
@@ -40,29 +52,30 @@ export default {
 
 
 <style lang="stylus" scoped>
+@import 'inputs'
 
-.cell
-  min-width 140px  // should be calculated somehow or flexboxed!
-  // display inline-block
-  padding  .5em 0
-  margin 0
-  min-height 40px
-
-
-.list
-  // @extend .cell
-  min-width 140px  // should be calculated somehow or flexboxed!
-  // display inline-block
-  // padding  .5em 0
-  margin 0
-  background $blue
-  min-height 40px
+// .cell
+//   min-width 140px  // should be calculated somehow or flexboxed!
+//   // display inline-block
+//   padding  .5em 0
+//   margin 0
+//   min-height 40px
 
 
-.maxi
-  @extend .cell
-  background #456
-  text-align center
+// .list
+//   // @extend .cell
+//   min-width 140px  // should be calculated somehow or flexboxed!
+//   // display inline-block
+//   // padding  .5em 0
+//   margin 0
+//   background $blue
+//   min-height 40px
+
+
+// .maxi
+//   @extend .cell
+//   background #456
+//   text-align center
 
 
 

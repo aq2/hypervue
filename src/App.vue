@@ -89,6 +89,6 @@ body
   min-width 800px
 
 #main  
-  padding 1rem
+  padding 1rem 27px
 
 </style>

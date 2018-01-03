@@ -95,9 +95,6 @@ export default {
 
 <style lang="stylus" scoped>
 
-input
-  background #36b     // todo replace with global color variable
-
 #browseFile 
   opacity 0
   z-index -1
@@ -107,22 +104,23 @@ input
   color transparent
   position absolute
 
-label 
-  color white           // todo - see above
-  padding .5em
-  cursor pointer
-  font-size 1.2em
-  background #36b     // todo - see above
-  border-radius 5px     // rems  - mixin, global mixin>
-  display inline-block
-  border 1px solid transparent
-
-label:hover
-  background #47c     // todo - see above
-  border 1px solid darkblue
+label
+  background blue
+  padding 0.5rem 0.25rem
+  border-radius 0.5rem
+  border 1px solid $g5
+  animation throb linear 2s infinite
+  link(0.5rem)
+  &:hover
+    cursor pointer
+    background lightblue
 
 .icon
   margin-right 15px
   margin-bottom -2px
+
+
+
+
 
 </style>
