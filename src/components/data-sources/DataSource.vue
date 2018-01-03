@@ -28,39 +28,12 @@
 </template>
 
 
-<script>
-
-export default {
-  data() {
-    return {
-      submitted: false,
-      blogs: [],
-      datasource: '',
-      fb: false,
-      csv: false,
-      buttoned: false
-    }
-  }
-}
-
-</script>
-
-
 <style lang="stylus" scoped>
 
 .spacer 
   width 50px
   display inline-block
   text-align center
-
-#buttons 
-  display inline-block
-
-.fade-enter-active, .fade-leave-active
-  transition opacity .5s
-
-.fade-enter, .fade-leave-active
-  opacity 0
 
 #text 
   background $g5
@@ -69,7 +42,6 @@ export default {
 
 ul
   padding 0 
-  // background $g2
   max-width 1020px
   margin 0 auto
   list-style-type none
@@ -85,14 +57,12 @@ li
   transition 0.5s all ease
   text-align center
   flex-grow 1
-  // width 300px
   border 2px solid blue
   animation throb linear 2s infinite
 
 li:hover
   background green
 
-#links  
 
 h1 
   margin 0 0 1rem 0

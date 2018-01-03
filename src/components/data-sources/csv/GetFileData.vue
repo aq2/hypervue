@@ -47,20 +47,18 @@ export default {
       // stick data in store
       const catData = {dimNames, alphas}
       this.$store.dispatch('setCatData', catData)
-      // this.$store.dispatch('setDimNames', dimNames)
       this.$store.dispatch('setCands', candidates)
-      // this.$store.dispatch('setAlphas', alphas)
       
       // and let them know it's done
       EventBus.$emit('fileParsed')
     },
 
 
-    deStringVals: function(rawStringedCandidates) {
+    deStringVals: (rawStringedCandidates) => {
       let candidates = []
       let alphas = []
       
-      // use fancier higher-order functions like map/reduce?
+      // todo use sets for alphas?
       rawStringedCandidates.forEach((line) => {
         let cand = []
         
@@ -82,8 +80,8 @@ export default {
     },
 
 
-    badHeaders: function(headers) {
-      const numericValues = headers.filter((h) => { return !isNaN(h) })
+    badHeaders: (headers) => {
+      const numericValues = headers.filter(h => !isNaN(h))
       // should this be a reduce? reduces down to true false
       return (numericValues === 0)
     }   
@@ -118,9 +116,5 @@ label
 .icon
   margin-right 15px
   margin-bottom -2px
-
-
-
-
 
 </style>

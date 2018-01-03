@@ -40,29 +40,30 @@ export default {
     TheSidebar
   },
   methods: {
-    // todo fugly! copyPasta
-    toggleFullScreen(elem) {
-      elem = elem || document.documentElement
-      if (!document.fullscreenElement && !document.mozFullScreenElement &&
-        !document.webkitFullscreenElement && !document.msFullscreenElement) {
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen()
-        } else if (elem.msRequestFullscreen) {
-          elem.msRequestFullscreen()
-        } else if (elem.mozRequestFullScreen) {
-          elem.mozRequestFullScreen()
-        } else if (elem.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
+    // todo fugly! copyPasta - switch?
+    toggleFullScreen(e) {
+      const d = document
+      e = e || d.documentElement
+      if (!d.fullscreenElement && !d.mozFullScreenElement &&
+        !d.webkitFullscreenElement && !d.msFullscreenElement) {
+        if (e.requestFullscreen) {
+          e.requestFullscreen()
+        } else if (e.msRequestFullscreen) {
+          e.msRequestFullscreen()
+        } else if (e.mozRequestFullScreen) {
+          e.mozRequestFullScreen()
+        } else if (e.webkitRequestFullscreen) {
+          e.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
         }
       } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen()
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen()
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen()
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen()
+        if (d.exitFullscreen) {
+          d.exitFullscreen()
+        } else if (d.msExitFullscreen) {
+          d.msExitFullscreen()
+        } else if (d.mozCancelFullScreen) {
+          d.mozCancelFullScreen()
+        } else if (d.webkitExitFullscreen) {
+          d.webkitExitFullscreen()
         }
       }
     }

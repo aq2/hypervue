@@ -1,32 +1,24 @@
 <template lang='pug'>
  
   #sidebar 
-    //- TheSidebarLinks(v-show='open')
 
 </template>
 
 
 <script>
 
-// import TheSidebarLinks from './SidebarLinks'
-import {$} from '../../modules/helpers'
 import {EventBus} from '../../main'
 
-
 export default {
-  components: {
-    // TheSidebarLinks
-  },
   data() {
     return {
       open: true,
-      // currentPage: 1
     }
   },
   methods: {
     toggle: function() {
       this.open = !this.open
-      let sid = $('#sidebar')
+      let sid = document.getElementById('sidebar')
       sid.style.width = sid.offsetWidth >= 50 ? '10px' : '150px'
     }
   },

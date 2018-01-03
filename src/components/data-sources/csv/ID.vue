@@ -1,46 +1,56 @@
-<template lang='pug'>
-  
-  #ID
+<template lang="pug">
 
+fieldset(id='idd')
+  legend ID
+  .list(v-for='(d, i) in dimNames'
+    @mouseover='hi(i)' 
+    @mouseleave='unhi(i)'
+  ) 
+    label
+      input(type='radio' :value='i' @click='changeID(i)' v-model='IDhere')
+      span(class='checkmark radio')
+    
 </template>
 
 
-
 <script>
+import {EventBus} from '../../../main'
+
 export default {
-  methods: {
-    makeCandidatesMap: function() {
-      // 2 - qq okay, what about fancy candidates?
-      // don't do this until we know ID!
-      let candsMap = new Map()
-
-      // find first alpha dim => temp key until confirmed later
-      let dimsRA = [...dimensionsMap]
-        
-      let foundIndex = dimsRA.findIndex((dim) => {
-        return dim[1].get('alpha')
-      })
-      // console.log('foundI', foundIndex)
-
-      candidates.forEach(cand => {
-        let candMap = new Map()
-        candMap.set('notYetID', cand[foundIndex].trim())
-        
-        cand.forEach((dim, j) => {
-          candMap.set(dimensions[j], cand[j])
-        })
-
-        // this is where the 'key' is assigned...
-        // this may change later if id changes!
-        candsMap.set(cand[foundIndex].trim(), candMap)
-      })
-      console.log(...candsMap)
+  data() {
+    return {
+      IDhere: null
     }
+  },
+
+  props: {
+    dimNames: {type: Array},
+    firstAlpha: {type: Number}
+  },
+  
+  methods: {
+    changeID: (i) => {
+      EventBus.$emit('updateID', i)
+    },
+    hi: (i) => {
+      document.getElementById(i).style.color = 'white'
+    },
+    unhi: (i) => {
+      document.getElementById(i).style.color = 'black'
+    }
+  },
+
+  created() {
+    this.IDhere = this.firstAlpha
   }
+
 }
+
 </script>
 
 
 <style lang="stylus" scoped>
+
+@import 'inputs'
 
 </style>

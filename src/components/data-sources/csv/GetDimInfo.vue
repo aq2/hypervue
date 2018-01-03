@@ -3,9 +3,8 @@
 #BuildCandidata
   h1 category meta-data
   fieldset
-    legend(class='title') please select
+    legend(class='title') please select...
     #exampleTable
-
       #catNames
         fieldset
           legend category
@@ -22,22 +21,14 @@
       
       // load rankables sub-comp, passing in props
       #rankables
-        Rankables(:dimNames='dimNames' :alphas='alphas' :step='step')
+        Rankables(:dimNames='dimNames' :alphas='alphas')
 
-      // load maxis sub-comp, passing in props
       #maxis(v-if='step>0')
         Maxis(:dimNames='dimNames' :crits='crits')
 
       #ID(v-if='step > 1')
-        fieldset(id='idd')
-          legend ID
-          .list(v-for='(cat, i) in dimNames'
-            @mouseover='hi(i)' @mouseleave='unhi(i)'
-          ) 
-            label 
-              input(type='radio' :value='i' v-model='ID')
-              span(class='checkmark radio')
-      //
+        ID(:dimNames='dimNames' :firstAlpha='firstAlpha')
+    //
 
   BuildDimData(:catData='newCatData' :cands='cands' v-show='step > 2')
   //
@@ -79,6 +70,7 @@
 import {EventBus} from '../../../main'
 import Maxis from './Maxis'
 import Rankables from './Rankables'
+import ID from './ID'
 import BuildCandiData from '../../builders/BuildCandiData'
 import BuildDimData from '../../builders/BuildDimData'
 
@@ -96,6 +88,7 @@ export default {
   components: {
     Maxis,
     Rankables,
+    ID,
     BuildCandiData,
     BuildDimData
   },
@@ -109,6 +102,9 @@ export default {
     },
     alphas() {
       return this.catData.alphas
+    },
+    firstAlpha() {
+      return this.catData.alphas[0]
     },
     dimNames() {
       return this.catData.dimNames
@@ -124,10 +120,10 @@ export default {
   },
   
   methods: {
-    hi: function(i) {
+    hi: (i) => {
       document.getElementById(i).style.color = 'white'
     },
-    unhi: function(i) {
+    unhi: (i) => {
       document.getElementById(i).style.color = 'black'
     },
     checkRankables() {
@@ -141,8 +137,8 @@ export default {
     },
     checkMaxis() {
         this.step = 2
-        var crits = this.crits
-        var maxis = this.maxis
+        const crits = this.crits
+        const maxis = this.maxis
 
         // first need to make sure maxi is in rankable
         for (var max of maxis) {
@@ -166,12 +162,41 @@ export default {
       this.step = 3      
       this.$store.dispatch('setCatData', this.newCatData)
 
+      // do i build dimData out of catData?
+      // don't need norms for all vizzes
+      // but deffo for parallel
+      // but then there's the problem about eligibilty
+      // maybe need inelgibles [] in CandData
+
+      const dimData = this.buildAllDimData() 
+
       // send IDgot event
-      EventBus.$emit('catDataBuilt')
+      // EventBus.$emit('catDataBuilt')
 
       // buildDimData listens and responds
       // then calls buildCandData
     },
+    buildAllDimData() {
+      let allDimData = {}
+      this.dimNames.forEach((dimName, d) => {
+        const alpha = this.alphas.includes(d)
+        const crit = this.crits.includes(d)
+        const maxi = this.maxis.includes(d)
+        const ID = (d == this.ID)
+        
+        // need scores from each cand
+        let scores = []
+        this.cands.forEach((cand) => {
+          scores.push(cand[d])
+        })
+
+        const dimData = {dimName, alpha, crit, maxi, ID, scores}
+        allDimData[d] = dimData
+      })
+      console.log(allDimData)
+      return allDimData
+    },
+
 
     findRankingsForCandidates() {
       // todo componentize - it will be handy for ron
@@ -330,8 +355,8 @@ export default {
     // todo fugly - use Sets?
     EventBus.$on('updateCrits', (i) => {
       if (this.crits.includes(i)) {
-        var iI = this.crits.indexOf(i)
-        this.crits.splice(iI, 1)
+        const iIdx = this.crits.indexOf(i)
+        this.crits.splice(iIdx, 1)
       } else {
         this.crits.push(i)
         this.crits.sort()
@@ -349,6 +374,10 @@ export default {
       }
       this.maxis = maxs
     })
+
+    EventBus.$on('updateID', (i) => {
+      this.ID = i
+    })
   }
 }
 
@@ -364,7 +393,7 @@ export default {
   padding 1rem 0
   // justify-content space-between
   
-  >div
+  > div
     flex-basis 160px
 
 #exampleTable > div:last-child fieldset

@@ -15,9 +15,7 @@
           |  new york,NY,8405837,302.6
           |  boston,MA,645966,48.3
           |  kansas city,MO,467007,315.0
-        GetFileData
-      //
-
+        GetFileData      
     //
   
     // does this need to be in its own div?
@@ -53,7 +51,6 @@ export default {
     }),
     EventBus.$on('dataBuilt', () => {
       this.dataBuilt = true
-      this.fileGot = false // ??
     })
   }
 }
@@ -64,24 +61,12 @@ export default {
 <style lang="stylus" scoped>
 
 #CsvSource
-  // background #aaa
   padding 5px 10px
-  // width 600px
-  // margin 0 auto
 
 #text 
   background $g5
   padding 0.5rem 1rem
   margin 1rem 0
-
-
-
-.fade-enter-active, .fade-leave-active
-  transition opacity .5s
-
-.fade-enter, .fade-leave-to 
-  opacity 0
-
 
 </style>
 

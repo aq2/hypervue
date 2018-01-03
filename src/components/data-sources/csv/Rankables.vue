@@ -32,13 +32,13 @@ export default {
     isAlpha: function(i) {
       return this.alphas.includes(i)
     },
-    changeCrits: function (i) {
+    changeCrits: (i) => {
       EventBus.$emit('updateCrits', i)
     },
-    hi: function(i) {
+    hi: (i) => {
       document.getElementById(i).style.color = 'white'
     },
-    unhi: function(i) {
+    unhi: (i) => {
       document.getElementById(i).style.color = 'black'
     }
   },

@@ -38,8 +38,9 @@ export default {
       EventBus.$emit('sidebarToggled')
     },
     // todo fugly! copyPasta
-    toggleFullScreen: function() {
+    toggleFullScreen: () => {
       var el = document.documentElement
+      // todo - change screen size after toggling!
       if (!document.fullscreenElement && !document.mozFullScreenElement &&
         !document.webkitFullscreenElement && !document.msFullscreenElement) {
         if (el.requestFullscreen) {
