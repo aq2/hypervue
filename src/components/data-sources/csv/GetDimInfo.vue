@@ -30,7 +30,7 @@
         ID(:dimNames='dimNames' :firstAlpha='firstAlpha')
     //
 
-  BuildDimData(:dimData='newCatData' :candiData='cands' v-show='step>2')
+  BuildDaData(:dimMeta='newCatMeta' :candMeta='cands' v-show='step>2')
   //
 
   // - dynamic components? via events payload
@@ -68,11 +68,10 @@
 <script>
 
 import {EventBus} from '../../../main'
+import ID from './ID'
 import Maxis from './Maxis'
 import Rankables from './Rankables'
-import ID from './ID'
-import BuildCandiData from '../../builders/BuildCandiData'
-import BuildDimData from '../../builders/BuildDimData'
+import BuildDaData from '../../builders/BuildDaData'
 
 export default {
   data() {
@@ -88,36 +87,35 @@ export default {
     Rankables,
     Maxis,
     ID,
-    BuildCandiData,
-    BuildDimData
+    BuildDaData
   },
   
   computed: {
-    candiData() {
-      return this.$store.getters.getCandiData
+    candMeta() {
+      return this.$store.getters.getCandMeta
     },
     cands() {
-      return this.candiData.candidates
+      return this.candMeta.candidates
     },
-    dimData() {
-      return this.$store.getters.getDimData
+    dimMeta() {
+      return this.$store.getters.getDimMeta
     },    
     alphas() {
-      return this.dimData.alphas
+      return this.dimMeta.alphas
     },
     firstAlpha() {
-      return this.dimData.alphas[0]
+      return this.dimMeta.alphas[0]
     },
     dimNames() {
-      return this.dimData.dimNames
+      return this.dimMeta.dimNames
     },
-    newCatData() {
+    newCatMeta() {
       const alphas = this.alphas
       const crits = this.crits
       const dimNames = this.dimNames
       const ID = this.ID
       const maxis = this.maxis
-      return {alphas, crits, dimNames, ID, maxis }
+      return {alphas, crits, dimNames, ID, maxis}
     }
   },
   
@@ -150,120 +148,17 @@ export default {
         })
     },
     gotID() {
-      this.step = 3      
-      this.$store.dispatch('setDimData', this.newCatData)
+      this.step = 3
+      const dimMeta = this.newCatMeta
+      const candMeta = this.candMeta
+      this.$store.dispatch('setDimMeta', dimMeta)
+      this.$store.dispatch('setCandMeta', candMeta)
 
-
-      const allDimData = this.buildAllDimData() 
-      console.log(allDimData)
-      
-      // qq
-      // have all buildData stuff in component
-      // send an event
-      // buildData listens to it
-      // builds data and $stores it
-      
-      // take into account eligible candidates
-      // need ineligibles[] 
-      // norm/stats/ranking needs to check?, or removed from scores?
-      // oooh implications!
-      // scores=[84,302,48,315], rankings=[1,2,0,3]
-      // remove 84 -> rkgs=[f,1,0,2]
-
-
-
-
-      // send IDgot event
-      // EventBus.$emit('catDataBuilt')
-
-      // buildDimData listens and responds
-      // then calls buildCandData
-    },
-    buildAllDimData() {
-      let allDimData = {}
-      this.dimNames.forEach((dimName, d) => {
-        const alpha = this.alphas.includes(d)
-        const crit = this.crits.includes(d)
-        const maxi = this.maxis.includes(d)
-        const ID = (d == this.ID)
-        
-        // need scores from each cand
-        let scores = []
-        this.cands.forEach((cand) => {
-          scores.push(cand[d])
-        })
-
-        let stats = false
-        let rankings = false
-        let norm = false
-        if (!this.alphas.includes(d)) {
-          stats = this.calcStats(scores)
-          rankings = this.calcRankings(scores)
-          norm = this.normaliseScores(scores)
-        }
-        
-        const dimData = {
-          dimName, alpha, crit, maxi, ID, scores, norm, rankings, stats
-        }
-        allDimData[d] = dimData
-      })
-
-      return allDimData
-    },
-
-    calcStats(scores) {
-      const min = Math.min(...scores)
-      const max = Math.max(...scores)
-
-      const len = scores.length
-      const total = scores.reduce((total, score) => {
-        return total + score
-      }, 0)
-      const mean = total / len
-
-      const sqrDiffs = scores.map(score => {
-        const diff = score - mean
-        return diff * diff
-      })
-
-      const sqrDiffsTotal = sqrDiffs.reduce((sum, sqD) => {
-        return sum + sqD
-      }, 0)  
-      const meanSqD = sqrDiffsTotal / len
-      const stdDev = Math.sqrt(meanSqD)
-      
-      const stats = {min, max, mean, stdDev}
-      return stats
-    },
-
-    calcRankings(scores) {
-      let rankings = []
-      const sorted = [...scores].sort((a,b) => {return a-b})
-      
-      scores.forEach((score, i) => {
-        let rank = sorted.indexOf(scores[i])
-        rankings.push(rank)
-      })
-      
-      return rankings
+      const allDaMeta = {dimMeta, candMeta}
+      // send IDgot event, buildDaData listens
+      EventBus.$emit('catMetaBuilt', allDaMeta)
     },
     
-    normaliseScores(scores) {
-      // what about maxis??? need to reverse something
-      if (!this.alpha) {
-        let normScores = []
-        const min = Math.min(...scores)
-        const max = Math.max(...scores)
-        const range = max - min
-        
-        scores.forEach((score) => {
-          const norm = (score - min)/(range)
-          normScores.push(norm)
-        })
-        return normScores
-      }
-      return false 
-    },
   },
     
   created() {
@@ -281,7 +176,6 @@ export default {
         this.crits.splice(iIdx, 1)
       } else {
         this.crits.push(i)
-        // this.crits.sort()
       }
     })
 
@@ -292,7 +186,6 @@ export default {
         maxs.splice(maxs.indexOf(i), 1)
       } else {
         maxs.push(i)
-        // maxs.sort()   // need sorting? not really
       }
       this.maxis = maxs
     })
@@ -313,7 +206,6 @@ export default {
 #exampleTable 
   display flex
   padding 1rem 0
-  // justify-content space-between
   
   > div
     flex-basis 160px

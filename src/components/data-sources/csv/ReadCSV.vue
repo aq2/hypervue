@@ -1,7 +1,7 @@
 <template lang="pug">
 
 #getFile
-  input(type="file" id='browseFile' accept=".csv, text/csv" @change='getFileData')
+  input(type="file" id='browseFile' accept=".csv, text/csv" @change='readFile')
   label(id='browseLabel' for='browseFile') 
     icon(name='upload' class='icon' scale=1.2)
     | choose a file...
@@ -14,7 +14,7 @@ import {EventBus} from '../../../main'
 
 export default {
   methods: {
-    getFileData: function(evt) {
+    readFile: function(evt) {
       const file = evt.target.files[0]      
       if (file) { 
         const rdr = new FileReader()
@@ -29,8 +29,8 @@ export default {
       const lines = file
                       .trim()       // remove last empty line
                       .split('\n')                    
-                      .map(line => line.split(','))   
-                        
+                      .map(line => line.split(','))
+   
       const dimNames = lines[0]
       
       // check valid file format/contents
@@ -46,11 +46,11 @@ export default {
       const ignores = []
 
       // stick data in store
-      const catData = {dimNames, alphas}
-      const candData = {candidates, ignores}
+      const catMeta = {dimNames, alphas}
+      const candMeta = {candidates, ignores}
 
-      this.$store.dispatch('setDimData', catData)
-      this.$store.dispatch('setCandiData', candData)
+      this.$store.dispatch('setDimMeta', catMeta)
+      this.$store.dispatch('setCandMeta', candMeta)
       
       // and let them know it's done
       EventBus.$emit('fileParsed')
