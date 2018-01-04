@@ -8,7 +8,7 @@
       #catNames
         fieldset
           legend category
-          .list(v-for='(dimName, i) in dimNames' :id='i') {{dimName}}
+          .list(v-for='(dimName,i) in dimNames' :id='i') {{dimName}}
       //
 
       #exampleData
@@ -26,14 +26,14 @@
       #maxis(v-if='step>0')
         Maxis(:dimNames='dimNames' :crits='crits')
 
-      #ID(v-if='step > 1')
+      #ID(v-if='step>1')
         ID(:dimNames='dimNames' :firstAlpha='firstAlpha')
     //
 
-  BuildDimData(:catData='newCatData' :cands='cands' v-show='step > 2')
+  BuildDimData(:dimData='newCatData' :candiData='cands' v-show='step>2')
   //
 
-  // - dynamic components? slots? could be part of maxis etc
+  // - dynamic components? via events payload
   #instructions
     div(v-show='step == 0')
       p first, select orderable categories to include in rankings
@@ -77,37 +77,39 @@ import BuildDimData from '../../builders/BuildDimData'
 export default {
   data() {
     return {
-      steps: ['rankable', 'maxi', 'ID'],
-      step: '0',
+      step: 0,
+      crits: [],
       maxis: [],
-      ID: null,
-      crits: []
+      ID: null
     }
   },
 
   components: {
-    Maxis,
     Rankables,
+    Maxis,
     ID,
     BuildCandiData,
     BuildDimData
   },
   
   computed: {
-    catData() {
-      return this.$store.getters.getCatData
+    candiData() {
+      return this.$store.getters.getCandiData
     },
     cands() {
-      return this.$store.getters.getCands
+      return this.candiData.candidates
     },
+    dimData() {
+      return this.$store.getters.getDimData
+    },    
     alphas() {
-      return this.catData.alphas
+      return this.dimData.alphas
     },
     firstAlpha() {
-      return this.catData.alphas[0]
+      return this.dimData.alphas[0]
     },
     dimNames() {
-      return this.catData.dimNames
+      return this.dimData.dimNames
     },
     newCatData() {
       const alphas = this.alphas
@@ -120,10 +122,10 @@ export default {
   },
   
   methods: {
-    hi: (i) => {
+    hi: i => {
       document.getElementById(i).style.color = 'white'
     },
-    unhi: (i) => {
+    unhi: i => {
       document.getElementById(i).style.color = 'black'
     },
     checkRankables() {
@@ -132,43 +134,44 @@ export default {
         this.step = 1
       } else {
         alert('not enough rankables - need at least one!')
-      }
-      
+      }      
     },
     checkMaxis() {
         this.step = 2
         const crits = this.crits
         const maxis = this.maxis
 
-        // first need to make sure maxi is in rankable
-        for (var max of maxis) {
-          if (!crits.includes(max)) { 
+        // need to make sure maxi is in rankable
+        maxis.forEach(max => {
+          if (!crits.includes(max)) {
             alert('maxi not in rank')
             // todo deal with it!
           }
-        }
-        
-        // qq JUST DONE MONSTER SESH
-        // this.buildRankableScoresForCandidates()
-        // this.findRankingsForCandidates()
-
-        // normalise all the rankables!
-        // this.buildNormalisedScoresForCategories()
-        // this.buildNormalisedScoresForCandidates() 
-        // qq
-
+        })
     },
     gotID() {
       this.step = 3      
-      this.$store.dispatch('setCatData', this.newCatData)
+      this.$store.dispatch('setDimData', this.newCatData)
 
-      // do i build dimData out of catData?
-      // don't need norms for all vizzes
-      // but deffo for parallel
-      // but then there's the problem about eligibilty
-      // maybe need inelgibles [] in CandData
 
-      const dimData = this.buildAllDimData() 
+      const allDimData = this.buildAllDimData() 
+      console.log(allDimData)
+      
+      // qq
+      // have all buildData stuff in component
+      // send an event
+      // buildData listens to it
+      // builds data and $stores it
+      
+      // take into account eligible candidates
+      // need ineligibles[] 
+      // norm/stats/ranking needs to check?, or removed from scores?
+      // oooh implications!
+      // scores=[84,302,48,315], rankings=[1,2,0,3]
+      // remove 84 -> rkgs=[f,1,0,2]
+
+
+
 
       // send IDgot event
       // EventBus.$emit('catDataBuilt')
@@ -190,192 +193,111 @@ export default {
           scores.push(cand[d])
         })
 
-        const dimData = {dimName, alpha, crit, maxi, ID, scores}
+        let stats = false
+        let rankings = false
+        let norm = false
+        if (!this.alphas.includes(d)) {
+          stats = this.calcStats(scores)
+          rankings = this.calcRankings(scores)
+          norm = this.normaliseScores(scores)
+        }
+        
+        const dimData = {
+          dimName, alpha, crit, maxi, ID, scores, norm, rankings, stats
+        }
         allDimData[d] = dimData
       })
-      console.log(allDimData)
+
       return allDimData
     },
 
+    calcStats(scores) {
+      const min = Math.min(...scores)
+      const max = Math.max(...scores)
 
-    findRankingsForCandidates() {
-      // todo componentize - it will be handy for ron
-      // also split into smaller functions - bit of a head fuck
-      // should deal with maxis somewhere - or wait for normalize?
-      // var catData = this.catData
-      var rankables = this.rankables
-      var ranksL = rankables.length
-      var dimensions = this.dimensions
-      var dimsL = dimensions.length
-      var allIndexedRankables = []        // qq what?
-      var alphas = this.alphas      
-      var alphasL = alphas.size
-      this.ID = alphas.keys().next().value
-      // console.log({myID})
+      const len = scores.length
+      const total = scores.reduce((total, score) => {
+        return total + score
+      }, 0)
+      const mean = total / len
+
+      const sqrDiffs = scores.map(score => {
+        const diff = score - mean
+        return diff * diff
+      })
+
+      const sqrDiffsTotal = sqrDiffs.reduce((sum, sqD) => {
+        return sum + sqD
+      }, 0)  
+      const meanSqD = sqrDiffsTotal / len
+      const stdDev = Math.sqrt(meanSqD)
       
+      const stats = {min, max, mean, stdDev}
+      return stats
+    },
 
-      for (var a=0; a<alphasL; a++) {
-        allIndexedRankables.push({rankable: false})
-      }
-
-      // for each rankable category
-      // mega reduce or summat!
-      for (var r=0; r<ranksL; r++) {
-        var indexedRankable = []        
-        var scores = dimensions[rankables[r]].values
-
-        // build new array of [{index:0, value:6}, ... {index:3, value:4}]
-        for (var cat = 0; cat<dimsL; cat++) {
-          indexedRankable.push({index: cat, value: scores[cat]})
-        }
+    calcRankings(scores) {
+      let rankings = []
+      const sorted = [...scores].sort((a,b) => {return a-b})
+      
+      scores.forEach((score, i) => {
+        let rank = sorted.indexOf(scores[i])
+        rankings.push(rank)
+      })
+      
+      return rankings
+    },
+    
+    normaliseScores(scores) {
+      // what about maxis??? need to reverse something
+      if (!this.alpha) {
+        let normScores = []
+        const min = Math.min(...scores)
+        const max = Math.max(...scores)
+        const range = max - min
         
-        // then sort that by value
-        indexedRankable.sort(function(a,b) {return a.value - b.value})
-        // min = sorted[0], max = sorted[last]        
-        dimensions[rankables[r]].min = indexedRankable[0].value
-        dimensions[rankables[r]].max = indexedRankable[dimsL-1].value
-
-        allIndexedRankables.push(indexedRankable)
-      } 
-      
-      // can find rankings of ID via my clever method
-      var cands = this.cands
-      var candsL = cands.length
-      // for each candidate,
-      for (var cand=0; cand<candsL; cand++) {
-        var candidate = cands[cand]
-        // for each rankable category
-        for (var ra=0; ra<ranksL; ra++) {
-          // find their ranking by index (?)
-          var rankingInScores  = this.findRankOfCand(cand, allIndexedRankables[rankables[ra]])
-          // add ranking to scores[]
-          candidate.scores[rankables[ra]].ranking = rankingInScores
-        }
+        scores.forEach((score) => {
+          const norm = (score - min)/(range)
+          normScores.push(norm)
+        })
+        return normScores
       }
+      return false 
     },
-    findRankOfCand(x, values) {
-      var rankOfIndex = values.find(v => v.index == x)
-      return values.indexOf(rankOfIndex)
-    },
-    buildNormalisedScoresForCategories() {
-      var categories = this.catData.categories
-      var dimsL = categories.length
-      var normed
-
-      // for all categories
-      for (var c=0; c<dimsL; c++) {
-        var cat = categories[c]
-        // if rankable
-        if (cat.rankable) {
-          // get values
-          var values = cat.values
-          // normalise them
-          normed = this.normalise(values, cat.min, cat.max)
-        } else {
-          // else false?
-          normed = false
-        }
-        // add them to category object
-        cat.normalised = normed
-      }
-    },
-    normalise(a, min, max) {
-      var l = a.length
-      var normalised = []
-      for (var i=0; i<l; i++) {
-        var norm = (a[i] - min) / (max - min)
-        normalised.push(norm)
-      }
-      return normalised
-    },
-    buildNormalisedScoresForCandidates() {
-      var cands = this.cands
-      var candsL = cands.length
-      var dims = this.catData.categories
-      var dimsL = dims.length
-      
-      // for all candidates
-      for (var c=0; c<candsL; c++) {
-        var cand = cands[c]
-      
-        // for all rankable dims
-        for (var i=0; i<dimsL; i++) {
-          var cat = dims[i]
-          if (cat.rankable) {
-            // get normalised score
-            var norm = cat.normalised[c]
-            // add it to candidate score
-            cand.scores[i].normalisedScore = norm
-          } else {
-            cand.scores[i].normalisedScore = false   
-          }
-        }
-
-      }
-    },  
-    makeIDfordims(ID) {
-      var categories = this.catData.categories
-      var dimsL = categories.length 
-      // for each category
-      for (var c=0; c<dimsL; c++) {
-        // set cat.ID to true or false
-        var cat = categories[c]
-          if (c == ID) {
-            cat.ID  = true
-          } else {
-            cat.ID  = false            
-          }
-      }
-    },
-    makeIDforCands(ID) {
-      // alert('boo')
-      var cands = this.cands
-      var candsL = cands.length
-      // for all cands,
-      for (var c=0; c<candsL; c++) {
-        var cand = cands[c]
-        // assign ID
-        var candID = cand.scores[ID].origScore
-        cand.ID = candID
-      // console.log({cand})
-      }
-      
-    }    
   },
-
     
   created() {
+    this.ID = this.alphas[0]
+
     this.dimNames.forEach((d, i) => {
       if(!this.alphas.includes(i)) {
         this.crits.push(i)}  
     })
-    
-    this.ID = this.alphas[0]
 
     // todo fugly - use Sets?
-    EventBus.$on('updateCrits', (i) => {
+    EventBus.$on('updateCrits', i => {
       if (this.crits.includes(i)) {
         const iIdx = this.crits.indexOf(i)
         this.crits.splice(iIdx, 1)
       } else {
         this.crits.push(i)
-        this.crits.sort()
+        // this.crits.sort()
       }
     })
 
     // todo repeated code?    
-    EventBus.$on('updateMaxis', (i) => {
+    EventBus.$on('updateMaxis', i => {
       const maxs = this.maxis
       if (maxs.includes(i)) {
         maxs.splice(maxs.indexOf(i), 1)
       } else {
         maxs.push(i)
-        maxs.sort()   // need sorting? not really
+        // maxs.sort()   // need sorting? not really
       }
       this.maxis = maxs
     })
 
-    EventBus.$on('updateID', (i) => {
+    EventBus.$on('updateID', i => {
       this.ID = i
     })
   }

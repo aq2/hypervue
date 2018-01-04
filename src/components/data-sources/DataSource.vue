@@ -10,7 +10,7 @@
   
   #text
     p First, you need to get some data.
-    p either by uploading a CSV file from you computer,
+    p either by uploading a CSV file from your computer,
     p or you can pick from an exciting range of sources
   
   #links

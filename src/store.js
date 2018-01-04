@@ -1,45 +1,43 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
-  
   // actual contents of the store 
   state: {
-    catData: {},
-    cands: [],
+    dimData: {},
+    candiData: [],
   },
 
   // components get stored data through these 
   getters: {
-    getCands: state => {
-      return state.cands
+    getDimData: state => {
+      return state.dimData
     },
-    getCatData: state => {
-      return state.catData
+    getCandiData: state => {
+      return state.candiData
     }
   },
 
   // actions call these mutators
   // don't call directly!
   mutations: {
-    mutateCands: (state, payload) => {
-      state.cands = payload
+    mutateCandiData: (state, payload) => {
+      state.candiData = payload
     },
-    mutateCatData: (state, payload) => {
-      state.catData = payload
+    mutateDimData: (state, payload) => {
+      state.dimData = payload
     }
   },
 
   // actions (that call mutations) dispatched by component events
   // eg. this.$store.dispatch(actionName, payload)
   actions: {
-    setCands: (context, payload) => {
-      context.commit('mutateCands', payload)
+    setCandiData: (context, payload) => {
+      context.commit('mutateCandiData', payload)
     },
-    setCatData: (context, payload) => {
-      context.commit('mutateCatData', payload)
+    setDimData: (context, payload) => {
+      context.commit('mutateDimData', payload)
     }
   }
 })

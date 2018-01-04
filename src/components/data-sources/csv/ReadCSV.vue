@@ -43,11 +43,14 @@ export default {
       // parse the raw candidates from file
       const rawCands = lines.slice(1)    // remove first headers line
       const {candidates, alphas} = this.deStringVals(rawCands)
-                  
+      const ignores = []
+
       // stick data in store
       const catData = {dimNames, alphas}
-      this.$store.dispatch('setCatData', catData)
-      this.$store.dispatch('setCands', candidates)
+      const candData = {candidates, ignores}
+
+      this.$store.dispatch('setDimData', catData)
+      this.$store.dispatch('setCandiData', candData)
       
       // and let them know it's done
       EventBus.$emit('fileParsed')

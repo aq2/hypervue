@@ -1,6 +1,5 @@
 <template lang="pug">
 
-//- transition(name='fade')
 #CsvSource
     #get(v-if='!fileGot && !dataBuilt')
       h1 get data from csv
@@ -15,7 +14,7 @@
           |  new york,NY,8405837,302.6
           |  boston,MA,645966,48.3
           |  kansas city,MO,467007,315.0
-        GetFileData      
+        ReadCSV      
     //
   
     // does this need to be in its own div?
@@ -29,13 +28,13 @@
 <script>
 
 import {EventBus} from '../../../main'
-import GetFileData from './GetFileData.vue'
+import ReadCSV from './ReadCSV.vue'
 import GetDimInfo from './GetDimInfo.vue'
 import SaveCSVToFB from './SaveCSVtoFB.vue'
 
 export default {
   components: {
-    GetFileData,
+    ReadCSV,
     GetDimInfo,
     SaveCSVToFB
   },

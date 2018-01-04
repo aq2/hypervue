@@ -3,8 +3,7 @@
 fieldset(id='idd')
   legend ID
   .list(v-for='(d, i) in dimNames'
-    @mouseover='hi(i)' 
-    @mouseleave='unhi(i)'
+    @mouseover='hi(i)' @mouseleave='unhi(i)'
   ) 
     label
       input(type='radio' :value='i' @click='changeID(i)' v-model='IDhere')

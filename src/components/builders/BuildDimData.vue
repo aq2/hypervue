@@ -14,8 +14,8 @@ import {EventBus} from '../../main'
 
 export default {
   props: {
-    catData: {type: Object},
-    cands: {type: Array}
+    dimData: {type: Object},
+    candiData: {type: Array}
   },
 
   methods: {

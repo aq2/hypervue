@@ -1,64 +1,83 @@
-sidebar:
-
 doing now:
-  ☐ css of cells @started(17-12-17 03:49)
   ☐ compontentizing 
+.
 
 next:
-  ✔ componentise buildCandData @high @done(31-12 03:08)
-    ☐ should be able to optimise code - try writing fuinctionally? @crit
-    ☐ we're going to need at least normalise 
-    ☐ ranking etc.. for ron in case things change
-    ✔ maxis @done(31-12 03:08)
-    ✔ ID @done(31-12 03:08)
-    
-  .  
-  ☐ custom checkbox (component!) that covers whole cell
+  ✔ should be able to optimise code - try writing fuinctionally? @done(04-01 00:52)
+  ✔ ranking etc.. for ron in case things change @done(04-01 01:30)
   ☐ candidate component?
   ☐ pareto
 .
+    
+general:
+  ☐ minimise complexity -> simpler flow
+  ☐ settings/preferences
+.
 
-data: @normal
+css:
+  ☐ .button class or some router links?
+  ☐ minimise css - share global styles?
+  ☐ header colors?
+  ☐ page colours when fullscreened
+  ☐ user-select false
+  ☐ light/dark color scheme
+.
+
+csv:
+  ☐ dynamic instructions for steps - via events/payload
+  ☐ does everything need to live in same page? - routes
   ☐ save all data to store @normal 
   ☐ save all data to firebase @normal 
   ☐ retrieve data from firebase @normal
 .
 
-js learn:
-  ☐ destructuring
-  ☐ higher order fns
-  ☐ stylus mixins
-  ☐ pug mixins
+sidebar:
+  ☐ height! esp when full screened
+.
 
 later:  
   ☐ deal with maxis @low
-  ☐ css!
-  ☐ sort out missing null data items
   ☐ word cloud map?
-  ☐ slots for changing contents?
   ☐ use flexbox plus vh/vw
-  ✔ header? @done(31-12 03:08)
-  ☐ hover effects on choosedatasource
   ☐ replace all hard-coded stylus colors with global vars
   ☐ replace all magic css vals in px -> rem, and vh/vw
+.
 
 lappy:
   ☐ sort out git for better sync to lappy
   ☐ code settings for lappy  
-//
+.
 
-js:
+js/css learn:
   ☐ sets
-  ☐ iterators
-  ☐ maps!
-  ✔ object methods?? @done(31-12 03:08)
-  ☐ show set in vue console, use computed to turn into spread/array and show that
+  ☐ destructuring
+  ☐ higher order fns
+  ☐ stylus mixins
+  ☐ pug mixins
 .  
 
 other:
+.
 
+
+=====================================================================  
 
 Archive:
+  ✔ css! @done(04-01 00:43)
+  ✔ css of cells @started(17-12-17 03:49) @done(04-01 00:41) @lasted(11 months 13 days 3 hours 7 minutes 50 seconds)
+  ✔ componentise buildCandData @high @done(31-12 03:08)
+  ✔ we're going to need at least normalise @done(04-01 00:41)
+  ✔ maxis @done(31-12 03:08)
+  ✔ ID @done(31-12 03:08)
+  ✔ custom checkbox (component!) that covers whole cell @done(04-01 00:41)
+  ✔ sort out missing null data items @done(04-01 00:42)
+  ✔ header? @done(31-12 03:08)
+  ✔ hover effects on choosedatasource @done(04-01 00:42)
+  ✔ object methods?? @done(31-12 03:08)
+  ✘ slots for changing contents? @cancelled(04-01 00:42)
+  ✘ iterators @cancelled(04-01 00:42)
+  ✘ maps! @cancelled(04-01 00:42)
+  ✘ show set in vue console, use computed to turn into spread/array and show that @cancelled(04-01 00:42)
   ✔ autoselect first alpha as ID @done(17-12-16 22:41)
   ✘ page-controller as alternative to slots -> live in sidebar @cancelled(17-12-16 22:41)
   ✔ browser shortcuts - need new set? @done(17-12-16 22:39)

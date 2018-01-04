@@ -1,5 +1,5 @@
 import Welcome from './components/Welcome.vue'
-import GetFile from './components/data-sources/csv/GetFileData.vue'
+import ReadCSV from './components/data-sources/csv/ReadCSV.vue'
 import DataSource from './components/data-sources/DataSource.vue'
 import CSVSource from './components/data-sources/csv/CSVSource.vue'
 import FirebaseSource from './components/data-sources/firebase/FirebaseSource.vue'
@@ -7,7 +7,7 @@ import FirebaseSource from './components/data-sources/firebase/FirebaseSource.vu
 
 export default [
   {path:'/', component:Welcome},
-  {path:'/get', component:GetFile},
+  {path:'/get', component:ReadCSV},
   {path:'/data', component:DataSource},
   {path:'/data/csv', component:CSVSource},
   {path:'/data/fb', component:FirebaseSource}
