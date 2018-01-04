@@ -14,45 +14,59 @@ export default {
   methods: {
 
     main(allDaMeta) {
-      console.info(1, allDaMeta)
       const {dimMeta, candMeta} = allDaMeta
-      console.log(2, dimMeta)
-      console.log(3, candMeta)
+
+      const dimData = this.buildAllDimData(dimMeta, candMeta)
+      // console.log(dimData)
+
+      // now build candidata
+      const candiData = this.buildCandiData(candMeta, dimData, dimMeta)
+      console.log(candiData)
+
+      // store em
+      this.$store.dispatch('setDimData', dimData)
+      this.$store.dispatch('setCandiData', candiData)
+
+      // now what?
+
+      // want to save it to firebase??
+
+      // choose Viz?
     },
 
-    // take into account eligible candidates
-      // need ineligibles[] 
-      // norm/stats/ranking needs to check?, or removed from scores?
-      // oooh implications!
-      // scores=[84,302,48,315], rankings=[1,2,0,3]
-      // remove 84 -> rkgs=[f,1,0,2]
+    buildAllDimData(dimMeta, candMeta) {
+      const {alphas, crits, dimNames, ID, maxis} = dimMeta
+      const {candidates, ignores} = candMeta
 
-
-    buildAllDimData() {
       let allDimData = {}
-      this.dimNames.forEach((dimName, d) => {
-        const alpha = this.alphas.includes(d)
-        const crit = this.crits.includes(d)
-        const maxi = this.maxis.includes(d)
-        const ID = (d == this.ID)
+      
+      dimNames.forEach((dimName, d) => {
+        const alpha = alphas.includes(d)
+        const crit = crits.includes(d)
+        const maxi = maxis.includes(d)
+        const isID = (d == ID)
         
         // need scores from each cand
         let scores = []
-        this.cands.forEach((cand) => {
-          scores.push(cand[d])
+        candidates.forEach((cand, c) => {
+          let score = cand[d]
+          if (ignores.includes(c)) {
+            score = false
+          }
+          scores.push(score)
         })
 
         let stats = false
         let rankings = false
         let norm = false
-        if (!this.alphas.includes(d)) {
+        if (!alphas.includes(d)) {
           stats = this.calcStats(scores)
           rankings = this.calcRankings(scores)
           norm = this.normaliseScores(scores)
         }
         
         const dimData = {
-          dimName, alpha, crit, maxi, ID, scores, norm, rankings, stats
+          dimName, alpha, crit, maxi, isID, scores, norm, rankings, stats
         }
         allDimData[d] = dimData
       })
@@ -114,7 +128,44 @@ export default {
       return false 
     },
   
+    buildCandiData(candMeta, dimData, dimMeta) {
+      // each candidate has candObj
+      // candID
+      // scores
+      // rankings
+      // norm?
+      // ignored
+      const {candidates, ignores} = candMeta
+      const {ID, alphas, crit, dimNames, maxis} = dimMeta
 
+      let candiData = {}
+      candidates.forEach((cand, c) => {
+        const candID = cand[ID]
+        const scores = cand
+        const ignored = (ignores.includes(c))
+
+        // build rankings, for each dimension
+        let rankings = []
+        let norm = []
+        Object.entries(dimData).forEach(([d, dimObj])=> {
+          // console.log(d, dimObj)
+          let rankForDim = false
+          let normForDim = false
+          if (dimObj.crit) {
+            rankForDim = dimObj.rankings[c]
+            normForDim = dimObj.norm[c]
+          }
+          rankings.push(rankForDim)
+          norm.push(normForDim)
+        })
+
+
+
+        const candObj = {candID, scores, rankings, norm, ignored}
+        candiData[c] = candObj
+      })
+      return candiData
+    }
 
 
     
