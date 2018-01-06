@@ -11,8 +11,7 @@
   
   router-link(to='/viz' id='viz')
     icon(name='area-chart' scale=4)
-    
-    
+
 
 </template>
 

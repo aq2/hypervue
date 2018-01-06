@@ -1,11 +1,8 @@
 doing now:
-  ☐ compontentizing 
+  ☐ fronts
 .
 
 next:
-  ✔ should be able to optimise code - try writing fuinctionally? @done(04-01 00:52)
-  ✔ ranking etc.. for ron in case things change @done(04-01 01:30)
-  ☐ candidate component?
   ☐ pareto
 .
     
@@ -26,9 +23,9 @@ css:
 csv:
   ☐ dynamic instructions for steps - via events/payload
   ☐ does everything need to live in same page? - routes
-  ☐ save all data to store @normal 
   ☐ save all data to firebase @normal 
   ☐ retrieve data from firebase @normal
+  ☐ disable checkboxes on dimInfo after OK
 .
 
 sidebar:
@@ -63,6 +60,11 @@ other:
 =====================================================================  
 
 Archive:
+  ✔ compontentizing @done(06-01 16:04)
+  ✔ should be able to optimise code - try writing fuinctionally? @done(04-01 00:52)
+  ✔ ranking etc.. for ron in case things change @done(04-01 01:30)
+  ✔ save all data to store @normal @done(06-01 16:04)
+  ✘ candidate component? @cancelled(06-01 16:04)
   ✔ css! @done(04-01 00:43)
   ✔ css of cells @started(17-12-17 03:49) @done(04-01 00:41) @lasted(11 months 13 days 3 hours 7 minutes 50 seconds)
   ✔ componentise buildCandData @high @done(31-12 03:08)

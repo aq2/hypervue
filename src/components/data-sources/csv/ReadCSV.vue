@@ -70,7 +70,7 @@ export default {
             if (!alphas.includes(v)) {
               alphas.push(v)
             }
-            value.trim()
+            value = value.trim()
           } else {
             value = Number(value)
           }

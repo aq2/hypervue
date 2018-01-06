@@ -1,6 +1,7 @@
 <template lang="pug">
   
-#deleteMe i'm the BuildDimData component 
+#buildDaData todo: save to firebase
+  router-link(to='/viz' class='throb') choose Viz type
 
 </template>
 
@@ -17,20 +18,13 @@ export default {
       const {dimMeta, candMeta} = allDaMeta
 
       const dimData = this.buildAllDimData(dimMeta, candMeta)
-      // console.log(dimData)
-
-      // now build candidata
       const candiData = this.buildCandiData(candMeta, dimData, dimMeta)
-      console.log(candiData)
 
       // store em
       this.$store.dispatch('setDimData', dimData)
       this.$store.dispatch('setCandiData', candiData)
 
-      // now what?
-
-      // want to save it to firebase??
-
+      // todo want to save it to firebase??
       // choose Viz?
     },
 
@@ -77,22 +71,14 @@ export default {
     calcStats(scores) {
       const min = Math.min(...scores)
       const max = Math.max(...scores)
-
-      const len = scores.length
-      const total = scores.reduce((total, score) => {
-        return total + score
-      }, 0)
-      const mean = total / len
+      const mean = this.mean(scores)
 
       const sqrDiffs = scores.map(score => {
         const diff = score - mean
         return diff * diff
       })
 
-      const sqrDiffsTotal = sqrDiffs.reduce((sum, sqD) => {
-        return sum + sqD
-      }, 0)  
-      const meanSqD = sqrDiffsTotal / len
+      const meanSqD = this.mean(sqrDiffs)
       const stdDev = Math.sqrt(meanSqD)
       
       const stats = {min, max, mean, stdDev}
@@ -101,7 +87,7 @@ export default {
 
     calcRankings(scores) {
       let rankings = []
-      const sorted = [...scores].sort((a,b) => {return a-b})
+      const sorted = [...scores].sort((a,b) => a-b)
       
       scores.forEach((score, i) => {
         let rank = sorted.indexOf(scores[i])
@@ -120,7 +106,7 @@ export default {
         const range = max - min
         
         scores.forEach((score) => {
-          const norm = (score - min)/(range)
+          const norm = (score - min)/range
           normScores.push(norm)
         })
         return normScores
@@ -129,14 +115,8 @@ export default {
     },
   
     buildCandiData(candMeta, dimData, dimMeta) {
-      // each candidate has candObj
-      // candID
-      // scores
-      // rankings
-      // norm?
-      // ignored
       const {candidates, ignores} = candMeta
-      const {ID, alphas, crit, dimNames, maxis} = dimMeta
+      const {ID} = dimMeta
 
       let candiData = {}
       candidates.forEach((cand, c) => {
@@ -147,8 +127,7 @@ export default {
         // build rankings, for each dimension
         let rankings = []
         let norm = []
-        Object.entries(dimData).forEach(([d, dimObj])=> {
-          // console.log(d, dimObj)
+        Object.entries(dimData).forEach(([d, dimObj]) => {
           let rankForDim = false
           let normForDim = false
           if (dimObj.crit) {
@@ -159,19 +138,29 @@ export default {
           norm.push(normForDim)
         })
 
+        const meanRank = this.mean(rankings)
+        const meanNorm = this.mean(norm)
 
-
-        const candObj = {candID, scores, rankings, norm, ignored}
+        const candObj = {candID, scores, rankings, meanRank, norm, meanNorm, ignored}
         candiData[c] = candObj
       })
       return candiData
+    },
+
+    mean(arr) {
+      let length = 0
+      arr.forEach((a) => {
+        if (a !== false) {    // ignore false elements
+          length++
+        }
+      })
+      const total = arr.reduce((total, e) => {
+        return total + e
+      }, 0)
+      const mean = total / length
+      return mean
     }
-
-
-    
-
   },
-
 
  
   created() {
