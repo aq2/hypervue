@@ -1,21 +1,23 @@
 doing now:
-  ☐ fronts
+  ✔ fronts @done(07-01 14:14)
+  ☐ pareto
+    ☐ order front by aveRank
 .
 
 next:
-  ☐ pareto
 .
     
 general:
   ☐ minimise complexity -> simpler flow
   ☐ settings/preferences
+  ☐ put page title in header
 .
 
 css:
   ☐ .button class or some router links?
   ☐ minimise css - share global styles?
   ☐ header colors?
-  ☐ page colours when fullscreened
+  ✔ page colours when fullscreened @done(07-01 16:58)
   ☐ user-select false
   ☐ light/dark color scheme
 .
@@ -29,7 +31,7 @@ csv:
 .
 
 sidebar:
-  ☐ height! esp when full screened
+  ✔ height! esp when full screened @done(07-01 16:59)
 .
 
 later:  

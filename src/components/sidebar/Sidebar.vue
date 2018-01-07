@@ -39,7 +39,6 @@ export default {
   transition .1s all ease-out
   box-sizing border-box
   width 10px
-  height 80vh // todo!
   margin 0
   padding 0
   border-right 2px solid $g2

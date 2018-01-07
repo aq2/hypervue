@@ -38,35 +38,6 @@ export default {
   components: {
     TheHeader,
     TheSidebar
-  },
-  methods: {
-    // todo fugly! copyPasta - switch?
-    toggleFullScreen(e) {
-      const d = document
-      e = e || d.documentElement
-      if (!d.fullscreenElement && !d.mozFullScreenElement &&
-        !d.webkitFullscreenElement && !d.msFullscreenElement) {
-        if (e.requestFullscreen) {
-          e.requestFullscreen()
-        } else if (e.msRequestFullscreen) {
-          e.msRequestFullscreen()
-        } else if (e.mozRequestFullScreen) {
-          e.mozRequestFullScreen()
-        } else if (e.webkitRequestFullscreen) {
-          e.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
-        }
-      } else {
-        if (d.exitFullscreen) {
-          d.exitFullscreen()
-        } else if (d.msExitFullscreen) {
-          d.msExitFullscreen()
-        } else if (d.mozCancelFullScreen) {
-          d.mozCancelFullScreen()
-        } else if (d.webkitExitFullscreen) {
-          d.webkitExitFullscreen()
-        }
-      }
-    }
   }
 }
 
@@ -77,6 +48,7 @@ export default {
 
 html 
   box-sizing border-box
+  height 100%
   
 *, *:before, *:after
   box-sizing inherit
@@ -84,12 +56,21 @@ html
 body 
   margin 0
   background $g4
+  height 100%
+
+#app 
+  height 100%
+  display flex
+  flex-direction column
 
 #page
   display flex
   min-width 800px
+  flex-grow 1
+  // transition all 1s ease
 
 #main  
-  padding 1rem 27px
+  padding 0.25rem 27px 1rem 27px
+  flex-grow 1
 
 </style>

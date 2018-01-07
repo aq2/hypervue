@@ -39,10 +39,11 @@ export default {
     },
     // todo fugly! copyPasta
     toggleFullScreen: () => {
-      var el = document.documentElement
+      const d = document
+      var el = d.documentElement
       // todo - change screen size after toggling!
-      if (!document.fullscreenElement && !document.mozFullScreenElement &&
-        !document.webkitFullscreenElement && !document.msFullscreenElement) {
+      if (!d.fullscreenElement && !d.mozFullScreenElement &&
+        !d.webkitFullscreenElement && !d.msFullscreenElement) {
         if (el.requestFullscreen) {
           el.requestFullscreen()
         } else if (el.msRequestFullscreen) {
@@ -53,14 +54,14 @@ export default {
           el.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
         }
       } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen()
+        if (d.exitFullscreen) {
+          d.exitFullscreen()
         } else if (document.msExitFullscreen) {
-          document.msExitFullscreen()
+          d.msExitFullscreen()
         } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen()
+          d.mozCancelFullScreen()
         } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen()
+          d.webkitExitFullscreen()
         }
       }
     }
