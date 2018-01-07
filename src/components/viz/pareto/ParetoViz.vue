@@ -55,11 +55,16 @@ methods: {
     // aveRanking spreads from 0 to 113
     let normedRanking = aveRanking*100/candsL
     let normedNorm = aveNorm*100*100/candsL
+    
     // console.log('nR', normedRanking)
     // norm ranking spreads from 0 to 100?
     let nodeEl = document.getElementById(c)
     // nodeEl.style.background = 'hsla(120, 100%, 50%, 0.7'
-    nodeEl.style.background = 'hsla(120, 100%, ' + (100-normedNorm) + '%, 0.9'
+    nodeEl.style.background = 'hsla(230, 60%, ' + (100-normedNorm) + '%, 0.9'
+    if (normedNorm > 50) {
+      nodeEl.style.color = 'grey'
+      
+    }
     // nodeEl.style.background = 'hsla(120, 100%, ' + (100-normedRanking) + '%, 0.9'
   },
   orderNodes(c) {
