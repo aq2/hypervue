@@ -64,7 +64,12 @@ export default {
         }
       }
     }
-  
+  },
+
+  created() {
+    EventBus.$on('paretoDataBuilt', () => {
+      this.$router.push('/viz/pareto/viz')
+    } )
   }
 }
 

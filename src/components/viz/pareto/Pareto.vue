@@ -7,6 +7,8 @@
 
 <script>
 
+import {EventBus} from '../../../main'
+
 export default {
   computed: {
     candiData() {
@@ -32,9 +34,16 @@ export default {
       const fronts = this.buildFronts(allSuperiors)
       console.log(fronts)
 
+      // now assign fronts to candidates
+      const newCandidata = this.updateCands(candiData, fronts)
+      console.log(newCandidata)
 
       // don't forget to $store all this stuff
+      this.$store.dispatch('setCandiData', newCandidata)
 
+      // ready to do viz
+      // send event to header to change page
+      EventBus.$emit('paretoDataBuilt')
     },
 
     calcDominances(candiData, candsL) {
@@ -108,19 +117,22 @@ export default {
       return 'equal'
     },
     
-    buildFronts(allSuperiors) {
-      let supsL = allSuperiors.length
+    // seems overly complicated?
+    buildFronts(allSups) {
+      let fronts = []
       let allCands = new Set()
-      for (let i=0; i<supsL; i++) {
+      
+      for (let i=0, l=allSups.length; i<l; i++) {
         allCands.add(i)
       }
-      let fronts = []
 
       while (allCands.size > 0) {
         let front = []
         let aCA = [...allCands]
-        aCA.forEach((c) => {
-          if (allSuperiors[c].length == 0) {
+      
+        // find non-dominated candidates
+        aCA.forEach(c => {
+          if (allSups[c].length == 0) {
             front.push(c)
             allCands.delete(c)
           }
@@ -128,12 +140,12 @@ export default {
         
         fronts.push(front)
 
-        front.forEach((f) => {
-          allCands.delete(f)          
-          allCands.forEach((c) => {
-            const index = allSuperiors[c].indexOf(f)
+        // remove front members from other sups
+        front.forEach(f => {
+          allCands.forEach(c => {
+            const index = allSups[c].indexOf(f)
             if (index != -1) {
-              allSuperiors[c].splice(index, 1)
+              allSups[c].splice(index, 1)
             }
           })
         })
@@ -141,9 +153,17 @@ export default {
       return fronts
     },
 
-  
-
+    updateCands(candiData, fronts) {
+      fronts.forEach((front, f) => {
+        front.forEach(peer => {
+          candiData[peer].pareto.front = f
+          candiData[peer].pareto.peers = front
+        })  
+      })
+      return candiData
+    }
   },
+
   created() {
     this.main()
   }

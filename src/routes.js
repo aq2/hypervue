@@ -5,6 +5,7 @@ import CSVSource from './components/data-sources/csv/CSVSource.vue'
 import FirebaseSource from './components/data-sources/firebase/FirebaseSource.vue'
 import ChooseViz from './components/viz/ChooseVizType.vue'
 import Pareto from './components/viz/pareto/Pareto.vue'
+import ParetoViz from './components/viz/pareto/ParetoViz.vue'
 
 export default [
   {path:'/', component:Welcome},
@@ -13,5 +14,6 @@ export default [
   {path:'/data/csv', component:CSVSource},
   {path:'/data/fb', component:FirebaseSource},
   {path:'/viz', component:ChooseViz},
-  {path:'/viz/pareto', component:Pareto}  
+  {path:'/viz/pareto', component:Pareto},
+  {path:'/viz/pareto/viz', component:ParetoViz}  
 ]
