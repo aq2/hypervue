@@ -11,9 +11,32 @@
   
   router-link(to='/viz' id='viz')
     icon(name='area-chart' scale=4)
-
+    h1 {{vizType}}
 
 </template>
+
+
+<script>
+
+import {EventBus} from '../../main'
+
+export default {
+
+  data() {
+    return {
+      vizType: 'Choose VizType'
+    }
+  },
+
+  created() {
+    this.vizType = 'Choose VizType'
+    EventBus.$on('changeTitle', newTitle => {
+      this.vizType = newTitle
+    })
+  }
+}
+
+</script>
 
 
 <style lang="stylus" scoped>

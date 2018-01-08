@@ -1,7 +1,7 @@
 <template lang="pug">
   
 header
-  #sidebar-toggle(@click='toggleSidebar') 
+  //- #sidebar-toggle(@click='toggleSidebar') 
     .tooltip 
       icon(v-if='sidebarOpen' name='chevron-circle-left' scale=2)
       icon(v-else name='chevron-circle-right' scale=2)

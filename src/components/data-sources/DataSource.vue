@@ -16,13 +16,13 @@
   #links
     ul 
       li
-        router-link(to='data/fb') 
-          icon(name='cloud' scale=4)
-          p get dataset from firebase
-      li
         router-link(to='data/csv')
             icon(name='folder-open' scale=4)
             p get data from CSV file
+      li
+        //- router-link(to='data/fb') 
+        icon(name='cloud' scale=4)
+        p get dataset from firebase
   
 
 </template>

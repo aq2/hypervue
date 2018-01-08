@@ -15,16 +15,27 @@ export default {
       open: true,
     }
   },
+  
   methods: {
     toggle: function() {
       this.open = !this.open
       let sid = document.getElementById('sidebar')
-      sid.style.width = sid.offsetWidth >= 50 ? '10px' : '150px'
+      sid.style.width = sid.offsetWidth >= 50 ? '0px' : '150px'
+    },
+    openUp: function() {
+      this.open = true
+      let sid = document.getElementById('sidebar')
+      sid.style.minWidth = '150px'
     }
   },
+  
   created() {
     EventBus.$on('sidebarToggled', () => {
       this.toggle()
+    })
+    
+    EventBus.$on('sidebarOpen', () => {
+      this.openUp()
     })
   }
 }

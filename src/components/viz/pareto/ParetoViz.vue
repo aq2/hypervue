@@ -1,7 +1,6 @@
 <template lang="pug">
   
 #viz
-  p Pareto dominance plot
   // container for each front
   .front(v-for='(front,f) in fronts') 
     .node(v-for='node in front' :ID='node') {{candName(node)}}
@@ -13,9 +12,11 @@
 
 
 <script>
+import {EventBus} from '../../../main'
 
 export default {
-  
+
+
 computed: {
   candiData() {
     return this.$store.getters.getCandiData
@@ -33,7 +34,12 @@ methods: {
 
   main() {
     // console.log(this.fronts)
+    EventBus.$emit('changeTitle', 'Pareto Dominance Plot')
+
+    // open up sidebar
+    EventBus.$emit('sidebarOpen')
     
+
     // colour da nodes
     Object.entries(this.candiData).forEach(([key, value]) => {
       // console.log(key)
@@ -94,6 +100,9 @@ mounted() {
 
 
 <style lang="stylus" scoped>
+
+#viz 
+  margin-top 1rem
 
 .front
   margin-bottom 2.5rem
