@@ -3,9 +3,13 @@ doing now:
   ☐ pareto
     ☐ order front by aveRank
     ☐ colour node by ranking
+    ✔ dim values in span @done(08-01 23:10)
   ☐ sidebar
     ✔ no sidebar - only for vizzes @done(08-01 18:50)
     ☐ don't need toggle?
+    ✔ dim stats in sidebar @done(08-01 23:09)
+    ✔ unscope? @done(08-01 23:16)
+    ☐ sub-componentize
 .
 
 next:

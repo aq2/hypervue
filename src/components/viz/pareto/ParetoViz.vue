@@ -8,7 +8,7 @@
     // container for each front
     .front(v-for='(front,f) in fronts') 
       .node(v-for='node in front' :ID='node') {{candName(node)}}
-        div(:ID="'nodeSpan'+node") span
+        .value(:ID="'nodeSpan'+node")
 
 </template>
 
@@ -19,6 +19,7 @@ import TheSidebar from '../sidebar/Sidebar'
 
 
 export default {
+
 components: {
   TheSidebar
 },
@@ -32,6 +33,9 @@ computed: {
   },
   fronts() {
     return this.candMeta.fronts
+  },
+  dimMeta() {
+    return this.$store.getters.getDimMeta
   }
   
 },
@@ -92,9 +96,36 @@ methods: {
     let nodeEl = document.getElementById(c)
     // nodeEl.style.background = 'hsla(120, 100%, 50%, 0.7'
     nodeEl.style.order = parseInt(aveRanking)
-  }
+  },
+
+  showDimValues(d) {
+      // show dim stats for each node
+      const candiData = this.candiData
+      Object.entries(candiData).forEach(([c, cand]) => {
+        // get normalised score for dimension for candidate
+        const myNorm = cand.norm[d]
+        // console.log(myNorm)
+
+        // change span width of each candidate
+        const nodeSpan = document.getElementById('nodeSpan'+c)
+        // nodeSpan.style.backgroundColor = 'orange'
+        nodeSpan.style.width = (myNorm*100) + '%'
+        nodeSpan.innerHTML = this.dimMeta.dimNames[d] + ':' + cand.scores[d]
+
+      })
+    },
+
+
 
 },
+
+created() {
+  EventBus.$on('showDimValues', (d) => {
+      console.log('show ', d)
+      this.showDimValues(d)
+    })
+},
+
 
 mounted() {
   this.main()
@@ -112,7 +143,10 @@ mounted() {
   // height 100%
   // flex-grow 1
 
-
+#sidebar 
+  position relative
+  top -40px
+  height 99vh
 
 //
 
@@ -123,7 +157,7 @@ mounted() {
   
 
 .front
-  margin-bottom 2.5rem
+  margin-bottom 3rem
   display flex
   flex-wrap wrap
   justify-content space-evenly
@@ -133,7 +167,7 @@ mounted() {
   width 140px
   max-width 140px
   height 2.5rem
-  background green
+  // background green
   border 2px solid $g3
   border-radius 0.5rem
   margin-bottom 0.2rem
@@ -141,5 +175,10 @@ mounted() {
   padding 0.05rem
   font-size 0.9rem
   // margin-right 0.2rem
+
+.value
+  background green
+  color #222
+
 
 </style>
