@@ -2,7 +2,7 @@
   
 #BuildCandidata
   h1 category meta-data
-  fieldset
+  fieldset(class='mainFieldset')
     legend(class='title') please select...
     #exampleTable
       #catNames
@@ -203,12 +203,15 @@ export default {
 
 @import 'inputs'
 
+#BuildCandidata 
+  // padding 1rem
+
+.mainFieldset
+  width 400px  // dunno why this works
+
 #exampleTable 
+  // padding 1rem 0
   display flex
-  padding 1rem 0
-  
-  > div
-    flex-basis 160px
 
 #exampleTable > div:last-child fieldset
   margin-right 0
@@ -223,6 +226,7 @@ export default {
   margin 1rem 0
   background $g5
   padding 0.5rem 1rem
+  width 600px
 
 
 </style>

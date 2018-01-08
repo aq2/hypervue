@@ -60,12 +60,13 @@ export default {
 <style lang="stylus" scoped>
 
 #CsvSource
-  // padding 5px 10px
+  padding 1rem
 
 #text 
   background $g5
   padding 0.5rem 1rem
   margin 1rem 0
+  width 600px
 
 </style>
 

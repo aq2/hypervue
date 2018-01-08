@@ -28,6 +28,9 @@
 
 <style lang="stylus" scoped>
 
+#DataSource 
+  padding 1rem
+
 .spacer 
   width 50px
   display inline-block
@@ -41,7 +44,7 @@
 ul
   padding 0 
   max-width 1020px
-  margin 0 auto
+  // margin 0 auto
   list-style-type none
   display flex
   justify-content space-around

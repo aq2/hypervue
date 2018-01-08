@@ -1,21 +1,27 @@
 <template lang="pug">
-  
-#viz
-  // container for each front
-  .front(v-for='(front,f) in fronts') 
-    .node(v-for='node in front' :ID='node') {{candName(node)}}
 
+#page  
+  #sidebar
+    TheSidebar
 
-
+  #viz
+    // container for each front
+    .front(v-for='(front,f) in fronts') 
+      .node(v-for='node in front' :ID='node') {{candName(node)}}
+        div(:ID="'nodeSpan'+node") span
 
 </template>
 
 
 <script>
 import {EventBus} from '../../../main'
+import TheSidebar from '../sidebar/Sidebar'
+
 
 export default {
-
+components: {
+  TheSidebar
+},
 
 computed: {
   candiData() {
@@ -37,7 +43,7 @@ methods: {
     EventBus.$emit('changeTitle', 'Pareto Dominance Plot')
 
     // open up sidebar
-    EventBus.$emit('sidebarOpen')
+    // EventBus.$emit('sidebarOpen')
     
 
     // colour da nodes
@@ -81,7 +87,7 @@ methods: {
     let aveNorm = cand.meanNorm
     // aveRanking spreads from 0 to 113
     // let normedNorm = aveNorm*100*100/candsL
-    console.log('c', c, aveRanking)
+    // console.log('c', c, aveRanking)
     // norm ranking spreads from 0 to 100?
     let nodeEl = document.getElementById(c)
     // nodeEl.style.background = 'hsla(120, 100%, 50%, 0.7'
@@ -101,8 +107,20 @@ mounted() {
 
 <style lang="stylus" scoped>
 
+#page 
+  display flex  // sideways
+  // height 100%
+  // flex-grow 1
+
+
+
+//
+
+
 #viz 
-  margin-top 1rem
+  margin-top .5rem
+  // overflow hidden
+  
 
 .front
   margin-bottom 2.5rem
@@ -112,15 +130,16 @@ mounted() {
 
 .node
   flex-grow 1
-  width 150px
-  max-width 150px
-  height 2.75rem
+  width 140px
+  max-width 140px
+  height 2.5rem
   background green
   border 2px solid $g3
   border-radius 0.5rem
   margin-bottom 0.2rem
   text-align center
-  padding 0.2rem
+  padding 0.05rem
+  font-size 0.9rem
   // margin-right 0.2rem
 
 </style>

@@ -6,11 +6,11 @@
     h1 HyperDViz
 
   router-link(to='/data' id='data')
-    icon(name='database' scale=3)
+    icon(name='file-excel-o' scale=3)
     h1 data source
   
   router-link(to='/viz' id='viz')
-    icon(name='area-chart' scale=4)
+    icon(name='area-chart' scale=3)
     h1 {{vizType}}
 
 </template>
@@ -43,7 +43,8 @@ export default {
 
 #links 
   display flex
-  max-width 1000px
+  max-width 50vw
+  margin 0 auto
 
 #links>div
   display flex
@@ -55,7 +56,7 @@ a
   display flex
   color darkblue
   padding-left 1rem
-  max-height 70px
+  max-height 60px
 
 h1 
   display none
@@ -64,11 +65,13 @@ h1
   color lime
   background $g3
   flex-grow 1
+  // border-bottom 2px lime solid
 
 .router-link-active h1  
   display inline-block
   padding-left 1rem
   margin 0
+  color lime
 
 
 </style>

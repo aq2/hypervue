@@ -13,10 +13,6 @@
       p or with the &nbsp;
         icon(name='window-restore' scale=2)
         | &nbsp; button at top-right
-      span you can also toggle the sidebar by clicking on &nbsp; 
-        icon(name='chevron-circle-right' scale=2)
-        | &nbsp; top left
-      br 
       br    
       p press the 'next page' button below to continue
 
@@ -28,6 +24,9 @@
 
 <style lang="stylus" scoped>
 
+#welcome 
+  margin 1rem
+
 #icon 
   font-size 6rem
   text-align center
@@ -36,15 +35,7 @@
   margin 1rem 0
   background $g5
   padding 0.5rem 1rem
-
-#link
-  // width 150px
-  // padding 0.5em
-  // background blue
-  // text-align center
-  // border-radius 5px
-  // border 2px solid yellow
-  // animation throb linear 2s infinite
+  width 600px
 
 a  
   background blue

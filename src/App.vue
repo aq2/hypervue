@@ -2,10 +2,8 @@
 
 #app       
   TheHeader
-  #page
-    TheSidebar
-    #main  
-      router-view
+  #page  
+    router-view
     
 </template>
 
@@ -13,7 +11,6 @@
 <script>
 
 import TheHeader from './components/header/Header.vue'
-import TheSidebar from './components/sidebar/Sidebar.vue'
 
 // Initialize Firebase
 let config = {
@@ -35,9 +32,9 @@ export default {
   firebase: {
     massages: messagesRef   // qq
   },
+  
   components: {
-    TheHeader,
-    TheSidebar
+    TheHeader
   }
 }
 
@@ -60,17 +57,5 @@ body
 
 #app 
   height 100%
-  display flex
-  flex-direction column
-
-#page
-  display flex
-  min-width 800px
-  flex-grow 1
-  // transition all 1s ease
-
-#main  
-  padding 0.25rem 27px 1rem 27px
-  flex-grow 1
 
 </style>

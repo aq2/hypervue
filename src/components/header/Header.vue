@@ -64,6 +64,9 @@ export default {
           d.webkitExitFullscreen()
         }
       }
+      
+      EventBus.$emit('sidebarHeight')
+      
     }
   },
 
@@ -81,8 +84,8 @@ export default {
 
 header 
   background $g3
-  height 74px
-  border-bottom 2px solid $g2
+  height 60px
+  // border-bottom 2px solid $g2
   display flex
 
 #headerLinks 
