@@ -3,7 +3,7 @@
 #getFile
   input(type="file" id='browseFile' accept=".csv, text/csv" @change='readFile')
   label(id='browseLabel' for='browseFile') 
-    icon(name='upload' class='icon' scale=1.2)
+    icon(name='upload' class='btnIcon' scale=1.2)
     | choose a file...
   
 </template>
@@ -106,18 +106,17 @@ export default {
   position absolute
 
 label
+  color $g9
+  padding 0.5rem
   background blue
-  padding 0.5rem 0.25rem
-  border-radius 0.5rem
-  border 1px solid $g5
   animation throb linear 2s infinite
   link(0.5rem)
   &:hover
     cursor pointer
     background lightblue
 
-.icon
-  margin-right 15px
+.btnIcon
+  margin-right 1rem
   margin-bottom -2px
 
 </style>

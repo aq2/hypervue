@@ -1,16 +1,22 @@
 <template lang='pug'>
 
 #app       
-  TheHeader
-  #page  
-    router-view
+  #sidebar
+    TheSideBar
+  #main 
+    #header
+      TheHeader
+    #page
+      router-view
+
     
 </template>
 
 
 <script>
 
-import TheHeader from './components/header/Header.vue'
+import TheHeader from './components/header/Header'
+import TheSideBar from './components/sidebar/Sidebar'
 
 // Initialize Firebase
 let config = {
@@ -34,6 +40,7 @@ export default {
   },
   
   components: {
+    TheSideBar,
     TheHeader
   }
 }
@@ -43,19 +50,42 @@ export default {
 
 <style lang="stylus">
 
-html 
+* 
   box-sizing border-box
-  height 100%
-  
-*, *:before, *:after
-  box-sizing inherit
+
+html 
+  color #111
+  font-size 1.2em
+  font-family Ubuntu, Helvetica, Arial, sans-serif
 
 body 
   margin 0
-  background $g4
-  height 100%
+  padding 0
 
 #app 
-  height 100%
+  display flex        // sidebar 'fixed', #main grows
+
+#sidebar
+  background blue
+  max-height 100vh
+  min-height 99.999vh
+
+#main 
+  margin 0
+  padding 0
+  flex-grow 1         // expands sideways to fill
+  background $g5
+
+#header 
+  margin 0
+  padding 0
+  height 60px
+  flex-grow 1         // fills width
+  background $g3
+
+#page  
+  margin 0
+  padding 1rem 0 0 1rem
+  background $g5
 
 </style>

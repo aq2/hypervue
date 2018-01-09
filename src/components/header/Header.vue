@@ -83,9 +83,6 @@ export default {
 <style lang="stylus" scoped>
 
 header 
-  background $g3
-  height 60px
-  // border-bottom 2px solid $g2
   display flex
 
 #headerLinks 

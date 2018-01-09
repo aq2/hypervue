@@ -7,12 +7,13 @@
   icon(name='upload' scale=8)
   .spacer
   icon(name='tasks' scale=8)
-  
+  br 
+  br
   #text
     p First, you need to get some data.
     p either by uploading a CSV file from your computer,
     p or you can pick from an exciting range of sources
-  
+  br
   #links
     ul 
       li
@@ -23,15 +24,12 @@
         //- router-link(to='data/fb') 
         icon(name='cloud' scale=4)
         p get dataset from firebase
+ 
   
-
 </template>
 
 
 <style lang="stylus" scoped>
-
-#DataSource 
-  margin 1rem
 
 .spacer 
   width 50px
@@ -39,34 +37,32 @@
   text-align center
 
 #text 
-  background $g5
-  padding 0.5rem 1rem
-  margin 1rem 0
   width 600px
+  padding 1rem
+  background $g7
 
 ul
-  padding 0 
-  max-width 1020px
-  // margin 0 auto
-  list-style-type none
+  margin 0
+  padding 0
   display flex
+  max-width 600px
+  list-style-type none
   justify-content space-around
 
 li
-  background $blue
-  padding .5rem
-  margin 1rem 0
-  border-radius 5px
-  font-size 1.05rem
-  transition 0.5s all ease
-  text-align center
   flex-grow 1
+  margin 1rem 0
+  padding .5rem
+  background $blue
+  font-size 1.05rem
+  text-align center
+  border-radius 5px
   border 2px solid blue
+  transition 0.5s all ease
   animation throb linear 2s infinite
 
 li:hover
   background green
-
 
 h1 
   margin 0 0 1rem 0

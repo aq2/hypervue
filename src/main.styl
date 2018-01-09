@@ -2,60 +2,44 @@
 @import 'styles/_mixins'
 @import 'styles/*'
 
-html
-  color #111
-  font-size 1.2em
-  font-family Ubuntu, Helvetica, Arial, sans-serif
 
 h1
+  margin 0
+  color #111
   font-size 2rem
   font-family Merriweather
-  margin-top 0.5rem
-  color #111
-  
-  // padding 0
-  // margin .75rem 0
 
 p
   color #111
-  
-
 
 a
-  // color $g8
-  text-decoration-line none
-  font-size 1.2rem
-  outline none
   color $g9
-  background $g3
-  padding 0.2rem 0.2rem
-  display inline-block
-  min-width 140px
-  text-align center
+  outline none
   link(0.5rem)
+  min-width 140px
+  background blue
+  font-size 1.2rem
+  text-align center
+  display inline-block
+  padding 0.2rem 0.2rem
+  text-decoration-line none
 
 
-/* Flash class and keyframe animation */
+//  ---  animations   ---
+//
+
 .flash
-  // color $green
   animation flash linear 2s infinite
-  // font-size 24px
-  // border 1px solid $green
 
 .throb
-  // border 2px solid green
   animation throb linear 2s infinite
-    
 
 @keyframes flash
-  0% { opacity: 1; } 
+  0% { opacity: 1 } 
   50% { opacity: .2 } 
-  100% { opacity: 1; }
+  100% { opacity: 1 }
 
 @keyframes throb
   0% { border-color: green } 
   50% { border-color: blue } 
   100% { border-color: green }
-
-
-// button

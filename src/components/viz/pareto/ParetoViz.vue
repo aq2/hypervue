@@ -2,7 +2,7 @@
 
 #pViz  
   #sidebar
-    TheSidebar
+    //- TheSidebar
 
   #viz
     .front(v-for='(front,f) in fronts') 
@@ -15,12 +15,12 @@
 <script>
 
 import {EventBus} from '../../../main'
-import TheSidebar from '../sidebar/Sidebar'
+// import TheSidebar from '../sidebar/Sidebar'
 
 export default {
 
 components: {
-  TheSidebar
+  // TheSidebar
 },
 
 computed: {
