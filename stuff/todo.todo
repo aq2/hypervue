@@ -1,64 +1,67 @@
 doing now:
   ☐ pareto
     ☐ something not right about order/color  @crit
-  ☐ sidebar
-    ☐ don't need toggle?
-    ☐ sub-componentize
-.
-
-next:
-  ☐ sidebar Height?
-.
+    ☐ dominace relations
     
-general:
-  ☐ minimise complexity -> simpler flow
-  ☐ settings/preferences
-  ☐ put page title in header
-.
+.    
+sidebar:
+  ☐ sub-componentize
+  ☐ select rather than radio
+  ☐ search for cand - highlight/grow
+  ☐ accordian slideable sidebar components when it gets too big
+  ☐ return of sidebar
+    ☐ always there, but sometimes 0, toggleable for vizzes
+    ☐ three states: hidden, open, closed
 
+.
+databar/multibar:
+  ☐ databar - multibar sparkline sorta
+  ☐ height and width of databar
+    
+.    
+general:
+  ☐ settings/preferences
+  ☐ peers average? useful for databar somehow?
+  
+.
+header:
+  ☐ put page title in header
+  ☐ use header space for < and ?
+  ☐ header colors?
+
+.
 css:
   ☐ .button class or some router links?
-  ☐ minimise css - share global styles?
-  ☐ header colors?
   ☐ user-select false
   ☐ light/dark color scheme
-.
 
+.
 csv:
   ☐ dynamic instructions for steps - via events/payload
   ☐ does everything need to live in same page? - routes
   ☐ save all data to firebase @normal 
   ☐ retrieve data from firebase @normal
   ☐ disable checkboxes on dimInfo after OK
-.
 
-sidebar:
 .
-
 later:  
   ☐ deal with maxis @low
   ☐ word cloud map?
   ☐ replace all hard-coded stylus colors with global vars
   ☐ replace all magic css vals in px -> rem, and vh/vw
-.
+  ☐ instructions
 
-lappy:
-  ☐ sort out git for better sync to lappy
-  ☐ code settings for lappy  
 .
-
 js/css learn:
   ☐ stylus mixins
   ☐ pug mixins
-.  
-
-other:
-.
-
+  
 
 =====================================================================  
 
 Archive:
+  ✔ minimise complexity -> simpler flow @done(09-01 19:25)
+  ✔ minimise css - share global styles? @done(09-01 20:11)
   ✔ fronts @done(07-01 14:14)
   ✔ order front by aveRank @done(09-01 01:56)
   ✔ colour node by ranking @done(09-01 01:56)

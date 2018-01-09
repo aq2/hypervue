@@ -10,10 +10,12 @@
 import {EventBus} from '../../../main'
 
 export default {
+
 computed: {
   candiData() {
     return this.$store.getters.getCandiData
   },
+  
   candMeta() {
     return this.$store.getters.getCandMeta
   }
@@ -21,7 +23,6 @@ computed: {
 
 methods: {
   main() {
-    console.log('--- pareto ready ---')
     const candiData = this.candiData
     const candsL = Object.keys(candiData).length
 
@@ -65,10 +66,8 @@ methods: {
           const dominator = this.compareCands(rankA, rankB)
           
           if (dominator == 'A') {
-            // add B to A's inferiors
-            infA.push(b)
-            // add A to B's superiors
-            supB.push(a)            
+            infA.push(b)            // add B to A's inferiors
+            supB.push(a)            // add A to B's superiors
           } else
           if (dominator == 'B') {
             infB.push(a)
@@ -81,28 +80,25 @@ methods: {
   },
 
   compareCands(ranksA, ranksB) {
-    const [firstIdx, firstWinner] = this.findFirstWinner(ranksA, ranksB)
-    const dominator = this.findDominator(firstIdx, firstWinner, ranksA, ranksB)
+    const [firstIdx, leader] = this.getLeader(ranksA, ranksB)
+    const dominator = this.getDominator(firstIdx, leader, ranksA, ranksB)
     return dominator
   },
 
-  findDominator(firstIdx, firstWinner, ranksA, ranksB) {
+  getDominator(firstIdx, leader, ranksA, ranksB) {
     for (let i=firstIdx+1, len=ranksA.length; i<len; i++) {
-      if ((ranksA[i] > ranksB[i]) && (firstWinner == 'A')) {
-        // no dominance - A was best, but now B is
-        return false
-      } else
-      if ((ranksB[i] > ranksA[i]) && (firstWinner == 'B')) {
+      if (((ranksA[i] > ranksB[i]) && (leader == 'A')) 
+      || ((ranksB[i] > ranksA[i]) && (leader == 'B'))) {
         // no dominance
         return false
-      } 
+      }
     }
-    return firstWinner
+    return leader
   },
 
-  findFirstWinner(ranksA, ranksB) {
+  getLeader(ranksA, ranksB) {
     for (let d=0, len=ranksA.length; d<len; d++) {
-      if (ranksA[d] > ranksB[d]) {  // B is better
+      if (ranksA[d] > ranksB[d]) {  // B is better at first
         return [d, 'B']
       } else
       if (ranksA[d] < ranksB[d]) {  // A is better
@@ -113,7 +109,7 @@ methods: {
     return 'equal'
   },
   
-  // seems overly complicated?
+  // seems overly complicated? - recursion?
   buildFronts(allSups) {
     let fronts = []
     let allCands = new Set()

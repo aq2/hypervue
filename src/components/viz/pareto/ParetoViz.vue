@@ -1,11 +1,10 @@
 <template lang="pug">
 
-#page  
+#pViz  
   #sidebar
     TheSidebar
 
   #viz
-    // container for each front
     .front(v-for='(front,f) in fronts') 
       .node(v-for='node in front' :ID='node') {{candName(node)}}
         .value(:ID="'nodeSpan'+node")
@@ -14,9 +13,9 @@
 
 
 <script>
+
 import {EventBus} from '../../../main'
 import TheSidebar from '../sidebar/Sidebar'
-
 
 export default {
 
@@ -42,33 +41,26 @@ computed: {
 
 data() {
   return {
-    orderMethod: "rank",
-    colourMethod: "rank"
-    
+    orderMethod: "score",
+    colourMethod: "score"    
   }
 },
 
 methods: {
-
   main() {
-    // console.log(this.fronts)
     EventBus.$emit('changeTitle', 'Pareto Dominance Plot')
-
-    // colour da nodes
-    Object.entries(this.candiData).forEach(([key, value]) => {
-      // console.log(key)
-      this.colourNodes(key)
-      this.orderNodes(key)
-    })
+    this.orderAllNodes()
+    this.colourAllNodes()
   },
   
   orderAllNodes() {
-    Object.entries(this.candiData).forEach(([key, value]) => {
+    Object.keys(this.candiData).forEach(key => {
       this.orderNodes(key)
     })
   },
+
   colourAllNodes() {
-    Object.entries(this.candiData).forEach(([key, value]) => {
+    Object.keys(this.candiData).forEach(key => {
       this.colourNodes(key)
     })
   },
@@ -137,6 +129,7 @@ methods: {
     })
   },
 
+  // todo - yuck?
   orderBy(meth) {
     this.orderMethod  = meth
     this.orderAllNodes()
@@ -163,7 +156,6 @@ created() {
   })
 },
 
-
 mounted() {
   this.main()
 }
@@ -175,18 +167,18 @@ mounted() {
 
 <style lang="stylus" scoped>
 
-#page 
+#pViz 
   display flex  // sideways
+  height 90vh
   
 #sidebar 
   position relative
   top -30px
-  height 99.9vh
+  height 95vh
 
-
-#viz 
+#viz
+  margin 0
   margin-top .5rem
-  
 
 .front
   margin-bottom 3rem
@@ -209,6 +201,5 @@ mounted() {
 .value
   background green
   color #222
-
 
 </style>

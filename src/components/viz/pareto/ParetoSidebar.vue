@@ -13,19 +13,19 @@
     h3 order by
     //- radio buttons?
     label mean rank
-      input(type='radio' value=1 @click="orderBy('rank')" v-model='oB')
+      input(type='radio' value=1 @click="orderBy('rank')" v-model='ordBy')
       span(class='checkmark radio')
     label mean score
-      input(type='radio' value=2 @click="orderBy('score')" v-model='oB')
+      input(type='radio' value=2 @click="orderBy('score')" v-model='ordBy')
       span(class='checkmark radio')
   hr
   #colour
     h3 colour by
     label mean rank
-      input(type='radio' value=1 @click="colourBy('rank')" v-model='cB')
+      input(type='radio' value=1 @click="colourBy('rank')" v-model='colBy')
       span(class='checkmark radio')
     label mean score
-      input(type='radio' value=2 @click="colourBy('score')" v-model='cB')
+      input(type='radio' value=2 @click="colourBy('score')" v-model='colBy')
       span(class='checkmark radio')
     //- radio buttons?
   hr
@@ -41,70 +41,71 @@
 import {EventBus} from '../../../main'
 
 export default {
-  computed: {
-    candiData() {
-      return this.$store.getters.getCandiData
-    },
-    dimMeta() {
-      return this.$store.getters.getDimMeta
-    },
-    dimData() {
-      return this.$store.getters.getDimData
-    },
-    dimNames() {
-      return this.dimMeta.dimNames
-    },
-    crits() {
-      return this.dimMeta.crits
-    }
+computed: {
+  candiData() {
+    return this.$store.getters.getCandiData
   },
-  data() {
-    return {
-      oB: 1,      // sets default radio for orderBy
-      cB: 2      // sets default radio for orderBy
-    }
+  dimMeta() {
+    return this.$store.getters.getDimMeta
   },
-
-  methods: {
-    showDim(d) {
-      // reset color for t'others
-      const allDims = [...document.getElementsByClassName('dim')]
-      allDims.forEach(d => {
-        d.style.color = '#111'
-      })
-
-      // set color for clicked dim
-      const dim = document.getElementById('dim' + d)
-      dim.style.color = '#89a'
-
-      // change span widths in viz
-      EventBus.$emit('showDimValues', d)
-    },
-
-    dimCrit(d) {
-      return (this.crits.includes(d))
-    },
-
-    stats(d) {
-      const stats = this.dimData[d].stats
-      let roundStats = {}
-      Object.entries(stats).forEach(([k,v]) => {
-        roundStats[k] = Math.round(v)
-      })
-      return roundStats
-    },
-
-    orderBy(meth) {
-      // emit event to viz
-      EventBus.$emit('orderBy', meth)
-    },
-
-    colourBy(meth) {
-      // emit event to viz
-      EventBus.$emit('colourBy', meth)
-    }
-
+  dimData() {
+    return this.$store.getters.getDimData
+  },
+  dimNames() {
+    return this.dimMeta.dimNames
+  },
+  crits() {
+    return this.dimMeta.crits
   }
+},
+
+data() {
+  return {
+    ordBy: 1,      // sets default radio for orderBy
+    colBy: 2      // sets default radio for orderBy
+  }
+},
+
+methods: {
+  showDim(d) {
+    // reset color for t'others
+    const allDims = [...document.getElementsByClassName('dim')]
+    allDims.forEach(d => {
+      d.style.color = '#111'
+    })
+
+    // set color for clicked dim
+    const dim = document.getElementById('dim' + d)
+    dim.style.color = '#89a'
+
+    // change span widths in viz
+    EventBus.$emit('showDimValues', d)
+  },
+
+  dimCrit(d) {
+    return (this.crits.includes(d))
+  },
+
+  stats(d) {
+    const stats = this.dimData[d].stats
+    let roundStats = {}
+    Object.entries(stats).forEach(([k,v]) => {
+      roundStats[k] = Math.round(v)
+    })
+    return roundStats
+  },
+
+  orderBy(meth) {
+    // emit event to viz
+    EventBus.$emit('orderBy', meth)
+  },
+
+  colourBy(meth) {
+    // emit event to viz
+    EventBus.$emit('colourBy', meth)
+  }
+
+}
 }
 
 </script>
@@ -116,19 +117,16 @@ export default {
 
 label 
   margin 0
-  // display block
   width 120px
-  // font-size 0.9rem 
 
 label span
   margin-left 105px
-  // position static
 
 .checkmark
   background-color $g4
 
 .dim
-  margin-bottom 0.25rem
+  margin-bottom 0.5rem
   color $g9
 
 .stats p
@@ -139,16 +137,14 @@ p
   margin 0
 
 h3  
-  // padding-top 0.25rem
   margin 0
   padding 0
-  // margin-bottom 0.25rem
+  margin-bottom 0.25rem
 
 hr 
   border 0
   border-top 2px dotted $g5
   width 100px
-  margin 0.25rem auto
-
+  margin 0.5rem auto
 
 </style>
