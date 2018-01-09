@@ -8,13 +8,27 @@
     .stats(:ID="'span'+d")
       p range: {{stats(d).min}} - {{stats(d).max}}
       p mean:{{(stats(d).mean)}} sd:{{stats(d).stdDev}}
-    hr
+  hr
   #order
     h3 order by
-    hr
+    //- radio buttons?
+    label mean rank
+      input(type='radio' value=1 @click="orderBy('rank')" v-model='oB')
+      span(class='checkmark radio')
+    label mean score
+      input(type='radio' value=2 @click="orderBy('score')" v-model='oB')
+      span(class='checkmark radio')
+  hr
   #colour
     h3 colour by
-    hr
+    label mean rank
+      input(type='radio' value=1 @click="colourBy('rank')" v-model='cB')
+      span(class='checkmark radio')
+    label mean score
+      input(type='radio' value=2 @click="colourBy('score')" v-model='cB')
+      span(class='checkmark radio')
+    //- radio buttons?
+  hr
   #search
     h3 search
     | insert search here
@@ -42,6 +56,12 @@ export default {
     },
     crits() {
       return this.dimMeta.crits
+    }
+  },
+  data() {
+    return {
+      oB: 1,      // sets default radio for orderBy
+      cB: 2      // sets default radio for orderBy
     }
   },
 
@@ -74,15 +94,41 @@ export default {
       return roundStats
     },
 
+    orderBy(meth) {
+      // emit event to viz
+      EventBus.$emit('orderBy', meth)
+    },
+
+    colourBy(meth) {
+      // emit event to viz
+      EventBus.$emit('colourBy', meth)
+    }
+
   }
 }
+
 </script>
 
 
 <style lang="stylus" scoped>
 
+@import '../../../components/data-sources/csv/inputs'
+
+label 
+  margin 0
+  // display block
+  width 120px
+  // font-size 0.9rem 
+
+label span
+  margin-left 105px
+  // position static
+
+.checkmark
+  background-color $g4
+
 .dim
-  margin-bottom 0.5rem
+  margin-bottom 0.25rem
   color $g9
 
 .stats p
@@ -93,14 +139,16 @@ p
   margin 0
 
 h3  
-  padding-top 0.25rem
-  margin-bottom 0.25rem
+  // padding-top 0.25rem
+  margin 0
+  padding 0
+  // margin-bottom 0.25rem
 
 hr 
   border 0
   border-top 2px dotted $g5
   width 100px
-  margin 10px auto
+  margin 0.25rem auto
 
 
 </style>

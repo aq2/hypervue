@@ -1,14 +1,8 @@
 doing now:
-  ✔ fronts @done(07-01 14:14)
   ☐ pareto
-    ☐ order front by aveRank
-    ☐ colour node by ranking
-    ✔ dim values in span @done(08-01 23:10)
+    ☐ something not right about order/color  @crit
   ☐ sidebar
-    ✔ no sidebar - only for vizzes @done(08-01 18:50)
     ☐ don't need toggle?
-    ✔ dim stats in sidebar @done(08-01 23:09)
-    ✔ unscope? @done(08-01 23:16)
     ☐ sub-componentize
 .
 
@@ -26,7 +20,6 @@ css:
   ☐ .button class or some router links?
   ☐ minimise css - share global styles?
   ☐ header colors?
-  ✔ page colours when fullscreened @done(07-01 16:58)
   ☐ user-select false
   ☐ light/dark color scheme
 .
@@ -40,13 +33,11 @@ csv:
 .
 
 sidebar:
-  ✔ height! esp when full screened @done(07-01 16:59)
 .
 
 later:  
   ☐ deal with maxis @low
   ☐ word cloud map?
-  ☐ use flexbox plus vh/vw
   ☐ replace all hard-coded stylus colors with global vars
   ☐ replace all magic css vals in px -> rem, and vh/vw
 .
@@ -57,9 +48,6 @@ lappy:
 .
 
 js/css learn:
-  ☐ sets
-  ☐ destructuring
-  ☐ higher order fns
   ☐ stylus mixins
   ☐ pug mixins
 .  
@@ -71,6 +59,19 @@ other:
 =====================================================================  
 
 Archive:
+  ✔ fronts @done(07-01 14:14)
+  ✔ order front by aveRank @done(09-01 01:56)
+  ✔ colour node by ranking @done(09-01 01:56)
+  ✔ dim values in span @done(08-01 23:10)
+  ✔ no sidebar - only for vizzes @done(08-01 18:50)
+  ✔ dim stats in sidebar @done(08-01 23:09)
+  ✔ unscope? @done(08-01 23:16)
+  ✔ page colours when fullscreened @done(07-01 16:58)
+  ✔ height! esp when full screened @done(07-01 16:59)
+  ✔ use flexbox plus vh/vw @done(09-01 01:56)
+  ✔ sets @done(09-01 01:57)
+  ✔ destructuring @done(09-01 01:57)
+  ✔ higher order fns @done(09-01 01:57)
   ✔ compontentizing @done(06-01 16:04)
   ✔ should be able to optimise code - try writing fuinctionally? @done(04-01 00:52)
   ✔ ranking etc.. for ron in case things change @done(04-01 01:30)

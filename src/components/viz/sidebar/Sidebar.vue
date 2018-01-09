@@ -35,7 +35,7 @@ methods: {
   setHeight() {
     const headerH = 60
     const windowH = window.innerHeight
-    const sidebarH = windowH - headerH
+    const sidebarH = windowH - headerH - 1
     let sid = document.getElementById('sidebar')
     sid.style.height = sidebarH + 'px'
   }
@@ -56,7 +56,7 @@ created() {
 },
 
 mounted() {
-  this.setHeight()
+  // this.setHeight()
 }
 }
 
@@ -66,12 +66,10 @@ mounted() {
 <style lang='stylus' scoped>
 
 #sidebar
-  background $g3
-  transition .1s all ease-out
-  margin 0
   width 150px
+  background $g3
+  padding-top 0.25rem
+  padding-left 0.5rem
   border-right 2px solid $g2
-  > div
-    padding-left 0.15rem
 
 </style>
