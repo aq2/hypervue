@@ -20,10 +20,11 @@
     #button  
       ReadCSV      
       
-    // does this need to be in its own div?
-    GetDimInfo(v-if='fileGot')
+  // does this need to be in its own div?
+  GetDimInfo(v-if='fileGot')
     
-    SaveCSVtoFB(v-if='dataBuilt')
+  // todo!
+  SaveCSVtoFB(v-if='dataBuilt')
 
 </template>
 

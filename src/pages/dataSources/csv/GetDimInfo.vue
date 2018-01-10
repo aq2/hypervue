@@ -71,7 +71,7 @@ import {EventBus} from '../../../main'
 import ID from './ID'
 import Maxis from './Maxis'
 import Rankables from './Rankables'
-import BuildDaData from '../../builders/BuildDaData'
+import BuildDaData from './../../../builders/BuildDaData'
 
 export default {
   data() {

@@ -23,6 +23,7 @@ computed: {
 
 methods: {
   main() {
+    alert('pareto')
     const candiData = this.candiData
     const candsL = Object.keys(candiData).length
 
@@ -46,7 +47,8 @@ methods: {
     this.$store.dispatch('setCandMeta', candMeta)
 
     // send event to header to change page
-    EventBus.$emit('paretoDataBuilt')
+    // EventBus.$emit('paretoDataBuilt')
+    EventBus.$emit('changePage', 'vizPareto' )
   },
 
   calcDominances(candiData, candsL) {

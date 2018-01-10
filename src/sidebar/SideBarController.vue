@@ -1,6 +1,6 @@
 <template lang="pug">
 
-SideBar(v-if="currentPage == 'viz'")
+SideBar(v-if="currentPage.startsWith('viz')")
 
 </template>
 
@@ -17,7 +17,9 @@ components: {
 },
 
 data() {
-  currentPage: ""
+  return {
+    currentPage: ""
+  }
 },
 
 created() {

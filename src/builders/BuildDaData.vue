@@ -1,14 +1,17 @@
 <template lang="pug">
   
-#buildDaData todo: save to firebase
-  router-link(to='/viz' class='throb') choose Viz type
+#buildDaData 
+  button(class='saveFB') save to firebase?
+  br
+  br
+  button(id='built' class='throb' @click="nextPage('chooseViz')") choose Viz Type
 
 </template>
 
 
 <script>
 
-import {EventBus} from '../../main'
+import {EventBus} from './../main'
 
 export default {
   
@@ -159,6 +162,10 @@ export default {
       }, 0)
       const mean = total / length
       return mean
+    },
+
+    nextPage(newPage) {
+      EventBus.$emit('changePage', newPage)
     }
   },
 
@@ -170,3 +177,13 @@ export default {
   }
 }
 </script>
+
+
+<style lang="stylus" scoped>
+
+.saveFB
+  background $g3
+  color blue
+
+
+</style>

@@ -3,7 +3,12 @@
 #daPage
   Welcome(v-if="page == 'welcome'")
   DataSource(v-if="page == 'dataSrc'")
-  ChooseViz(v-if="page == 'viz'")
+  CSVSource(v-if="page == 'csv'")
+
+  ChooseViz(v-if="page == 'chooseViz'")
+  Pareto(v-if="page == 'pareto'")
+  VizPareto(v-if="page == 'vizPareto'")
+
 
 </template>
 
@@ -13,14 +18,21 @@
 import {EventBus} from './../main'
 import Welcome from '../pages/Welcome'
 import DataSource from './dataSources/DataSource'
+import CSVSource from './dataSources/csv/CSVSource'
 import ChooseViz from './viz/ChooseVizType'
+import Pareto from './../pages/viz/pareto/Pareto'
+import VizPareto from './../pages/viz/pareto/ParetoViz'
+
 
 export default {
 
 components: {
   Welcome,
   DataSource,
-  ChooseViz
+  CSVSource,
+  ChooseViz,
+  Pareto,
+  VizPareto
 },  
 
 data() {

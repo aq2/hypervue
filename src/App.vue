@@ -5,7 +5,7 @@
     SideBarController
   #main 
     header
-      Header
+      TheHeader
     #page
       PageController
 
@@ -15,7 +15,7 @@
 
 <script>
 
-import Header from './header/Header'
+import TheHeader from './header/TheHeader'
 import SideBarController from './sidebar/SideBarController'
 import PageController from './pages/PageController'
 
@@ -41,7 +41,7 @@ export default {
   },
   
   components: {
-    Header,
+    TheHeader,
     PageController,
     SideBarController    
   }

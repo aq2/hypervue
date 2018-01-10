@@ -1,15 +1,15 @@
 <template lang="pug">
 
 #links  
-  router-link(to='/' id='home' exact)
+    //- router-link(to='/' id='home' exact)
     icon(name='home' scale=3)
     h1 HyperDViz
 
-  router-link(to='/data' id='data')
+    //- router-link(to='/data' id='data')
     icon(name='file-excel-o' scale=3)
     h1 data source
   
-  router-link(to='/viz' id='viz')
+    //- router-link(to='/viz' id='viz')
     icon(name='area-chart' scale=3)
     h1 {{vizType}}
 

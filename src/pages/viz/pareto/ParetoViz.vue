@@ -1,7 +1,7 @@
 <template lang="pug">
 
 #pViz  
-  #sidebar
+  //- #sidebar
     //- TheSidebar
 
   #viz

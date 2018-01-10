@@ -65,7 +65,7 @@ export default {
         }
       }
       
-      EventBus.$emit('sidebarHeight')
+      // EventBus.$emit('sidebarHeight')
       
     }
   },
