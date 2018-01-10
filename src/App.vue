@@ -2,12 +2,12 @@
 
 #app       
   #sidebar
-    TheSideBar
+    SideBarController
   #main 
-    #header
-      TheHeader
+    header
+      Header
     #page
-      router-view
+      PageController
 
     
 </template>
@@ -15,8 +15,9 @@
 
 <script>
 
-import TheHeader from './components/header/Header'
-import TheSideBar from './components/sidebar/Sidebar'
+import Header from './header/Header'
+import SideBarController from './sidebar/SideBarController'
+import PageController from './pages/PageController'
 
 // Initialize Firebase
 let config = {
@@ -40,8 +41,9 @@ export default {
   },
   
   components: {
-    TheSideBar,
-    TheHeader
+    Header,
+    PageController,
+    SideBarController    
   }
 }
 
@@ -76,7 +78,7 @@ body
   flex-grow 1         // expands sideways to fill
   background $g5
 
-#header 
+header 
   margin 0
   padding 0
   height 60px

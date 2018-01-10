@@ -2,13 +2,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import VueRouter from 'vue-router'
-import Routes from './routes'
-Vue.use(VueRouter)
-const router = new VueRouter({
-  routes: Routes
-})
-
 // vuex datastore
 import {store} from './store'
 
@@ -43,13 +36,12 @@ import 'vue-awesome/icons/bicycle'
 import Icon from 'vue-awesome/components/Icon'
 Vue.component('icon', Icon)
 
-
 export const EventBus = new Vue()
 
 // start the app
 new Vue({
   el: '#app',
   store,
-  router,
+  // router,
   render: h => h(App)
 })

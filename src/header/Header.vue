@@ -8,7 +8,7 @@ header
       span(class='tooltiptext tooltip-right') click to toggle sidebar
   
   #headerLinks
-    TheHeaderLinks
+    HeaderLinks
   
   #fullscreen-toggle(@click='toggleFullScreen' class='tooltip')
       span(class='tooltiptext tooltip-left') toggle fullscreen
@@ -19,8 +19,8 @@ header
 
 <script>
 
-import {EventBus} from '../../main'
-import TheHeaderLinks from './HeaderLinks'
+import {EventBus} from './../main'
+import HeaderLinks from './HeaderLinks'
 
 export default {
   data() {
@@ -29,7 +29,7 @@ export default {
     }
   },
   components: {
-    TheHeaderLinks,
+    HeaderLinks,
   },
   methods: {
     toggleSidebar: function() {

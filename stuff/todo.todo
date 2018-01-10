@@ -1,8 +1,12 @@
 doing now:
+  ☐ lose da router
+    ☐ csv controller - see notes
+      ☐ has own page events - csvPage
+
   ☐ pareto
     ☐ something not right about order/color  @crit
-    ☐ dominace relations
-    
+    ☐ dominance relations
+
 .    
 sidebar:
   ☐ sub-componentize
@@ -22,23 +26,29 @@ databar/multibar:
 general:
   ☐ settings/preferences
   ☐ peers average? useful for databar somehow?
+  ☐ instructions - autoload? ? icon in header
   
 .
 header:
   ☐ put page title in header
   ☐ use header space for < and ?
   ☐ header colors?
+  headerlinks:
+    ☐ need to listen to events too? or prop from header?
+    ☐ needs to emit too coz they're links
+    ☐ styling
 
 .
 css:
-  ☐ .button class or some router links?
   ☐ user-select false
   ☐ light/dark color scheme
+  ☐ move inputs.styl -> make it global, override locally
+  how many greys do i need? $g5
+  ☐ replace all hard-coded stylus colors with global vars
 
 .
 csv:
   ☐ dynamic instructions for steps - via events/payload
-  ☐ does everything need to live in same page? - routes
   ☐ save all data to firebase @normal 
   ☐ retrieve data from firebase @normal
   ☐ disable checkboxes on dimInfo after OK
@@ -47,8 +57,6 @@ csv:
 later:  
   ☐ deal with maxis @low
   ☐ word cloud map?
-  ☐ replace all hard-coded stylus colors with global vars
-  ☐ replace all magic css vals in px -> rem, and vh/vw
   ☐ instructions
 
 .
@@ -60,6 +68,10 @@ js/css learn:
 =====================================================================  
 
 Archive:
+  ✔ global stuff like text in main.styl @done(10-01 02:06)
+  ✔ replace all magic css vals in px -> rem, and vh/vw @done(10-01 02:09)
+  ✔ does everything need to live in same page? - routes @done(10-01 02:09)
+  ✘ .button class or some router links? @cancelled(10-01 02:04)
   ✔ minimise complexity -> simpler flow @done(09-01 19:25)
   ✔ minimise css - share global styles? @done(09-01 20:11)
   ✔ fronts @done(07-01 14:14)

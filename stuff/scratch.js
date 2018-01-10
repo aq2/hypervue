@@ -46,16 +46,9 @@ var values = [
 values.sort(function(a,b) {return a.value - b.value})
 
 
-function findRankOfCand(x) {
-var rankOfIndex = values.find(v => v.index == x)
-return values.indexOf(rankOfIndex)
-}
-
-var r = findRankOfCand(0)
-console.log(r)
 
 
- firePost: function() {
+ firePost() {
       this.$http.post('https://dvzvue.firebaseio.com/mystuff.json', {
         msg: 'success!',
         author: 'mickey'
@@ -65,61 +58,23 @@ console.log(r)
       })
     }
 
-    created() {
-      // get data from dbase
-      this.$http.get('https://dvzvue.firebaseio.com/mystuff.json')
-        .then(function(data) {
-          // console
-          return data.json()
-        })
-        .then(function(data) {
-          console.log(data)
-          var blogsArray = []
-          for (let key in data) {
-            console.log(key, data[key])
-            data[key].id = key
-            blogsArray.push(data[key])
-          }
-          console.log(blogsArray)
-          this.blogs = blogsArray
-          
-        })
-    }
-
-// global classes
-
-
-// // global mixins
-// border-radius(radius=5px)
-//   border-radius radius
-//   border 1px solid transparent
-//   transition .5s all ease
-//   :hover
-//     background: $lightblue
-//     cursor: pointer
-//     color #ccc
-//     border 1px solid darkblue
-//     border 2px solid $green
-//     animation throb linear 2s infinite
-
-// /* Flash class and keyframe animation */
-// .flashit
-//   color $green
-//   animation flash linear 2s infinite
-//   font-size 24px
-//   // border 1px solid $green
-
-// .throbber
-//   border 2px solid $green
-//   animation throb linear 2s infinite
-    
-
-// @keyframes flash
-//   0% { opacity: 1; } 
-//   50% { opacity: .2 } 
-//   100% { opacity: 1; }
-
-// @keyframes throb
-//   0% { border-color: $green } 
-//   50% { border-color: $blue } 
-//   100% { border-color: $green }
+created() {
+  // get data from dbase
+  this.$http.get('https://dvzvue.firebaseio.com/mystuff.json')
+    .then(function(data) {
+      // console
+      return data.json()
+    })
+    .then(function(data) {
+      console.log(data)
+      var blogsArray = []
+      for (let key in data) {
+        console.log(key, data[key])
+        data[key].id = key
+        blogsArray.push(data[key])
+      }
+      console.log(blogsArray)
+      this.blogs = blogsArray
+      
+    })
+}

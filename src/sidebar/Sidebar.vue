@@ -10,9 +10,9 @@
 
 <script>
 
-import {EventBus} from '../../main'
+import {EventBus} from './../main'
 // todo - generalise!
-import ParetoSidebar from '../viz/pareto/ParetoSidebar'
+import ParetoSidebar from './../pages/viz/pareto/ParetoSidebar'
 
 export default {
 components: {

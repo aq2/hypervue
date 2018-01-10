@@ -113,7 +113,7 @@ methods: {
 
 <style lang="stylus" scoped>
 
-@import '../../../components/data-sources/csv/inputs'
+@import '../../../pages/dataSources/csv/inputs'
 
 label 
   margin 0
