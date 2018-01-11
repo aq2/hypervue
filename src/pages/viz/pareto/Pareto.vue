@@ -23,7 +23,6 @@ computed: {
 
 methods: {
   main() {
-    alert('pareto')
     const candiData = this.candiData
     const candsL = Object.keys(candiData).length
 

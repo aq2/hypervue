@@ -1,7 +1,4 @@
 doing now:
-  ☐ lose da router
-    ☐ csv controller - see notes
-      ☐ has own page events - csvPage
 
   ☐ pareto
     ☐ something not right about order/color  @crit
@@ -14,7 +11,7 @@ sidebar:
   ☐ search for cand - highlight/grow
   ☐ accordian slideable sidebar components when it gets too big
   ☐ return of sidebar
-    ☐ always there, but sometimes 0, toggleable for vizzes
+    ☐ toggleable for vizzes
     ☐ three states: hidden, open, closed
 
 .
@@ -68,6 +65,10 @@ js/css learn:
 =====================================================================  
 
 Archive:
+  ✔ lose da router @done(10-01 14:57)
+  ✔ always there, but sometimes 0, @done(10-01 14:58)
+  ✘ csv controller - see notes @cancelled(10-01 14:57)
+  ✘ has own page events - csvPage @cancelled(10-01 14:57)
   ✔ global stuff like text in main.styl @done(10-01 02:06)
   ✔ replace all magic css vals in px -> rem, and vh/vw @done(10-01 02:09)
   ✔ does everything need to live in same page? - routes @done(10-01 02:09)

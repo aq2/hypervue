@@ -1,13 +1,21 @@
 <template lang="pug">
 
-#dims
-  h3 dimensions
-  .dim(v-for='(dim,d) in dimNames' :ID="'dim'+d" v-if='dimCrit(d)'
-    @click='showDim(d)') {{dim}}
+#paretoSidebar
+  #candInfo
+    h3 candInfo
+    #candName {{candName}}
+    p aveRank {{aveRank}}
+    p aveScore {{aveScore}}
+    //- button show dominance
+  hr
+  #dims
+    h3 dimensions
+    .dim(v-for='(dim,d) in dimNames' :ID="'dim'+d" v-if='dimCrit(d)'
+      @click='showDim(d)') {{dim}}
 
-    .stats(:ID="'span'+d")
-      p range: {{stats(d).min}} - {{stats(d).max}}
-      p mean:{{(stats(d).mean)}} sd:{{stats(d).stdDev}}
+      .stats(:ID="'span'+d")
+        p range: {{stats(d).min}} - {{stats(d).max}}
+        p mean:{{(stats(d).mean)}} sd:{{stats(d).stdDev}}
   hr
   #order
     h3 order by
@@ -62,7 +70,12 @@ computed: {
 data() {
   return {
     ordBy: 1,      // sets default radio for orderBy
-    colBy: 2      // sets default radio for orderBy
+    colBy: 2,      // sets default radio for orderBy
+    candName: 'click a node',
+    aveRank: -1,
+    aveScore: -1,
+    currentNode: -1,
+    oldNode: -1
   }
 },
 
@@ -103,8 +116,20 @@ methods: {
   colourBy(meth) {
     // emit event to viz
     EventBus.$emit('colourBy', meth)
+  },
+
+  showCandInfo(candInfo) {
+    this.candName = candInfo.candID
+    this.aveRank = candInfo.meanRank
+    this.aveScore = candInfo.meanNorm
   }
 
+},
+
+created() {
+  EventBus.$on('nodeClicked', candInfo => {
+    this.showCandInfo(candInfo)
+  })
 }
 }
 
@@ -113,7 +138,11 @@ methods: {
 
 <style lang="stylus" scoped>
 
-@import '../../../pages/dataSources/csv/inputs'
+#paretoSidebar
+  display flex
+  flex-direction column
+  max-height 99.9vh
+  // min-height
 
 label 
   margin 0
@@ -146,5 +175,13 @@ hr
   border-top 2px dotted $g5
   width 100px
   margin 0.5rem auto
+
+button
+  font-size 0.75rem
+  padding 0.25rem 
+
+#candName
+  color $g8
+
 
 </style>

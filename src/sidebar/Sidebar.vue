@@ -2,7 +2,7 @@
 
 #sidebar
   ParetoSidebar
-  //- todo should be dynamic!
+  //- todo should be dynamic! ie if page=pareto 
 
 
 </template>
@@ -15,6 +15,7 @@ import {EventBus} from './../main'
 import ParetoSidebar from './../pages/viz/pareto/ParetoSidebar'
 
 export default {
+
 components: {
   ParetoSidebar
 },
@@ -32,13 +33,13 @@ methods: {
     sid.style.width = sid.offsetWidth >= 50 ? '0px' : '150px'
   },
   
-  setHeight() {
-    const headerH = 60
-    const windowH = window.innerHeight
-    const sidebarH = windowH - headerH - 1
-    let sid = document.getElementById('sidebar')
-    sid.style.height = sidebarH + 'px'
-  }
+  // setHeight() {
+  //   const headerH = 60
+  //   const windowH = window.innerHeight
+  //   const sidebarH = windowH - headerH - 1
+  //   let sid = document.getElementById('sidebar')
+  //   sid.style.height = sidebarH + 'px'
+  // }
 },
 
 created() {
@@ -46,9 +47,9 @@ created() {
     this.toggle()
   })
 
-  EventBus.$on('sidebarHeight', () => {
-    this.setHeight()
-  })
+  // EventBus.$on('sidebarHeight', () => {
+  //   this.setHeight()
+  // })
   
   EventBus.$on('sidebarOpen', () => {
     this.openUp()
@@ -58,6 +59,7 @@ created() {
 mounted() {
   // this.setHeight()
 }
+
 }
 
 </script>
@@ -66,7 +68,7 @@ mounted() {
 <style lang='stylus' scoped>
 
 #sidebar
-  width 150px
+  width 155px
   background $g3
   padding-top 0.25rem
   padding-left 0.5rem

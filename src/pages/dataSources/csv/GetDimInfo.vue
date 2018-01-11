@@ -201,9 +201,8 @@ export default {
 
 <style lang="stylus" scoped>
 
-@import 'inputs'
 
-#BuildCandidata 
+// #BuildCandidata 
   // padding 1rem
 
 .mainFieldset
@@ -215,7 +214,7 @@ export default {
 
 #exampleTable > div:last-child fieldset
   margin-right 0
-  background $g5
+  background $g7
 
 #catNames .list 
   font-weight bold
@@ -224,7 +223,7 @@ export default {
 
 #instructions 
   margin 1rem 0
-  background $g5
+  background $g7
   padding 0.5rem 1rem
   width 600px
 

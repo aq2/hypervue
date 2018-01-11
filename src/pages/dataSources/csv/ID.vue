@@ -48,8 +48,3 @@ export default {
 </script>
 
 
-<style lang="stylus" scoped>
-
-@import 'inputs'
-
-</style>

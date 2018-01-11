@@ -64,10 +64,10 @@ export default {
 <style lang="stylus" scoped>
 
 
-#text 
-  width 600px
-  background $g6
-  padding 1rem
+// #text 
+//   width 600px
+//   background $g6
+//   padding 1rem
 
 </style>
 

@@ -37,12 +37,7 @@ methods: {
 </script>
 
 
-
-
 <style lang="stylus" scoped>
-
-// #DataSource 
-//   padding 1rem
 
 .spacer 
   width 50px
@@ -55,8 +50,6 @@ methods: {
 button
   min-width 275px
   min-height 200px
-
-
 
 
 </style>

@@ -1,15 +1,15 @@
 <template lang="pug">
 
 #links  
-    //- router-link(to='/' id='home' exact)
+  button(id='welcome')
     icon(name='home' scale=3)
     h1 HyperDViz
 
-    //- router-link(to='/data' id='data')
-    icon(name='file-excel-o' scale=3)
+  button(id='dataSource')
+    icon(name='file-excel-o' scale=2.5)
     h1 data source
   
-    //- router-link(to='/viz' id='viz')
+  button(id='viz')
     icon(name='area-chart' scale=3)
     h1 {{vizType}}
 
@@ -24,7 +24,8 @@ export default {
 
   data() {
     return {
-      vizType: 'Choose VizType'
+      vizType: 'Choose VizType',
+      currentPage: 'welcome'
     }
   },
 
@@ -33,6 +34,18 @@ export default {
     EventBus.$on('changeTitle', newTitle => {
       this.vizType = newTitle
     })
+
+    // EventBus.$on('changePage', newPage => {
+    //   this.currentType = newPage
+    //   let el = document.getElementById(newPage)
+    //   el.style.flexGrow = 1
+    // })
+  },
+
+  mounted() {
+    let el = document.getElementById(this.currentPage)
+    el.style.flexGrow = 1
+
   }
 }
 
@@ -43,23 +56,27 @@ export default {
 
 #links 
   display flex
-  max-width 50vw
+  width 50vw
   margin 0 auto
 
-#links>div
+#links > button
   display flex
   transition all 1s
   align-items baseline
 
-a 
+button
   border-radius 0.5rem
   display flex
   color darkblue
-  padding-left 1rem
+  padding 0.5rem
   max-height 60px
 
 h1 
   display none
+
+
+
+
 
 .router-link-active
   color lime

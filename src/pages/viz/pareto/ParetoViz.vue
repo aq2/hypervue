@@ -6,7 +6,7 @@
 
   #viz
     .front(v-for='(front,f) in fronts') 
-      .node(v-for='node in front' :ID='node') {{candName(node)}}
+      .node(v-for='node in front' :ID='node' @click='doNode(node)') {{candName(node)}}
         .value(:ID="'nodeSpan'+node")
 
 </template>
@@ -52,7 +52,11 @@ methods: {
     this.orderAllNodes()
     this.colourAllNodes()
   },
-  
+
+  $(ID) {
+    return document.getElementById(ID)
+  },
+    
   orderAllNodes() {
     Object.keys(this.candiData).forEach(key => {
       this.orderNodes(key)
@@ -87,7 +91,7 @@ methods: {
       normScore = score * 100     
     }
 
-    let nodeEl = document.getElementById(c)
+    let nodeEl = this.$(c)
     nodeEl.style.background = 'hsla(230, 60%, ' + (100-normScore) + '%, 0.9'
 
     if (normScore > 50) {
@@ -111,7 +115,7 @@ methods: {
       // norm ranking spreads from 0 to 100?
       normScore = score      
     }
-    let nodeEl = document.getElementById(c)
+    let nodeEl = this.$(c)
     nodeEl.style.order = parseInt(normScore)
   },
 
@@ -121,10 +125,13 @@ methods: {
     Object.entries(candiData).forEach(([c, cand]) => {
       // get normalised score for dimension for candidate
       const myNorm = cand.norm[d]
+      const node = this.$(c)
+      node.style.opacity = 1
 
       // change span width of each candidate
-      const nodeSpan = document.getElementById('nodeSpan'+c)
+      const nodeSpan = this.$('nodeSpan'+c)
       nodeSpan.style.width = (myNorm*100) + '%'
+      
       nodeSpan.innerHTML = this.dimMeta.dimNames[d] + ':' + cand.scores[d]
     })
   },
@@ -138,7 +145,61 @@ methods: {
   colourBy(meth) {
     this.colourMethod  = meth
     this.colourAllNodes()
-  }
+  },
+
+  doNode(candID) {
+    // highlight node
+    // const node = this.$(candID)
+    // node.style.background = 'orange'
+
+    //todo unhighlight previously clicked node
+
+    // show dominances - functionate?
+    const cand = this.candiData[candID]
+    console.log(cand)
+    // const pareto = cand.pareto
+    // console.log('p', pareto)
+    
+    const inferiors = cand.pareto.inferiors
+    const superiors = cand.pareto.superiors
+    console.log('infs', inferiors)
+
+    // got through all candidates
+    Object.keys(this.candiData).forEach(c => {
+      c = Number(c)
+      const node = this.$(c)
+      // console.log(c)
+      if (inferiors.includes(c)) {
+        // console.log('inf includes', c)        
+        // its inf
+        node.style.background = 'red'
+        // node.style.color = 'white'
+        node.style.opacity = '1'             
+      } 
+      else      
+      if (superiors.includes(c)) {
+        // it's inf
+        node.style.background = 'green'
+        node.style.opacity = '1'
+                
+      } else
+      if (candID == c) {
+        // it's this
+        node.style.background = 'white'        
+        node.style.opacity = '1'
+
+      } else {
+        // it's other
+        node.style.opacity = '0.3'
+      }
+
+    })
+
+    // send message
+    EventBus.$emit('nodeClicked', cand)
+  },
+
+  
 
 },
 
