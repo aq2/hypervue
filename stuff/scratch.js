@@ -1,39 +1,40 @@
 var exampleCand = {
-        key: 0,
-        ID: 'Cambridge',
-        scores: [
-          {
-            catNum: 0,                // repeated data, but useful?
-            catName: 'rank',          // repeated data, but useful?
-            origScore: 1,
-            normalisedScore: false,   // not rankable     * laters?
-            rank: false,              // not rankable,    *
-            maxi: false               // could be useful  *
-          },
-          {
-            catNum: 1,
-            catName: 'name',
-            origScore: 'Cambridge',
-            normalisedScore: false,
-            rank: false
-          },
-          {
-            catNum: 2,
-            catName: 'nss',
-            origScore: 4732,
-            normalisedScore: 0.2,
-            rank: 1
-          },
-          {
-            catNum: 3,
-            catName: 'hons',
-            origScore: 72.1,
-            normalisedScore: 0.2,
-            rank: 2
-          }
-        ]
-        // later add pareto object {}
-      }
+  key: 0,
+  ID: 'Cambridge',
+  scores: [
+    {
+      catNum: 0,                // repeated data, but useful?
+      catName: 'rank',          // repeated data, but useful?
+      origScore: 1,
+      normalisedScore: false,   // not rankable     * laters?
+      rank: false,              // not rankable,    *
+      maxi: false               // could be useful  *
+    },
+    {
+      catNum: 1,
+      catName: 'name',
+      origScore: 'Cambridge',
+      normalisedScore: false,
+      rank: false
+    },
+    {
+      catNum: 2,
+      catName: 'nss',
+      origScore: 4732,
+      normalisedScore: 0.2,
+      rank: 1
+    },
+    {
+      catNum: 3,
+      catName: 'hons',
+      origScore: 72.1,
+      normalisedScore: 0.2,
+      rank: 2
+    }
+  ]
+  // later add pareto object {}
+}
+
 
 
 var values = [
@@ -78,3 +79,11 @@ created() {
       
     })
 }
+
+
+
+//- #sidebar-toggle(@click='toggleSidebar') 
+.tooltip 
+icon(v-if='sidebarOpen' name='chevron-circle-left' scale=2)
+icon(v-else name='chevron-circle-right' scale=2)
+span(class='tooltiptext tooltip-right') click to toggle sidebar

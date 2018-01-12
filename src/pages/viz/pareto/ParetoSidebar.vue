@@ -6,20 +6,18 @@
     #candName {{candName}}
     p aveRank {{aveRank}}
     p aveScore {{aveScore}}
-    //- button show dominance
   hr
   #dims
     h3 dimensions
     .dim(v-for='(dim,d) in dimNames' :ID="'dim'+d" v-if='dimCrit(d)'
       @click='showDim(d)') {{dim}}
-
       .stats(:ID="'span'+d")
         p range: {{stats(d).min}} - {{stats(d).max}}
         p mean:{{(stats(d).mean)}} sd:{{stats(d).stdDev}}
   hr
   #order
     h3 order by
-    //- radio buttons?
+    //- radio buttons? - or
     label mean rank
       input(type='radio' value=1 @click="orderBy('rank')" v-model='ordBy')
       span(class='checkmark radio')
@@ -141,8 +139,8 @@ created() {
 #paretoSidebar
   display flex
   flex-direction column
+  min-height 95vh
   max-height 99.9vh
-  // min-height
 
 label 
   margin 0
@@ -155,15 +153,15 @@ label span
   background-color $g4
 
 .dim
-  margin-bottom 0.5rem
   color $g9
+  margin-bottom 0.5rem
 
 .stats p
   color $g7
 
 p 
-  padding 0
   margin 0
+  padding 0
 
 h3  
   margin 0
@@ -177,8 +175,8 @@ hr
   margin 0.5rem auto
 
 button
-  font-size 0.75rem
   padding 0.25rem 
+  font-size 0.75rem
 
 #candName
   color $g8

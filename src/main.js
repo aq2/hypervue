@@ -31,6 +31,7 @@ import 'vue-awesome/icons/database'
 import 'vue-awesome/icons/chevron-circle-right'
 import 'vue-awesome/icons/chevron-circle-left'
 import 'vue-awesome/icons/bicycle'
+import 'vue-awesome/icons/question-circle'
 
 // import 'vue-awesome/icons'  // !! warns bundles all icons = 500kB
 import Icon from 'vue-awesome/components/Icon'

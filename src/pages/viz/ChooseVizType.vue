@@ -13,6 +13,7 @@
     button(id='pareto' @click="nextPage('pareto')")
       icon(name='bicycle' scale=4)
       p pareto dominance plot
+    .spacer   
     button(id='parallel')
       icon(name='line-chart' scale=4)
       p parallel plot
@@ -38,11 +39,6 @@ methods: {
 
 
 <style lang="stylus" scoped>
-
-.spacer 
-  width 50px
-  display inline-block
-  text-align center
 
 #links 
   width 600px

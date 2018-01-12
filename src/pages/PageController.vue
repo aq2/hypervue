@@ -2,6 +2,7 @@
 
 #daPage
   Welcome(v-if="page == 'welcome'")
+  
   DataSource(v-if="page == 'dataSrc'")
   CSVSource(v-if="page == 'csv'")
 

@@ -16,6 +16,7 @@
     p or with the &nbsp;
       icon(name='window-restore' scale=2)
       | &nbsp; button at top-right
+    button let's go fullscreen
     br    
     p press the 'next page' button below to continue
   br

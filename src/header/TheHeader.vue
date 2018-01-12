@@ -1,16 +1,16 @@
 <template lang="pug">
   
-header
-  //- #sidebar-toggle(@click='toggleSidebar') 
-    .tooltip 
-      icon(v-if='sidebarOpen' name='chevron-circle-left' scale=2)
-      icon(v-else name='chevron-circle-right' scale=2)
-      span(class='tooltiptext tooltip-right') click to toggle sidebar
-  
+#theHeader
   #headerLinks
     HeaderLinks
   
-  #fullscreen-toggle(@click='toggleFullScreen' class='tooltip')
+  #help
+    button(@click='help' class='tooltip')
+      span(class='tooltiptext tooltip-left') what do i do?
+      icon(name='question-circle' scale=2)
+
+  #fullscreen-toggle 
+    button(@click='toggleFullScreen' class='tooltip')
       span(class='tooltiptext tooltip-left') toggle fullscreen
       icon(name='window-restore' scale=2)
 
@@ -37,39 +37,51 @@ export default {
       // sidebar listens for this event
       EventBus.$emit('sidebarToggled')
     },
-    // todo fugly! copyPasta
-    toggleFullScreen: () => {
+    
+    toggleFullScreen() {
       const d = document
-      var el = d.documentElement
-      // todo - change screen size after toggling!
       if (!d.fullscreenElement && !d.mozFullScreenElement &&
         !d.webkitFullscreenElement && !d.msFullscreenElement) {
-        if (el.requestFullscreen) {
-          el.requestFullscreen()
-        } else if (el.msRequestFullscreen) {
-          el.msRequestFullscreen()
-        } else if (el.mozRequestFullScreen) {
-          el.mozRequestFullScreen()
-        } else if (el.webkitRequestFullscreen) {
-          el.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
-        }
+        this.goFullScreen()
       } else {
-        if (d.exitFullscreen) {
-          d.exitFullscreen()
-        } else if (document.msExitFullscreen) {
-          d.msExitFullscreen()
-        } else if (document.mozCancelFullScreen) {
-          d.mozCancelFullScreen()
-        } else if (document.webkitExitFullscreen) {
-          d.webkitExitFullscreen()
-        }
+        this.unFullScreen()
       }
-      
-      // EventBus.$emit('sidebarHeight')
-      
-    }
-  },
+    },
+    
+    goFullScreen() {
+      var el = document.documentElement
+      if (el.requestFullscreen) {
+        el.requestFullscreen()
+      } else
+      if (el.msRequestFullscreen) {
+        el.msRequestFullscreen()
+      } else 
+      if (el.mozRequestFullScreen) {
+        el.mozRequestFullScreen()
+      } else 
+      if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
+      }
+    },
 
+    unFullScreen() {
+      const d = document
+      if (d.exitFullscreen) {
+        d.exitFullscreen()
+      } else 
+      if (d.msExitFullscreen) {
+        d.msExitFullscreen()
+      } else 
+      if (d.mozCancelFullScreen) {
+        d.mozCancelFullScreen()
+      } else 
+      if (d.webkitExitFullscreen) {
+        d.webkitExitFullscreen()
+      }  
+    }
+    
+
+  },
   created() {
     EventBus.$on('paretoDataBuilt', () => {
       this.$router.push('/viz/pareto/viz')
@@ -82,19 +94,19 @@ export default {
 
 <style lang="stylus" scoped>
 
-header 
+#theHeader 
   display flex
 
 #headerLinks 
   flex-grow 1
 
-#sidebar-toggle
-  margin 0
-  padding 1rem 3rem 0 .5rem
-
 #fullscreen-toggle
   margin 0
-  padding 1rem .5rem 0 0
+
+button
+  height 60px
+  // max-height 20px
+  // padding 1rem .5rem 0 0
 
 
 </style>

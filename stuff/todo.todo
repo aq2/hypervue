@@ -3,6 +3,19 @@ doing now:
   ☐ pareto
     ☐ something not right about order/color  @crit
     ☐ dominance relations
+  ☐ inferiors?
+  ☐ all buttons throbbing
+    
+.
+header:
+  ✔ split togglefullscreen - goFull, unFull @done(12-01 16:40)
+  ☐ put page title in header
+  ☐ use header space for < and ?
+  ☐ header colors?
+  headerlinks:
+    ☐ need to listen to events too? or prop from header?
+    ☐ needs to emit too coz they're links
+    ☐ styling
 
 .    
 sidebar:
@@ -11,29 +24,21 @@ sidebar:
   ☐ search for cand - highlight/grow
   ☐ accordian slideable sidebar components when it gets too big
   ☐ return of sidebar
-    ☐ toggleable for vizzes
-    ☐ three states: hidden, open, closed
-
-.
-databar/multibar:
-  ☐ databar - multibar sparkline sorta
-  ☐ height and width of databar
-    
-.    
-general:
-  ☐ settings/preferences
-  ☐ peers average? useful for databar somehow?
-  ☐ instructions - autoload? ? icon in header
+  ☐ toggleable for vizzes
+  ☐ three states: hidden, open, closed
   
-.
-header:
-  ☐ put page title in header
-  ☐ use header space for < and ?
-  ☐ header colors?
-  headerlinks:
-    ☐ need to listen to events too? or prop from header?
-    ☐ needs to emit too coz they're links
-    ☐ styling
+  .
+  databar/multibar:
+    ☐ databar - multibar sparkline sorta
+    ☐ height and width of databar
+    
+  .    
+  general:
+    ☐ settings/preferences
+    ☐ peers average? useful for databar somehow?
+    ☐ instructions - autoload? ? icon in header
+            
+
 
 .
 css:
@@ -61,7 +66,7 @@ js/css learn:
   ☐ stylus mixins
   ☐ pug mixins
   
-
+.
 =====================================================================  
 
 Archive:

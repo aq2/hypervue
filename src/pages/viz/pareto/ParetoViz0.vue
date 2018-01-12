@@ -2,7 +2,7 @@
 
 #pViz  
   #viz
-    .front(v-for='front in fronts') 
+    .front(v-for='(front,f) in fronts') 
       .node(v-for='node in front' :ID='node' 
             @click='doNode(node)') {{candName(node)}}
         .value(:ID="'nodeSpan'+node")
@@ -13,8 +13,13 @@
 <script>
 
 import {EventBus} from '../../../main'
+// import TheSidebar from '../sidebar/Sidebar'
 
 export default {
+
+components: {
+  // TheSidebar
+},
 
 computed: {
   candiData() {
@@ -29,6 +34,7 @@ computed: {
   dimMeta() {
     return this.$store.getters.getDimMeta
   }
+  
 },
 
 data() {
@@ -40,7 +46,6 @@ data() {
 
 methods: {
   main() {
-    // todo - header should respond
     EventBus.$emit('changeTitle', 'Pareto Dominance Plot')
     this.orderAllNodes()
     this.colourAllNodes()
@@ -52,13 +57,13 @@ methods: {
     
   orderAllNodes() {
     Object.keys(this.candiData).forEach(key => {
-      this.orderANode(key)
+      this.orderNodes(key)
     })
   },
 
   colourAllNodes() {
     Object.keys(this.candiData).forEach(key => {
-      this.colourANode(key)
+      this.colourNodes(key)
     })
   },
   
@@ -66,7 +71,7 @@ methods: {
     return this.candiData[c].candID
   },
 
-  colourANode(c) {
+  colourNodes(c) {
     let candiData = this.candiData
     const candsL = Object.keys(candiData).length
 
@@ -92,7 +97,7 @@ methods: {
     }
   },
 
-  orderANode(c) {
+  orderNodes(c) {
     let candiData = this.candiData
     const candsL = Object.keys(candiData).length
     let cand = candiData[c]
@@ -125,7 +130,7 @@ methods: {
       const nodeSpan = this.$('nodeSpan'+c)
       nodeSpan.style.width = (myNorm*100) + '%'
       
-      nodeSpan.innerHTML = cand.scores[d]
+      nodeSpan.innerHTML = this.dimMeta.dimNames[d] + ':' + cand.scores[d]
     })
   },
 
@@ -192,6 +197,7 @@ methods: {
     EventBus.$emit('nodeClicked', cand)
   },
 
+  
 
 },
 
@@ -221,25 +227,33 @@ mounted() {
 <style lang="stylus" scoped>
 
 #pViz 
-  display flex  // expands sideways
+  display flex  // sideways
+  min-height 90vh
+  
+#viz
+  margin 0
+  margin-top .5rem
 
 .front
-  display flex // run sideways
+  margin-bottom 3rem
+  display flex
   flex-wrap wrap
   justify-content space-evenly
-  margin-bottom 3rem
 
 .node
+  flex-grow 1
   width 140px
+  max-width 140px
   height 2.5rem
+  border 2px solid $g3
+  border-radius 0.5rem
+  margin-bottom 0.2rem
+  text-align center
   padding 0.05rem
   font-size 0.9rem
-  text-align center
-  border-radius 0.5rem
-  margin-bottom 0.25rem
 
 .value
-  color #aa0
   background green
+  color #222
 
 </style>

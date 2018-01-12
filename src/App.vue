@@ -83,7 +83,8 @@ header
   padding 0
   height 60px
   flex-grow 1         // fills width
-  background $g3
+  // background $g3
+  // border-bottom 2px solid $g1
 
 #page  
   margin 0
