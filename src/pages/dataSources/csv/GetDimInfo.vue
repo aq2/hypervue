@@ -99,10 +99,10 @@ export default {
     },
     dimMeta() {
       return this.$store.getters.getDimMeta
-    },    
+    },     
     alphas() {
       return this.dimMeta.alphas
-    },
+    },    
     firstAlpha() {
       return this.dimMeta.alphas[0]
     },

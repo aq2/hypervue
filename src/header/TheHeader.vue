@@ -1,6 +1,6 @@
 <template lang="pug">
   
-#theHeader
+header
   #headerLinks
     HeaderLinks
   
@@ -23,69 +23,76 @@ import {EventBus} from './../main'
 import HeaderLinks from './HeaderLinks'
 
 export default {
-  data() {
-    return {
-      sidebarOpen: false
+data() {
+  return {
+    sidebarOpen: false
+  }
+},
+components: {
+  HeaderLinks,
+},
+methods: {
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen
+    // sidebar listens for this event
+    EventBus.$emit('sidebarToggled')
+  },
+  
+  toggleFullScreen() {
+    const d = document
+    if (!d.fullscreenElement && !d.mozFullScreenElement &&
+      !d.webkitFullscreenElement && !d.msFullscreenElement) {
+      this.goFullScreen()
+    } else {
+      this.unFullScreen()
     }
   },
-  components: {
-    HeaderLinks,
-  },
-  methods: {
-    toggleSidebar: function() {
-      this.sidebarOpen = !this.sidebarOpen
-      // sidebar listens for this event
-      EventBus.$emit('sidebarToggled')
-    },
-    
-    toggleFullScreen() {
-      const d = document
-      if (!d.fullscreenElement && !d.mozFullScreenElement &&
-        !d.webkitFullscreenElement && !d.msFullscreenElement) {
-        this.goFullScreen()
-      } else {
-        this.unFullScreen()
-      }
-    },
-    
-    goFullScreen() {
-      var el = document.documentElement
-      if (el.requestFullscreen) {
-        el.requestFullscreen()
-      } else
-      if (el.msRequestFullscreen) {
-        el.msRequestFullscreen()
-      } else 
-      if (el.mozRequestFullScreen) {
-        el.mozRequestFullScreen()
-      } else 
-      if (el.webkitRequestFullscreen) {
-        el.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
-      }
-    },
-
-    unFullScreen() {
-      const d = document
-      if (d.exitFullscreen) {
-        d.exitFullscreen()
-      } else 
-      if (d.msExitFullscreen) {
-        d.msExitFullscreen()
-      } else 
-      if (d.mozCancelFullScreen) {
-        d.mozCancelFullScreen()
-      } else 
-      if (d.webkitExitFullscreen) {
-        d.webkitExitFullscreen()
-      }  
+  
+  goFullScreen() {
+    var el = document.documentElement
+    if (el.requestFullscreen) {
+      el.requestFullscreen()
+    } else
+    if (el.msRequestFullscreen) {
+      el.msRequestFullscreen()
+    } else 
+    if (el.mozRequestFullScreen) {
+      el.mozRequestFullScreen()
+    } else 
+    if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
     }
-    
-
   },
+
+  unFullScreen() {
+    const d = document
+    if (d.exitFullscreen) {
+      d.exitFullscreen()
+    } else 
+    if (d.msExitFullscreen) {
+      d.msExitFullscreen()
+    } else 
+    if (d.mozCancelFullScreen) {
+      d.mozCancelFullScreen()
+    } else 
+    if (d.webkitExitFullscreen) {
+      d.webkitExitFullscreen()
+    }  
+  },
+
+  help() {
+    // todo!      
+  }
+
+  },  
   created() {
     EventBus.$on('paretoDataBuilt', () => {
       this.$router.push('/viz/pareto/viz')
-    } )
+    })
+
+    EventBus.$on('fullScreen', () => {
+      this.goFullScreen()
+    })
   }
 }
 
@@ -94,7 +101,7 @@ export default {
 
 <style lang="stylus" scoped>
 
-#theHeader 
+header
   display flex
 
 #headerLinks 
@@ -105,8 +112,6 @@ export default {
 
 button
   height 60px
-  // max-height 20px
-  // padding 1rem .5rem 0 0
 
 
 </style>

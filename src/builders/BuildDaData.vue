@@ -4,7 +4,7 @@
   button(class='saveFB') save to firebase?
   br
   br
-  button(id='built' class='throb' @click="nextPage('chooseViz')") choose Viz Type
+  button(id='built' class='throb' @click='nextPage(4)') choose Viz Type
 
 </template>
 

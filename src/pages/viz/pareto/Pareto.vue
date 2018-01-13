@@ -1,8 +1,8 @@
-<template lang="pug">
+// <template lang="pug">
   
-  #pareto pareto
+//   #pareto pareto
 
-</template>
+// </template>
 
 
 <script>
@@ -47,7 +47,7 @@ methods: {
 
     // send event to header to change page
     // EventBus.$emit('paretoDataBuilt')
-    EventBus.$emit('changePage', 'vizPareto' )
+    EventBus.$emit('changePage', 5)
   },
 
   calcDominances(candiData, candsL) {

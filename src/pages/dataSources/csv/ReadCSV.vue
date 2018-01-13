@@ -14,7 +14,7 @@ import {EventBus} from '../../../main'
 
 export default {
 methods: {
-  readFile: function(evt) {
+  readFile(evt) {
     const file = evt.target.files[0]      
     if (file) { 
       const rdr = new FileReader()
@@ -25,7 +25,7 @@ methods: {
     }
   }, 
   
-  processFile: function(file) {
+  processFile(file) {
     const lines = file
                     .trim()       // remove last empty line
                     .split('\n')                    
@@ -57,7 +57,7 @@ methods: {
   },
 
 
-  deStringVals: (rawStringedCandidates) => {
+  deStringVals(rawStringedCandidates) {
     let candidates = []
     let alphas = []
     
@@ -83,7 +83,7 @@ methods: {
   },
 
 
-  badHeaders: (headers) => {
+  badHeaders(headers) {
     const numericValues = headers.filter(h => !isNaN(h))
     // should this be a reduce? reduces down to true false
     return (numericValues === 0)
@@ -116,7 +116,7 @@ label
   animation throb linear 2s infinite
   link(0.5rem)
   position static
-  width 10rem
+  width 12rem
   &:hover
     cursor pointer
     background lightblue
@@ -125,8 +125,6 @@ label
   margin-right 1rem
   margin-bottom -2px
 
-button
-  width 120px
 
 
 </style>

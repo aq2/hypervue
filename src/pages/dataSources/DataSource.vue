@@ -1,23 +1,26 @@
 <template lang="pug">
 
-#DataSource
+#page
   h1 Choose a dataset
+  .v
   icon(name='database' scale=8)
-  .spacer
+  .h
   icon(name='upload' scale=8)
-  .spacer
+  .h
   icon(name='tasks' scale=8)
-  br 
-  br
+  .v
+  
   #text
     p First, you need to get some data.
     p either by uploading a CSV file from your computer,
     p or you can pick from an exciting range of sources
-  br
+  .v
+  
   #links
-    button(id='csv' @click="nextPage('csv')")
+    button(id='csv' @click="nextPage(2)")
       icon(name='folder-open' scale=4)
       p get data from CSV file
+    .h
     button(id='firebase')
       icon(name='cloud' scale=4)
       p get data from firebase
@@ -47,11 +50,6 @@ methods: {
 
 <style lang="stylus" scoped>
 
-.spacer 
-  width 50px
-  display inline-block
-  text-align center
-
 #links
   width 600px
 
@@ -61,7 +59,5 @@ button
 #firebase
   background $g3
 
-#csv
-  margin-right 50px
 
 </style>

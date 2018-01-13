@@ -1,7 +1,8 @@
 <template lang='pug'>
 
-#sidebar
-  ParetoSidebar
+#sidey
+  aside
+    ParetoSidebar
   //- todo should be dynamic! ie if page=pareto 
 
 
@@ -67,7 +68,7 @@ mounted() {
 
 <style lang='stylus' scoped>
 
-#sidebar
+#sidebar, aside
   width 155px
   background $g3
   padding-top 0.25rem

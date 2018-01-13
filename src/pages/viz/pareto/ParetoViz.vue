@@ -220,7 +220,9 @@ mounted() {
 
 <style lang="stylus" scoped>
 
-#pViz 
+#pViz
+  // margin 0
+  // padding 0
   display flex  // expands sideways
 
 .front
@@ -236,7 +238,8 @@ mounted() {
   font-size 0.9rem
   text-align center
   border-radius 0.5rem
-  margin-bottom 0.25rem
+  margin 0 0.25rem 0.25rem 0
+
 
 .value
   color #aa0

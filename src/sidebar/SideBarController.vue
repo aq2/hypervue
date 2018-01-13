@@ -1,6 +1,7 @@
 <template lang="pug">
 
-SideBar(v-if="currentPage.startsWith('viz')")
+aside 
+  SideBar(v-if='currentPage==5')
 
 </template>
 
@@ -18,7 +19,7 @@ components: {
 
 data() {
   return {
-    currentPage: ""
+    currentPage: 0
   }
 },
 
@@ -32,3 +33,12 @@ created() {
 }
 
 </script>
+
+<style lang="stylus" scoped>
+
+aside
+  background blue
+  max-height 100vh
+  min-height 99.999vh
+
+</style>

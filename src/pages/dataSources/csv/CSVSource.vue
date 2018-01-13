@@ -1,12 +1,13 @@
 <template lang="pug">
 
-#CsvSource
+#page
   #get(v-if='!fileGot && !dataBuilt')
     h1 get data from csv
-    br
+    .v
+    
     icon(name='file-text-o' scale=8)
-    br
-    br
+    .v
+
     #text
       p Must be in CSV format,
       p with criteria headers as first row, eg:
@@ -16,7 +17,8 @@
         |  new york,NY,8405837,302.6
         |  boston,MA,645966,48.3
         |  kansas city,MO,467007,315.0
-    br
+    .v
+    
     #button  
       ReadCSV      
       
@@ -59,17 +61,4 @@ export default {
 }
 
 </script>
-
-
-<style lang="stylus" scoped>
-
-
-// #text 
-//   width 600px
-//   background $g6
-//   padding 1rem
-
-</style>
-
-
 

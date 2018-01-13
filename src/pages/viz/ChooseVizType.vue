@@ -1,25 +1,30 @@
 <template lang="pug">
 
-#DataSource
+#page
   h1 Choose vizType
   icon(name='bar-chart' scale=8)
-  .spacer
+  .h
   icon(name='line-chart' scale=8)
-  .spacer
+  .h
   icon(name='pie-chart' scale=8)
-  br
-  br
+  .v
+
+  #text
+    p please choose a visualisation type
+  .v
+
   #links
-    button(id='pareto' @click="nextPage('pareto')")
+    button(id='pareto' @click="nextPage(5)")
       icon(name='bicycle' scale=4)
       p pareto dominance plot
-    .spacer   
+    .h   
     button(id='parallel')
       icon(name='line-chart' scale=4)
       p parallel plot
   
 
 </template>
+
 
 <script>
 
@@ -34,7 +39,6 @@ methods: {
 }
 
 }
-
 </script>
 
 
