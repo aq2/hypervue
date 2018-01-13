@@ -42,16 +42,12 @@ created() {
 
   EventBus.$on('changePageType', newPageType => {
     this.pageType = newPageType
-    const welcome = this.$('welcome')
-    const data = this.$('data')
-    const viz = this.$('viz')
 
-    welcome.classList.remove('active')
-    data.classList.remove('active')
-    viz.classList.remove('active')
+    this.$('welcome').classList.remove('active')
+    this.$('data').classList.remove('active')
+    this.$('viz').classList.remove('active')
 
-    let el = this.$(newPageType)
-    el.classList.add('active')
+    this.$(newPageType).classList.add('active')
   })
 
 },
@@ -68,6 +64,21 @@ methods: {
 
   nextPage(newPage) {
     EventBus.$emit('changePage', newPage)
+    let pageType
+    switch(newPage) {
+      case 0:
+        pageType = 'welcome'
+        break
+      case 1:
+        pageType = 'data'
+        break
+      case 4:
+        pageType = 'viz'
+        break
+      default:
+        pageType = this.pageType
+    }
+    EventBus.$emit('changePageType', pageType)
   }
 },
 
