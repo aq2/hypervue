@@ -1,7 +1,7 @@
 <template lang="pug">
 
 aside 
-  SideBar(v-if='currentPage==5')
+  SideBar(v-if='currentPage==8')
 
 </template>
 

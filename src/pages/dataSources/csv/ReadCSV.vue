@@ -2,9 +2,9 @@
 
 #getFile
   input(type="file" id='browseFile' accept=".csv, text/csv" @change='readFile')
-  label(id='browseLabel' for='browseFile') 
+  label(id='browseLabel' for='browseFile')
     icon(name='upload' class='btnIcon' scale=1.2)
-    | choose a file...
+    span choose a file...
   
 </template>
 
@@ -15,10 +15,10 @@ import {EventBus} from '../../../main'
 export default {
 methods: {
   readFile(evt) {
-    const file = evt.target.files[0]      
-    if (file) { 
+    const file = evt.target.files[0]
+    if (file) {
       const rdr = new FileReader()
-      rdr.onload = e => {this.processFile(e.target.result)} 
+      rdr.onload = e => {this.processFile(e.target.result)}
       rdr.readAsText(file)
     } else {
       alert('failed to load file')
@@ -28,7 +28,7 @@ methods: {
   processFile(file) {
     const lines = file
                     .trim()       // remove last empty line
-                    .split('\n')                    
+                    .split('\n')
                     .map(line => line.split(','))
   
     const dimNames = lines[0]
@@ -52,7 +52,7 @@ methods: {
     this.$store.dispatch('setDimMeta', catMeta)
     this.$store.dispatch('setCandMeta', candMeta)
     
-    // and let them know it's done
+    // and let CSVSource know it's done
     EventBus.$emit('fileParsed')
   },
 
@@ -74,7 +74,7 @@ methods: {
         } else {
           value = Number(value)
         }
-        cand.push(value) 
+        cand.push(value)
       })
       
       candidates.push(cand)

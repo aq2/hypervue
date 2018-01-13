@@ -1,8 +1,5 @@
-// <template lang="pug">
-  
-//   #pareto pareto
-
-// </template>
+<template lang="pug">
+</template>
 
 
 <script>
@@ -46,8 +43,7 @@ methods: {
     this.$store.dispatch('setCandMeta', candMeta)
 
     // send event to header to change page
-    // EventBus.$emit('paretoDataBuilt')
-    EventBus.$emit('changePage', 5)
+    EventBus.$emit('changePage', 8)
   },
 
   calcDominances(candiData, candsL) {
@@ -104,7 +100,7 @@ methods: {
       } else
       if (ranksA[d] < ranksB[d]) {  // A is better
         return [d, 'A']
-      }        
+      }
     }
     // must be all equal!
     return 'equal'
@@ -162,5 +158,4 @@ created() {
 }
 
 }
-
 </script>

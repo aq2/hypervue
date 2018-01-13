@@ -4,17 +4,11 @@ doing now:
     ☐ something not right about order/color  @crit
     ☐ dominance relations
   ☐ inferiors?
-  ☐ all buttons throbbing
     
 .
 header:
-  ✔ split togglefullscreen - goFull, unFull @done(12-01 16:40)
-  ☐ put page title in header
-  ☐ use header space for < and ?
   ☐ header colors?
   headerlinks:
-    ☐ need to listen to events too? or prop from header?
-    ☐ needs to emit too coz they're links
     ☐ styling
 
 .    
@@ -23,8 +17,7 @@ sidebar:
   ☐ select rather than radio
   ☐ search for cand - highlight/grow
   ☐ accordian slideable sidebar components when it gets too big
-  ☐ return of sidebar
-  ☐ toggleable for vizzes
+  ☐ toggleable sidebar for vizzes 
   ☐ three states: hidden, open, closed
   
   .
@@ -42,9 +35,7 @@ sidebar:
 
 .
 css:
-  ☐ user-select false
   ☐ light/dark color scheme
-  ☐ move inputs.styl -> make it global, override locally
   how many greys do i need? $g5
   ☐ replace all hard-coded stylus colors with global vars
 
@@ -70,6 +61,15 @@ js/css learn:
 =====================================================================  
 
 Archive:
+  ✔ all buttons throbbing @done(13-01 03:01)
+  ✔ split togglefullscreen - goFull, unFull @done(12-01 16:40)
+  ✔ put page title in header @done(13-01 03:01)
+  ✔ use header space for < and ? @done(13-01 03:01)
+  ✔ need to listen to events too? or prop from header? @done(13-01 03:01)
+  ✔ needs to emit too coz they're links @done(13-01 03:01)
+  ✔ return of sidebar @done(13-01 03:01)
+  ✔ user-select false @done(13-01 03:02)
+  ✔ move inputs.styl -> make it global, override locally @done(13-01 03:02)
   ✔ lose da router @done(10-01 14:57)
   ✔ always there, but sometimes 0, @done(10-01 14:58)
   ✘ csv controller - see notes @cancelled(10-01 14:57)

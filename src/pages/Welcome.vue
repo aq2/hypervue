@@ -8,7 +8,7 @@
   icon(name='line-chart' scale=8)
   icon(name='pie-chart' scale=7)
   .v
-  
+
   #text
     p It doesn't look like much yet, but it will be great!
     p It's better to run this app in full-screen mode,
@@ -17,8 +17,8 @@
       | &nbsp; button at top-right
     button(@click='fullScreen') let's go fullscreen
     p press the 'next page' button below to continue
-  .v  
-  
+  .v
+
   button(class='throb' @click='nextPage') next page
 
 
@@ -34,6 +34,7 @@ export default {
 methods: {
   nextPage() {
     EventBus.$emit('changePage', 1)
+    EventBus.$emit('changePageType', 'data')
   },
   fullScreen() {
     EventBus.$emit('fullScreen')

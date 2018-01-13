@@ -1,8 +1,7 @@
 <template lang='pug'>
 
-#sidey
-  aside
-    ParetoSidebar
+aside
+  ParetoSidebar
   //- todo should be dynamic! ie if page=pareto 
 
 
@@ -20,7 +19,7 @@ export default {
 components: {
   ParetoSidebar
 },
-  
+
 data() {
   return {
     open: true,
@@ -32,15 +31,7 @@ methods: {
     this.open = !this.open
     let sid = document.getElementById('sidebar')
     sid.style.width = sid.offsetWidth >= 50 ? '0px' : '150px'
-  },
-  
-  // setHeight() {
-  //   const headerH = 60
-  //   const windowH = window.innerHeight
-  //   const sidebarH = windowH - headerH - 1
-  //   let sid = document.getElementById('sidebar')
-  //   sid.style.height = sidebarH + 'px'
-  // }
+  }
 },
 
 created() {
@@ -48,27 +39,18 @@ created() {
     this.toggle()
   })
 
-  // EventBus.$on('sidebarHeight', () => {
-  //   this.setHeight()
-  // })
-  
   EventBus.$on('sidebarOpen', () => {
     this.openUp()
   })
 },
 
-mounted() {
-  // this.setHeight()
 }
-
-}
-
 </script>
 
 
 <style lang='stylus' scoped>
 
-#sidebar, aside
+aside
   width 155px
   background $g3
   padding-top 0.25rem

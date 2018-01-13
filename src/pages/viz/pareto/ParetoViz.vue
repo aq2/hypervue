@@ -4,7 +4,7 @@
   //- ParetoCalcs
   #viz
     .front(v-for='front in fronts') 
-      .node(v-for='node in front' :ID='node' 
+      .node(v-for='node in front' :ID='node'
             @click='doNode(node)') {{candName(node)}}
         .value(:ID="'nodeSpan'+node")
 
@@ -40,7 +40,7 @@ computed: {
 data() {
   return {
     orderMethod: "score",
-    colourMethod: "score"    
+    colourMethod: "score"
   }
 },
 
@@ -87,7 +87,7 @@ methods: {
     if (this.colourMethod == 'score') {
       score = cand.meanNorm
       // norm ranking spreads from 0 to 100?
-      normScore = score * 100     
+      normScore = score * 100
     }
 
     let nodeEl = this.$(c)
@@ -112,7 +112,7 @@ methods: {
     if (this.orderMethod == 'score') {
       score = cand.meanNorm
       // norm ranking spreads from 0 to 100?
-      normScore = score      
+      normScore = score
     }
     let nodeEl = this.$(c)
     nodeEl.style.order = parseInt(normScore)
@@ -147,17 +147,11 @@ methods: {
   },
 
   doNode(candID) {
-    // highlight node
-    // const node = this.$(candID)
-    // node.style.background = 'orange'
-
     //todo unhighlight previously clicked node
 
     // show dominances - functionate?
     const cand = this.candiData[candID]
     console.log(cand)
-    // const pareto = cand.pareto
-    // console.log('p', pareto)
     
     const inferiors = cand.pareto.inferiors
     const superiors = cand.pareto.superiors
@@ -169,11 +163,11 @@ methods: {
       const node = this.$(c)
       // console.log(c)
       if (inferiors.includes(c)) {
-        // console.log('inf includes', c)        
+        // console.log('inf includes', c)
         // its inf
         node.style.background = 'red'
         // node.style.color = 'white'
-        node.style.opacity = '1'             
+        node.style.opacity = '1'
       } 
       else      
       if (superiors.includes(c)) {
@@ -184,20 +178,18 @@ methods: {
       } else
       if (candID == c) {
         // it's this
-        node.style.background = 'white'        
+        node.style.background = 'white'
         node.style.opacity = '1'
 
       } else {
         // it's other
         node.style.opacity = '0.3'
       }
-
     })
 
     // send message
     EventBus.$emit('nodeClicked', cand)
   },
-
 
 },
 
@@ -227,8 +219,6 @@ mounted() {
 <style lang="stylus" scoped>
 
 #pViz
-  // margin 0
-  // padding 0
   display flex  // expands sideways
 
 .front
@@ -245,7 +235,6 @@ mounted() {
   text-align center
   border-radius 0.5rem
   margin 0 0.25rem 0.25rem 0
-
 
 .value
   color #aa0

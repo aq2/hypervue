@@ -1,6 +1,6 @@
-<template lang='pug'> 
+<template lang='pug'>
   
-#BuildCandidata
+#page
   h1 category meta-data
   fieldset(class='mainFieldset')
     legend(class='title') please select...
@@ -167,7 +167,7 @@ export default {
 
     this.dimNames.forEach((d, i) => {
       if(!this.alphas.includes(i)) {
-        this.crits.push(i)}  
+        this.crits.push(i)}
     })
 
     // todo fugly - use Sets?
@@ -180,7 +180,7 @@ export default {
       }
     })
 
-    // todo repeated code?    
+    // todo repeated code?
     EventBus.$on('updateMaxis', i => {
       const maxs = this.maxis
       if (maxs.includes(i)) {
@@ -205,27 +205,22 @@ export default {
 
 <style lang="stylus" scoped>
 
-
-// #BuildCandidata 
-  // padding 1rem
-
 .mainFieldset
   width 400px  // dunno why this works
 
-#exampleTable 
-  // padding 1rem 0
+#exampleTable
   display flex
 
 #exampleTable > div:last-child fieldset
   margin-right 0
   background $g7
 
-#catNames .list 
+#catNames .list
   font-weight bold
   transition 1s all
   // speckly bug ??
 
-#instructions 
+#instructions
   margin 1rem 0
   background $g7
   padding 0.5rem 1rem

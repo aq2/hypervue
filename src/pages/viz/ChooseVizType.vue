@@ -14,7 +14,7 @@
   .v
 
   #links
-    button(id='pareto' @click="nextPage(5)")
+    button(id='pareto' @click="nextPage(7)")
       icon(name='bicycle' scale=4)
       p pareto dominance plot
     .h   
@@ -34,8 +34,8 @@ export default {
 
 methods: {
   nextPage(newPage) {
-    EventBus.$emit('changePage', newPage)    
-  }  
+    EventBus.$emit('changePage', newPage)
+  }
 }
 
 }
@@ -44,7 +44,7 @@ methods: {
 
 <style lang="stylus" scoped>
 
-#links 
+#links
   width 600px
 
 button

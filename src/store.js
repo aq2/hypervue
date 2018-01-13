@@ -9,8 +9,7 @@ state: {
   dimMeta: {},
   dimData: {},
   candMeta: [],
-  candiData: {},
-  page: 'welcome'
+  candiData: {}
 },
 
 // components get stored data through these 
@@ -26,9 +25,6 @@ getters: {
   },
   getCandMeta(state) {
     return state.candMeta
-  },
-  getPage(state) {
-    return state.page
   }
 },
 
@@ -46,9 +42,6 @@ mutations: {
   },
   mutateDimMeta(state, payload) {
     state.dimMeta = payload
-  },
-  mutatePage(state, payload) {
-    state.page = payload
   }
 },
 
@@ -66,9 +59,6 @@ actions: {
   },
   setDimMeta(context, payload) {
     context.commit('mutateDimMeta', payload)
-  },
-  setPage(context, payload) {
-    context.commit('mutateePage', payload)
   }
 }
 
