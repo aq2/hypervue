@@ -1,6 +1,7 @@
 <template lang="pug">
 
-#pViz  
+#pViz
+  //- ParetoCalcs
   #viz
     .front(v-for='front in fronts') 
       .node(v-for='node in front' :ID='node' 
@@ -13,8 +14,13 @@
 <script>
 
 import {EventBus} from '../../../main'
+// import ParetoCalcs from '../pareto/ParetoCalcs'
 
 export default {
+
+components: {
+  // ParetoCalcs
+},
 
 computed: {
   candiData() {
@@ -41,7 +47,7 @@ data() {
 methods: {
   main() {
     // todo - header should respond
-    EventBus.$emit('changeTitle', 'Pareto Dominance Plot')
+    EventBus.$emit('changeVizTitle', 'Pareto Dominance Plot')
     this.orderAllNodes()
     this.colourAllNodes()
   },

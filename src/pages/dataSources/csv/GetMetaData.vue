@@ -162,6 +162,7 @@ export default {
   },
     
   created() {
+    // todo move to main()?
     this.ID = this.alphas[0]
 
     this.dimNames.forEach((d, i) => {
@@ -192,7 +193,10 @@ export default {
 
     EventBus.$on('updateID', i => {
       this.ID = i
-    })
+    }),
+
+    EventBus.$emit('changeDataTitle', 'CSV Meta Data')
+
   }
 }
 

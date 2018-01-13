@@ -18,12 +18,12 @@
         |  boston,MA,645966,48.3
         |  kansas city,MO,467007,315.0
     .v
-    
+
     #button  
       ReadCSV      
       
   // does this need to be in its own div?
-  GetDimInfo(v-if='fileGot')
+  GetMetaData(v-if='fileGot')
     
   // todo!
   SaveCSVtoFB(v-if='dataBuilt')
@@ -35,13 +35,13 @@
 
 import {EventBus} from '../../../main'
 import ReadCSV from './ReadCSV.vue'
-import GetDimInfo from './GetDimInfo.vue'
+import GetMetaData from './GetMetaData.vue'
 import SaveCSVToFB from './SaveCSVtoFB.vue'
 
 export default {
   components: {
     ReadCSV,
-    GetDimInfo,
+    GetMetaData,
     SaveCSVToFB
   },
   data() {
@@ -56,7 +56,8 @@ export default {
     }),
     EventBus.$on('dataBuilt', () => {
       this.dataBuilt = true
-    })
+    }),
+    EventBus.$emit('changeDataTitle', 'CSV Data')
   }
 }
 

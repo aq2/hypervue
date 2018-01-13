@@ -1,15 +1,15 @@
 <template lang="pug">
 
 #links  
-  button(id='welcome' @click='nextPage(0)')
+  button(id='b0' @click='nextPage(0)')
     icon(name='home' scale=3)
     h1 HyperDViz
 
-  button(id='dataSrc' @click='nextPage(1)')
+  button(id='b1' @click='nextPage(1)')
     icon(name='file-excel-o' scale=2.5)
-    h1 data source
+    h1 {{dataTitle}}
   
-  button(id='viz' @click='nextPage(3)')
+  button(id='b4' @click='nextPage(4)')
     icon(name='area-chart' scale=3)
     h1 {{vizType}}
 
@@ -24,47 +24,63 @@ export default {
 
 data() {
   return {
+    dataTitle: 'data source',
     vizType: 'Choose VizType',
     currentPage: 0,
-    pages: ['welcome', 'dataSrc', 'viz']
+    pages: ['welcome', 'dataSrc', 'dataSrc', 'dataSrc', 'chooseViz', 'viz'],
+    pgs: [0,1,2,2,4]
   }
 },
 
 created() {
-  this.vizType = 'Choose VizType'
+  // this.vizType = 'Choose VizType'
   
-  EventBus.$on('changeTitle', newTitle => {
-    this.vizType = newTitle
+  EventBus.$on('changeDataTitle', newDataTitle => {
+    this.dataTitle = newDataTitle
+  })
+
+  EventBus.$on('changeVizTitle', newVizTitle => {
+    this.vizType = newVizTitle
   })
 
   EventBus.$on('changePage', newPage => {
     this.currentPage = newPage
-    console.log(newPage)
+    console.warn('-----np', newPage)
+    
+    // let i = 'b' + this.pgs[newPage]
+    // console.log('i', i)
+    // let el = this.$(i)
+    // el.classList.add('active')
 
-    // toggle them all?
-    // set active to active, not the others?
-    this.pages.forEach((page, p) => {
-      let el = this.$(this.pages[p])
-      if (p == this.currentPage) {
-        el.classList.toggle('active')
-        el.style.flexGrow = 1
-      } else {
-        el.style.flexGrow = 0
-        el.classList.remove('active')
-        
-      }
+    let lnx = this.$('links')
+    let kids = [...lnx.childNodes]
+    console.log('kids', kids)
+
+    const pgs = this.pgs  
+
+    kids.forEach(kid => {
+      let bId = kid.id
+      console.log('bI', bId)
       
+      let el = this.$(bId)
+      console.log('el', el)
+      
+      // now change bx into x
+      let b = Number(bId[1])  // ie 2nd character of string
+      console.log('b', b)
+      if (b == pgs[this.currentPage]) {
+        console.log('activating', b)
+        el.classList.add('active')
+      } else {
+        console.log('remving', b)    
+        el.classList.remove('active')
+      }
     })
-
-    // let el = this.$(this.pages[newPage])
-    // el.classList.toggle('active')
-    // el.style.flexGrow = 1
   })
 },
 
 mounted() {
-  let el = this.$(this.pages[this.currentPage])
-  el.style.flexGrow = 1
+  let el = this.$('b' + this.currentPage)
   el.classList.toggle('active')
 },
 

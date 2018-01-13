@@ -8,9 +8,10 @@ main
     DataSource(v-if='page==1')
     CSVSource(v-if='page==2')
     // FBSource(v-if='page==3')
+    //- GetMetaData
 
     ChooseViz(v-if='page==4')
-    Pareto(v-if='page == 5')
+    ParetoCalcs(v-if='page == 5')
     ParetoViz(v-if='page == 5')
 
 
@@ -25,7 +26,7 @@ import Welcome from '../pages/Welcome'
 import DataSource from './dataSources/DataSource'
 import CSVSource from './dataSources/csv/CSVSource'
 import ChooseViz from './viz/ChooseVizType'
-import Pareto from './../pages/viz/pareto/Pareto'
+import ParetoCalcs from './../pages/viz/pareto/ParetoCalcs'
 import ParetoViz from './../pages/viz/pareto/ParetoViz'
 
 
@@ -37,7 +38,7 @@ components: {
   DataSource,
   CSVSource,
   ChooseViz,
-  Pareto,
+  ParetoCalcs,
   ParetoViz
 },  
 
