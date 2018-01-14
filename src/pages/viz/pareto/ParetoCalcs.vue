@@ -8,12 +8,6 @@ import {EventBus} from '../../../main'
 
 export default {
 
-data() {
-  return {
-    newCD: {}
-  }
-},
-
 computed: {
   candiData() {
     return this.$store.getters.getCandiData
@@ -27,23 +21,36 @@ computed: {
 methods: {
   
   main() {
-    // what vars do we need?
-    // all we want is the ranks
     let cands = this.candiData
     let allRankings = []
     Object.values(cands).forEach((val) => {
       allRankings.push(val.rankings)
       val.pareto = {front: -1, sups:[], infs:[]}
     })
-    // is it paretod now!
 
+    // find infs and sups
     var candsWithDom = this.contest(allRankings, cands)
-    console.log(candsWithDom)
 
     // yippee! now build up fronts
-    // using all superiors - need to get this fron contest?
-    // or build it?
+    var fronts = []
 
+    let allSups = []
+    Object.values(candsWithDom).forEach((cand) => {
+      allSups.push(cand.pareto.sups)
+    })
+
+    let newFronts = this.buildFronts(allSups)
+
+    const newCandidata = this.updateCands(candsWithDom, newFronts)
+    let candMeta = this.candMeta
+    candMeta.fronts = fronts
+
+    // now store this stuff!
+    this.$store.dispatch('setCandiData', newCandidata)
+    this.$store.dispatch('setCandMeta', candMeta)
+
+    // send event to header to change page
+    EventBus.$emit('changePage', 8)
   },
 
   contest(allRankings, cands) {
@@ -70,8 +77,7 @@ methods: {
 
       }
     }
-    return cands // ?? either pass them in, or use data() - take yer pick
-
+    return cands
   },
 
   getLeader(ranksA, ranksB) {
@@ -86,7 +92,6 @@ methods: {
     // must be all equal!
     return 'equal'
   },
-
 
   compareCands(rankA, rankB) {
     const [firstIdx, leader] = this.getLeader(rankA, rankB)
@@ -105,10 +110,62 @@ methods: {
     return leader
   },
 
+  findNonDominated(allSups) {
+    var nonDoms = []
+    allSups.forEach((sup, c) => {
+      if (sup.length == 0) {
+        nonDoms.push(c)
+        console.log('pushing ', c)
+      }
+    })
+    return nonDoms
+  },
 
+// seems overly complicated? - recursion?
+  buildFronts(allSups) {
+    let fronts = []
+    let allCands = new Set()
+    
+    for (let i=0, l=allSups.length; i<l; i++) {
+      allCands.add(i)
+    }
 
+    while (allCands.size > 0) {
+      let front = []
+      let aCA = [...allCands]
+    
+      // find non-dominated candidates
+      aCA.forEach(c => {
+        if (allSups[c].length == 0) {
+          front.push(c)
+          allCands.delete(c)
+        }
+      })
+      
+      fronts.push(front)
 
+      // remove front members from other sups
+      front.forEach(f => {
+        allCands.forEach(c => {
+          const index = allSups[c].indexOf(f)
+          if (index != -1) {
+            allSups[c].splice(index, 1)
+          }
+        })
+      })
+    }  // end while
+    return fronts
+  },
 
+  updateCands(candiData, fronts) {
+    fronts.forEach((front, f) => {
+      front.forEach(peer => {
+        candiData[peer].pareto.front = f
+        candiData[peer].pareto.peers = front
+      })  
+    })
+    return candiData
+  },
 },
 
 created() {
