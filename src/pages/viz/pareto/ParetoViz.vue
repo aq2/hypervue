@@ -1,7 +1,6 @@
 <template lang="pug">
 
 #pViz
-  //- ParetoCalcs
   #viz
     .front(v-for='front in fronts') 
       .node(v-for='node in front' :ID='node'
@@ -14,13 +13,8 @@
 <script>
 
 import {EventBus} from '../../../main'
-// import ParetoCalcs from '../pareto/ParetoCalcs'
 
 export default {
-
-components: {
-  // ParetoCalcs
-},
 
 computed: {
   candiData() {
@@ -39,14 +33,13 @@ computed: {
 
 data() {
   return {
-    orderMethod: "score",
-    colourMethod: "score"
+    orderMethod: "rank",
+    colourMethod: "rank"
   }
 },
 
 methods: {
   main() {
-    // todo - header should respond
     EventBus.$emit('changeVizTitle', 'Pareto Dominance Plot')
     this.orderAllNodes()
     this.colourAllNodes()
@@ -102,6 +95,7 @@ methods: {
     let candiData = this.candiData
     const candsL = Object.keys(candiData).length
     let cand = candiData[c]
+    // console.log('c', cand)
     let score, normScore
 
     if (this.orderMethod == 'rank') {
@@ -116,6 +110,11 @@ methods: {
     }
     let nodeEl = this.$(c)
     nodeEl.style.order = parseInt(normScore)
+    
+    // show value of each candidate
+    const nodeSpan = this.$('nodeSpan'+c)
+    // nodeSpan.style.width = (myNorm*100) + '%'
+    nodeSpan.innerHTML = score
   },
 
   showDimValues(d) {
@@ -151,11 +150,11 @@ methods: {
 
     // show dominances - functionate?
     const cand = this.candiData[candID]
-    console.log(cand)
+    // console.log(cand)
     
     const inferiors = cand.pareto.inferiors
     const superiors = cand.pareto.superiors
-    console.log('infs', inferiors)
+    // console.log('infs', inferiors)
 
     // got through all candidates
     Object.keys(this.candiData).forEach(c => {

@@ -49,6 +49,7 @@ methods: {
     const catMeta = {dimNames, alphas}
     const candMeta = {candidates, ignores}
 
+
     this.$store.dispatch('setDimMeta', catMeta)
     this.$store.dispatch('setCandMeta', candMeta)
     

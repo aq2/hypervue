@@ -9,7 +9,7 @@
     icon(name='file-excel-o' scale=2.5)
     h1 {{dataTitle}}
   
-  button(id='viz' @click='nextPage(4)')
+  button(id='viz' @click='nextPage(6)')
     icon(name='area-chart' scale=3)
     h1 {{vizType}}
 
