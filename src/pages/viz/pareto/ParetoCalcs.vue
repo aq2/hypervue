@@ -30,20 +30,21 @@ methods: {
 
     // find infs and sups
     var candsWithDom = this.contest(allRankings, cands)
-
-    // yippee! now build up fronts
-    var fronts = []
-
+    // console.log(candsWithDom)
+    
     let allSups = []
     Object.values(candsWithDom).forEach((cand) => {
       allSups.push(cand.pareto.sups)
     })
+    // console.table(allSups)
 
     let newFronts = this.buildFronts(allSups)
 
     const newCandidata = this.updateCands(candsWithDom, newFronts)
     let candMeta = this.candMeta
-    candMeta.fronts = fronts
+    candMeta.fronts = newFronts
+
+    // console.log(newFronts)
 
     // now store this stuff!
     this.$store.dispatch('setCandiData', newCandidata)
@@ -74,9 +75,10 @@ methods: {
             cands[b].pareto.infs.push(a)
             cands[a].pareto.sups.push(b)
           }
-
+          // console.log('dom', dominator)
       }
     }
+    // console.log('contest', cands)
     return cands
   },
 

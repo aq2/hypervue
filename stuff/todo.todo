@@ -1,10 +1,12 @@
 doing now:
 
   ☐ pareto
-    ☐ something not right about order/color  @crit
+    ✔ something not right about order/color  @crit @done(15-01 13:39)
+    ☐ rank.score - decimals
     ✔ dominance relations @done(14-01 20:00)
     ☐ embed pareto calcs somehow - import?
   ✔ inferiors? @done(14-01 20:00)
+    ☐ superiors??
     
 .
 header:

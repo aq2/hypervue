@@ -101,20 +101,23 @@ methods: {
     if (this.orderMethod == 'rank') {
       score = cand.meanRank
       // aveRanking spreads from 0 to 113 ??
-      normScore = score * 100 / candsL
+      normScore = (score * 100 / candsL)
     } else 
     if (this.orderMethod == 'score') {
-      score = cand.meanNorm
+      score = cand.meanNorm * 100
       // norm ranking spreads from 0 to 100?
       normScore = score
     }
     let nodeEl = this.$(c)
-    nodeEl.style.order = parseInt(normScore)
+    nodeEl.style.order = parseInt(normScore) //qq
+    // need some sort of ranking
+
+    nodeEl.style.opacity = 1
     
     // show value of each candidate
     const nodeSpan = this.$('nodeSpan'+c)
     // nodeSpan.style.width = (myNorm*100) + '%'
-    nodeSpan.innerHTML = score
+    nodeSpan.innerHTML = this.orderMethod + ' ' + score.toFixed(1)
   },
 
   showDimValues(d) {
@@ -152,8 +155,8 @@ methods: {
     const cand = this.candiData[candID]
     // console.log(cand)
     
-    const inferiors = cand.pareto.inferiors
-    const superiors = cand.pareto.superiors
+    const inferiors = cand.pareto.infs
+    const superiors = cand.pareto.sups
     // console.log('infs', inferiors)
 
     // got through all candidates
@@ -219,21 +222,23 @@ mounted() {
 
 #pViz
   display flex  // expands sideways
+  margin-top 1rem
 
 .front
   display flex // run sideways
   flex-wrap wrap
   justify-content space-evenly
-  margin-bottom 3rem
+  margin-bottom 3.2rem
 
 .node
   width 140px
-  height 2.5rem
+  height 3rem
   padding 0.05rem
-  font-size 0.9rem
+  font-size 1rem
   text-align center
   border-radius 0.5rem
-  margin 0 0.25rem 0.25rem 0
+  margin 0 0.75rem 0.4rem 0
+  border 2px solid $g3
 
 .value
   color #aa0
