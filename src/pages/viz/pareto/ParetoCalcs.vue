@@ -21,51 +21,34 @@ computed: {
 methods: {
   
   main() {
-    let origCands = this.candiData
-
-    let cands = [...origCands]
+    const cands = this.candiData
 
     let allRankings = []
-    origCands.forEach(cand => {
-      allRankings.push(cand.rankings) //qq
+    cands.forEach(cand => {
+      allRankings.push(cand.rankings)
     })
 
     // find infs and sups
     var candsWithDom = this.contest(allRankings, cands)
 
-
+    // keep allSups for finding fronts later
     let allSups = []
     cands.forEach((cand) => {
-      const sups = [...cand.sups]  // derefernce it!
+      const sups = [...cand.sups]  // dereference it!
       allSups.push(sups)
     })
-
-    // let newSups = allSups.slice(0)
     let newFronts = this.buildFronts(allSups)
 
-
-    console.log('after buildFronts')    
-    console.table(candsWithDom) 
-    // return
-    
-    // const newCandidata = this.updateCands(candsWithDom, newFronts)
-    
     newFronts.forEach((front, f) => {
       front.forEach(peer => {
         candsWithDom[peer].paretoFront = f
         candsWithDom[peer].peers = front
       })  
     })
-    
-    // console.log('after forEach')
-    // console.table(candsWithDom)
 
+    // keep fronts elsewhere...
     let candMeta = this.candMeta
     candMeta.fronts = newFronts
-    
-    // return
-
-    // console.log(newFronts)
 
     // now store this stuff!
     this.$store.dispatch('setCandiData', candsWithDom)
@@ -85,7 +68,6 @@ methods: {
         var rankB = allRankings[b]
         var dominator = this.compareCands(rankA, rankB)
 
-        // need to change shared data()
         if (dominator == 'A') {
             // add B to A's inferiors
             cands[a].infs.push(b)
@@ -96,11 +78,8 @@ methods: {
             cands[b].infs.push(a)
             cands[a].sups.push(b)
           }
-          // console.log('dom', dominator)
       }
     }
-    // console.log('contest', cands)
-    // qq no sups?
     return cands
   },
 
@@ -134,20 +113,8 @@ methods: {
     return leader
   },
 
-  findNonDominated(allSups) {
-    var nonDoms = []
-    allSups.forEach((sup, c) => {
-      if (sup.length == 0) {
-        nonDoms.push(c)
-        console.log('pushing ', c)
-      }
-    })
-    return nonDoms
-  },
-
   // seems overly complicated? - recursion?
   buildFronts(allSups) {
-    // let allSups = [...allSupsO]
     let fronts = []
     let allCands = new Set()
     
@@ -181,48 +148,6 @@ methods: {
     }  // end while
     return fronts
   },
-
-  updateCands(cands, fronts) {
-    fronts.forEach((front, f) => {
-      front.forEach(peer => {
-        cands[peer].paretoFront = f
-        cands[peer].peers = front
-      })  
-    })
-    return cands
-  },
-
-  deepClone(obj) {
-  //in case of primitives
-  if(obj===null || typeof obj !== "object"){
-    return obj
-  }
-
-  //date objects should be 
-  if(obj instanceof Date){
-    return new Date(obj.getTime())
-  }
-
-  //handle Array
-  if(Array.isArray(obj)){
-    var clonedArr = []
-    obj.forEach(function(element){
-      clonedArr.push(this.deepClone(element))
-    })
-    return clonedArr
-  }
-
-  //lastly, handle objects
-  let clonedObj = new obj.constructor()
-  for(var prop in obj){
-    if(obj.hasOwnProperty(prop)){
-      clonedObj[prop] = this.deepClone(obj[prop])
-    }
-  }
-  return clonedObj
-}
-
-
 
 },
 created() {
