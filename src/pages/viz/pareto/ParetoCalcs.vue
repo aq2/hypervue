@@ -22,6 +22,10 @@ methods: {
   
   main() {
     let cands = this.candiData
+
+    // let cands2 = [...cands]
+    // console.log(cands)
+
     let allRankings = []
     Object.values(cands).forEach((val) => {
       allRankings.push(val.rankings)
@@ -30,13 +34,20 @@ methods: {
 
     // find infs and sups
     var candsWithDom = this.contest(allRankings, cands)
-    // console.log(candsWithDom)
+    // console.log(candsWithDom)  
+    // qq no superiors??
     
     let allSups = []
     Object.values(candsWithDom).forEach((cand) => {
+      console.log(cand)
+      console.log('c.p', cand.pareto)
+      console.log('c.p.s', cand.pareto.sups)
       allSups.push(cand.pareto.sups)
     })
     // console.table(allSups)
+    // qq eh?but we have them now?
+    // where the fuck do they come from?
+
 
     let newFronts = this.buildFronts(allSups)
 
@@ -79,6 +90,7 @@ methods: {
       }
     }
     // console.log('contest', cands)
+    // qq no sups?
     return cands
   },
 

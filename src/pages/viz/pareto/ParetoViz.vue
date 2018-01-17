@@ -116,7 +116,7 @@ methods: {
     
     // show value of each candidate
     const nodeSpan = this.$('nodeSpan'+c)
-    // nodeSpan.style.width = (myNorm*100) + '%'
+    nodeSpan.style.width = (score * 1) + '%'
     nodeSpan.innerHTML = this.orderMethod + ' ' + score.toFixed(1)
   },
 
@@ -171,19 +171,21 @@ methods: {
         // node.style.color = 'white'
         node.style.opacity = '1'
       } 
-      else      
+      else
       if (superiors.includes(c)) {
         // it's inf
         node.style.background = 'green'
         node.style.opacity = '1'
                 
-      } else
+      } 
+      else
       if (candID == c) {
         // it's this
         node.style.background = 'white'
         node.style.opacity = '1'
 
-      } else {
+      } 
+      else {
         // it's other
         node.style.opacity = '0.3'
       }
