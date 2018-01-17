@@ -120,8 +120,9 @@ methods: {
     const {candidates, ignores} = candMeta
     const {ID} = dimMeta
 
-    let candiData = {}
+    let candiData = []
     candidates.forEach((cand, c) => {
+      const candKey = c
       const candID = cand[ID]
       const scores = cand
       const ignored = (ignores.includes(c))
@@ -143,8 +144,13 @@ methods: {
       const meanRank = this.mean(rankings)
       const meanNorm = this.mean(norm)
 
-      const candObj = {candID, scores, rankings, meanRank, norm, meanNorm, ignored}
-      candiData[c] = candObj
+      // const pareto = {front:-1, sups:[], peers:[], infs:[]}
+
+
+
+
+      const candObj = {candKey, candID, scores, rankings, meanRank, norm, meanNorm, ignored, paretoFront:-1, sups:[], peers:[], infs:[]}
+      candiData.push(candObj)
     })
     return candiData
   },

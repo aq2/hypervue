@@ -9,7 +9,7 @@ state: {
   dimMeta: {},
   dimData: {},
   candMeta: [],
-  candiData: {}
+  candiData: []
 },
 
 // components get stored data through these 

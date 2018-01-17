@@ -50,14 +50,14 @@ methods: {
   },
     
   orderAllNodes() {
-    Object.keys(this.candiData).forEach(key => {
-      this.orderANode(key)
+    this.candiData.forEach(cand => {
+      this.orderANode(cand.candKey)
     })
   },
 
   colourAllNodes() {
-    Object.keys(this.candiData).forEach(key => {
-      this.colourANode(key)
+    this.candiData.forEach(cand => {
+      this.colourANode(cand.candKey)
     })
   },
   
@@ -67,7 +67,7 @@ methods: {
 
   colourANode(c) {
     let candiData = this.candiData
-    const candsL = Object.keys(candiData).length
+    const candsL = candiData.length
 
     let cand = candiData[c]
     let score, normScore
@@ -93,7 +93,7 @@ methods: {
 
   orderANode(c) {
     let candiData = this.candiData
-    const candsL = Object.keys(candiData).length
+    const candsL = candiData.length
     let cand = candiData[c]
     // console.log('c', cand)
     let score, normScore
@@ -123,14 +123,14 @@ methods: {
   showDimValues(d) {
     // show dim stats for each node
     const candiData = this.candiData
-    Object.entries(candiData).forEach(([c, cand]) => {
+    candiData.forEach((cand) => {
       // get normalised score for dimension for candidate
       const myNorm = cand.norm[d]
-      const node = this.$(c)
+      const node = this.$(cand.candKey)
       node.style.opacity = 1
 
       // change span width of each candidate
-      const nodeSpan = this.$('nodeSpan'+c)
+      const nodeSpan = this.$('nodeSpan'+cand.candKey)
       nodeSpan.style.width = (myNorm*100) + '%'
       
       nodeSpan.innerHTML = cand.scores[d]
@@ -155,12 +155,12 @@ methods: {
     const cand = this.candiData[candID]
     // console.log(cand)
     
-    const inferiors = cand.pareto.infs
-    const superiors = cand.pareto.sups
+    const inferiors = cand.infs
+    const superiors = cand.sups
     // console.log('infs', inferiors)
 
     // got through all candidates
-    Object.keys(this.candiData).forEach(c => {
+    this.candiData.forEach((cand,c) => {
       c = Number(c)
       const node = this.$(c)
       // console.log(c)

@@ -21,44 +21,54 @@ computed: {
 methods: {
   
   main() {
-    let cands = this.candiData
+    let origCands = this.candiData
 
-    // let cands2 = [...cands]
-    // console.log(cands)
+    let cands = [...origCands]
 
     let allRankings = []
-    Object.values(cands).forEach((val) => {
-      allRankings.push(val.rankings)
-      val.pareto = {front: -1, sups:[], infs:[]}
+    origCands.forEach(cand => {
+      allRankings.push(cand.rankings) //qq
     })
 
     // find infs and sups
     var candsWithDom = this.contest(allRankings, cands)
-    // console.log(candsWithDom)  
-    // qq no superiors??
-    
+
+
     let allSups = []
-    Object.values(candsWithDom).forEach((cand) => {
-      console.log(cand)
-      console.log('c.p', cand.pareto)
-      console.log('c.p.s', cand.pareto.sups)
-      allSups.push(cand.pareto.sups)
+    cands.forEach((cand) => {
+      const sups = [...cand.sups]  // derefernce it!
+      allSups.push(sups)
     })
-    // console.table(allSups)
-    // qq eh?but we have them now?
-    // where the fuck do they come from?
 
-
+    // let newSups = allSups.slice(0)
     let newFronts = this.buildFronts(allSups)
 
-    const newCandidata = this.updateCands(candsWithDom, newFronts)
+
+    console.log('after buildFronts')    
+    console.table(candsWithDom) 
+    // return
+    
+    // const newCandidata = this.updateCands(candsWithDom, newFronts)
+    
+    newFronts.forEach((front, f) => {
+      front.forEach(peer => {
+        candsWithDom[peer].paretoFront = f
+        candsWithDom[peer].peers = front
+      })  
+    })
+    
+    // console.log('after forEach')
+    // console.table(candsWithDom)
+
     let candMeta = this.candMeta
     candMeta.fronts = newFronts
+    
+    // return
 
     // console.log(newFronts)
 
     // now store this stuff!
-    this.$store.dispatch('setCandiData', newCandidata)
+    this.$store.dispatch('setCandiData', candsWithDom)
     this.$store.dispatch('setCandMeta', candMeta)
 
     // send event to header to change page
@@ -78,13 +88,13 @@ methods: {
         // need to change shared data()
         if (dominator == 'A') {
             // add B to A's inferiors
-            cands[a].pareto.infs.push(b)
+            cands[a].infs.push(b)
             // add A to B's superiors
-            cands[b].pareto.sups.push(a)
+            cands[b].sups.push(a)
           } else
           if (dominator == 'B') {
-            cands[b].pareto.infs.push(a)
-            cands[a].pareto.sups.push(b)
+            cands[b].infs.push(a)
+            cands[a].sups.push(b)
           }
           // console.log('dom', dominator)
       }
@@ -135,8 +145,9 @@ methods: {
     return nonDoms
   },
 
-// seems overly complicated? - recursion?
+  // seems overly complicated? - recursion?
   buildFronts(allSups) {
+    // let allSups = [...allSupsO]
     let fronts = []
     let allCands = new Set()
     
@@ -171,17 +182,49 @@ methods: {
     return fronts
   },
 
-  updateCands(candiData, fronts) {
+  updateCands(cands, fronts) {
     fronts.forEach((front, f) => {
       front.forEach(peer => {
-        candiData[peer].pareto.front = f
-        candiData[peer].pareto.peers = front
+        cands[peer].paretoFront = f
+        cands[peer].peers = front
       })  
     })
-    return candiData
+    return cands
   },
-},
 
+  deepClone(obj) {
+  //in case of primitives
+  if(obj===null || typeof obj !== "object"){
+    return obj
+  }
+
+  //date objects should be 
+  if(obj instanceof Date){
+    return new Date(obj.getTime())
+  }
+
+  //handle Array
+  if(Array.isArray(obj)){
+    var clonedArr = []
+    obj.forEach(function(element){
+      clonedArr.push(this.deepClone(element))
+    })
+    return clonedArr
+  }
+
+  //lastly, handle objects
+  let clonedObj = new obj.constructor()
+  for(var prop in obj){
+    if(obj.hasOwnProperty(prop)){
+      clonedObj[prop] = this.deepClone(obj[prop])
+    }
+  }
+  return clonedObj
+}
+
+
+
+},
 created() {
   this.main()
 }
