@@ -1,7 +1,7 @@
 <template lang="pug">
 
 #pViz
-  #viz
+  #vizz
     .front(v-for='front in fronts') 
       .node(v-for='node in front' :ID='node'
             @click='doNode(node)') {{candName(node)}}
@@ -41,6 +41,16 @@ data() {
 methods: {
   main() {
     EventBus.$emit('changeVizTitle', 'Pareto Dominance Plot')
+    // set height of #viz or pViz?
+    let vizz = this.$('vizz')
+
+    let mainH = this.$('main').offsetHeight
+    let headerH = this.$('header').offsetHeight
+    let articleH = mainH - headerH
+
+    // pViz.style.height = articleH + 'px'
+    vizz.style.height = articleH + 'px'
+
     this.orderAllNodes()
     this.colourAllNodes()
   },
@@ -224,13 +234,31 @@ mounted() {
 
 #pViz
   display flex  // expands sideways
-  margin-top 1rem
+  // margin-top 1rem
+  // flex-direction column
+  // min-height 90vh
+  // min-height 100%
+  // justify-content space-evenly
+  
+
+#vizz
+  display flex  // makes fronts fill screen
+  flex-direction column
+  flex-grow 1
+  background blue
+  justify-content space-between
+  // margin-top 1rem
 
 .front
   display flex // run sideways
   flex-wrap wrap
   justify-content space-evenly
-  margin-bottom 3.2rem
+  // margin-bottom 2.5rem
+  border-bottom 2px solid $g2
+  // flex-grow 1
+  min-height 1rem
+  background $g8
+  
 
 .node
   width 140px
@@ -245,5 +273,9 @@ mounted() {
 .value
   color #aa0
   background green
+
+// #article
+  // padding 0
+  // margin 0
 
 </style>

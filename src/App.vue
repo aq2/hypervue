@@ -50,15 +50,29 @@ export default {
   box-sizing border-box
   user-select none
 
+html
+  height 100%
+  // display flex
+  // flex-direction column
+  background green
+
 body 
   margin 0
   padding 0
-  color #111
+  color #121
+  height 100%
+  background $g5
   font-size 1.15em
   font-family Ubuntu, Helvetica, Arial, sans-serif
+  // flex-grow 1
+  // display flex
+  // flex-direction column
 
 #app 
   display flex        // sidebar 'fixed', #main grows
-
+  background orange
+  // flex-grow 1
+  height 100%
+  
 
 </style>

@@ -1,12 +1,8 @@
 doing now:
 
   ☐ pareto
-    ✔ something not right about order/color  @crit @done(15-01 13:39)
     ☐ rank.score - decimals
-    ✔ dominance relations @done(14-01 20:00)
     ☐ embed pareto calcs somehow - import?
-  ✔ inferiors? @done(14-01 20:00)
-    ☐ superiors??
     
 .
 header:
@@ -24,19 +20,17 @@ sidebar:
   ☐ toggleable sidebar for vizzes 
   ☐ three states: hidden, open, closed
   
-  .
-  databar/multibar:
-    ☐ databar - multibar sparkline sorta
-    ☐ height and width of databar
+ .
+ databar/multibar:
+   ☐ databar - multibar sparkline sorta
+   ☐ height and width of databar
     
-  .    
-  general:
-    ☐ settings/preferences
-    ☐ peers average? useful for databar somehow?
-    ☐ instructions - autoload? ? icon in header
-            
-
-
+ .    
+ general:
+   ☐ settings/preferences
+   ☐ peers average? useful for databar somehow?
+   ☐ instructions - autoload? ? icon in header
+ 
 .
 css:
   ☐ light/dark color scheme
@@ -65,6 +59,10 @@ js/css learn:
 =====================================================================  
 
 Archive:
+  ✔ something not right about order/color  @crit @done(15-01 13:39)
+  ✔ dominance relations @done(14-01 20:00)
+  ✔ inferiors? @done(14-01 20:00)
+  ✔ superiors?? @done(17-01 21:21)
   ✔ all buttons throbbing @done(13-01 03:01)
   ✔ split togglefullscreen - goFull, unFull @done(12-01 16:40)
   ✔ put page title in header @done(13-01 03:01)

@@ -36,7 +36,7 @@
   // - dynamic components? via events payload
   #instructions
     div(v-show='step == 0')
-      p first, select orderable categories to include in rankings
+      p First, <b>select orderable categories to include in rankings</b>
       p ie don't select a non-numeric category
       p need at least two categories
       p press OK when done
@@ -44,14 +44,14 @@
     //
 
     div(v-show='step == 1')
-      p now select categories where high values are good
+      p now <b>select categories where high values are good</b>
       p default is lower values are better
       p press OK when done
       button(@click='checkMaxis') OK
     //
 
     div(v-show='step == 2')
-      p now select a category to use as an identifier
+      p now <b>select a category to use as an identifier</b>
       p this name will be used to identify candidates
       p so it's best to chose an alpha-numeric name
       p press OK when done

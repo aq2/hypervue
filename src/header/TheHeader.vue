@@ -1,6 +1,6 @@
 <template lang="pug">
   
-header
+#header
   #headerLinks
     HeaderLinks
   
@@ -101,7 +101,7 @@ methods: {
 
 <style lang="stylus" scoped>
 
-header
+#header
   display flex
 
 #headerLinks 

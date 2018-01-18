@@ -11,11 +11,19 @@
 
   #text
     p It doesn't look like much yet, but it will be great!
-    p It's better to run this app in full-screen mode,
-    p toggled with F11, or with the &nbsp;
-      icon(name='window-restore' scale=2)
-      | &nbsp; button at top-right
-    button(@click='fullScreen') let's go fullscreen
+    p It's better to run this app in full-screen mode, either:
+    ul
+      li
+        | toggled with F11, or 
+      li
+        | with the 
+        span(id='restore')
+          icon(name='window-restore' scale=1.25)
+        | button at top-right
+      li
+        | or the nice big button below
+        .v2
+        button(@click='fullScreen') let's go fullscreen
     p press the 'next page' button below to continue
   .v
 
@@ -44,3 +52,17 @@ methods: {
 }
 
 </script>
+
+
+<style lang="stylus" scoped>
+
+#restore
+  margin 0 0.25rem 0 0.15rem
+
+li 
+  margin-bottom 0.5rem
+
+.v2
+  height .5rem
+
+</style>

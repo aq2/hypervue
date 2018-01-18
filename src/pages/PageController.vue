@@ -1,8 +1,8 @@
 <template lang="pug">
 
-main
+#main
   TheHeader
-  article
+  #article
     Welcome(v-if='page == 0')
       
     DataSource(v-if='page == 1')
@@ -65,17 +65,21 @@ created() {
 
 <style lang="stylus" scoped>
 
-main 
+#main 
   margin 0
-  padding .5rem 0
+  padding 0
+  // padding .5rem 0
   flex-grow 1         // expands sideways to fill
-  background $g5
-  max-height 100vh
-  min-height 99.999vh
+  // background $g5
+  // max-height 100vh
+  // min-height 99.999vh
+  // display flex
+  // flex-direction column
 
-article
+#article
   margin 0
-  padding 1rem 0 0 1rem
-  background $g5
+  // padding 2rem 0 0 3rem
+  // background black
+  // flex-grow 1
 
 </style>

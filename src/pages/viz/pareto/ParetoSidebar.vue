@@ -118,8 +118,8 @@ methods: {
 
   showCandInfo(candInfo) {
     this.candName = candInfo.candID
-    this.aveRank = candInfo.meanRank
-    this.aveScore = candInfo.meanNorm
+    this.aveRank = candInfo.meanRank.toFixed(5)
+    this.aveScore = candInfo.meanNorm.toFixed(5)
   }
 
 },
@@ -139,8 +139,8 @@ created() {
 #paretoSidebar
   display flex
   flex-direction column
-  min-height 95vh
-  max-height 99.9vh
+  // min-height 95vh
+  // max-height 99.9vh
 
 label 
   margin 0
@@ -162,6 +162,7 @@ label span
 p 
   margin 0
   padding 0
+  font-size 0.95rem
 
 h3  
   margin 0

@@ -1,7 +1,8 @@
 <template lang="pug">
 
-aside 
-  SideBar(v-if='currentPage==8')
+//- aside 
+
+SideBar(v-if='currentPage==8')
 
 </template>
 
@@ -36,9 +37,9 @@ created() {
 
 <style lang="stylus" scoped>
 
-aside
-  background blue
-  max-height 100vh
-  min-height 99.999vh
+// aside
+//   background blue
+//   max-height 100vh
+//   min-height 99.999vh
 
 </style>
