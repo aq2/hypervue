@@ -1,23 +1,26 @@
 <template lang="pug">
   
 #header
-  //- #candInfo
   CandInfo(v-if='vizPage')
+  
   #headerLinks
     HeaderLinks
-  #search
-    button(@click='search')
-      icon(name='search' scale=2)
+  
+  #buttons
+    #search
+      button(@click='search')
+        icon(name='search' scale=2)
 
-  #help
-    button(@click='help' class='tooltip')
-      span(class='tooltiptext tooltip-left') what do i do?
-      icon(name='question-circle' scale=2)
+    #help
+      button(@click='help' class='tooltip')
+        span(class='tooltiptext tooltip-left') what do i do?
+        icon(name='question-circle' scale=2)
 
-  #fullscreen-toggle 
-    button(@click='toggleFullScreen' class='tooltip')
-      span(class='tooltiptext tooltip-left') toggle fullscreen
-      icon(name='window-restore' scale=2)
+    #fullscreen-toggle 
+      button(@click='toggleFullScreen' class='tooltip')
+        span(class='tooltiptext tooltip-left') toggle fullscreen
+        icon(name='window-restore' scale=2)
+
 
 </template>
 
@@ -30,19 +33,21 @@ import CandInfo from './../sidebar/components/CandInfo'
 
 export default {
 components: {
-  HeaderLinks,
-  CandInfo
+  CandInfo,
+  HeaderLinks
 },
+
 data() {
   return {
     vizPage: false
   }
 },
+
 methods: {
   toggleFullScreen() {
     const d = document
     if (!d.fullscreenElement && !d.mozFullScreenElement &&
-      !d.webkitFullscreenElement && !d.msFullscreenElement) {
+        !d.webkitFullscreenElement && !d.msFullscreenElement) {
       this.goFullScreen()
     } else {
       this.unFullScreen()
@@ -106,22 +111,20 @@ methods: {
 <style lang="stylus" scoped>
 
 #header
+  height 82px
   display flex
-  height 80px
-  background orange
-  
-#candInfo
-  // margin 0
-  // padding 0  
-
-#headerLinks 
-  flex-grow 1
+  background $g3
+  border-bottom 2px solid $g2
+  justify-content space-between
 
 #fullscreen-toggle
   margin 0
 
 button
-  height 60px
+  height 80px
+  min-width 80px
 
+#buttons
+  display flex
 
 </style>

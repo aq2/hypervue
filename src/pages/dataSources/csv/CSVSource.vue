@@ -6,6 +6,7 @@
   icon(name='file-text-o' scale=8)
   .v
   #text
+    p You've opted to load data from a file.
     p File must be in CSV format, with criteria headers as first row, eg:
     pre
       | city,state,population,land area<br>

@@ -1,14 +1,18 @@
 <template lang="pug">
 
-#info
-  .data
-    .name {{cand.candID}}
-    .rank mean Rank {{cand.meanRank}}  / {{candL}}
-    .score mean Norm Score {{meanNorm}}
-  .databar
-    .bar(v-for='(crit, c) in crits')
-      .top(:id="'top'+c") {{critInit(c)}}
-      .bottom(:id="'bott'+c")
+#candInfo
+  #info(v-if='candL > 0')
+    .data
+      .name {{cand.candID}}
+      .rank mean Rank {{cand.meanRank}}  / {{candL}}
+      .score mean Norm Score {{meanNorm}}
+    .databar
+      .bar(v-for='(crit, c) in crits')
+        .top(:id="'top'+c") {{critInit(c)}}
+        .bottom(:id="'bott'+c")
+  #instr(v-else)
+    p Hover over a node for info
+    p Click on a node for dominance
 
 </template>
 
@@ -58,9 +62,9 @@ created() {
 
 #info
   background blue
-  width 600px
+  width 400px
   height 80px
-  margin 0
+  margin 0 0 0 1rem
   display flex
 
 .data 
@@ -74,7 +78,7 @@ created() {
 
 .databar  
   display flex
-  height 60px
+  height 80px
   // padding 0
 
 .bar
@@ -92,6 +96,11 @@ created() {
 #top3
   height 40px
   
-
+#instr p
+  color $g9
+  font-size 1.52rem
+  padding 0.5rem 0 0 1rem
+  margin 0
+  animation flash linear 2s infinite
 
 </style>

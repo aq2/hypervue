@@ -45,7 +45,8 @@
 
     div(v-show='step == 1')
       p now <b>select categories where high values are good</b>
-      p default is lower values are better
+      p the default is lower values are better
+      p check the relevant box to over-ride the default
       p press OK when done
       button(@click='checkMaxis') OK
     //

@@ -25,7 +25,7 @@ export default {
 data() {
   return {
     currentPage: 0,
-    pageTitle: 'HyperDViz'
+    pageTitle: 'Welcome to HyperDViz'
   }
 },
 
@@ -107,9 +107,9 @@ methods: {
 <style lang="stylus" scoped>
 
 #links
-  width 900px
+  width 700px
   display flex
-  margin 0 auto
+  // margin 0 auto
   // align right
 
 #links > button
@@ -118,24 +118,28 @@ methods: {
   align-items center
 
 button
+  height 80px
   display flex
-  color darkblue
-  padding 0.5rem
-  max-height 60px
+  color $g9
+  padding 0.5rem 0 0 1rem
   border-radius 0.5rem
+  min-width 80px
+
+
 
 h1
   display none
 
 .active
-  color lime
+  // border 0
+  color $g9
   flex-grow 1
   background $g3
-  border 0
+  padding-left 1rem
 
 .active h1
   margin 0
-  color lime
+  color $g9
   padding-left 1rem
   display inline-block
 

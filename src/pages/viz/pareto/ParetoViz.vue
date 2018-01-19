@@ -4,7 +4,7 @@
   #vizz
     .front(v-for='front in fronts') 
       .node(v-for='node in front' :ID='node'
-            @click='doNode(node)') {{candName(node)}}
+            @mouseover='showInfo(node)' @click='showDom(node)') {{candName(node)}}
         .value(:ID="'nodeSpan'+node")
 
 </template>
@@ -157,7 +157,7 @@ methods: {
     this.colourAllNodes()
   },
 
-  doNode(candID) {
+  showDom(candID) {
     //todo unhighlight previously clicked node
 
     // show dominances - functionate?
@@ -193,9 +193,13 @@ methods: {
       }
     })
 
-    // send message
-    EventBus.$emit('showCandInfo', ([cand, this.candiData.length]))
+    // // send message
+    // EventBus.$emit('showCandInfo', ([cand, this.candiData.length]))
   },
+  showInfo(candID) {
+    const cand = this.candiData[candID]    
+    EventBus.$emit('showCandInfo', ([cand, this.candiData.length]))
+  }
 
 },
 
@@ -227,47 +231,41 @@ mounted() {
 #pViz
   display flex  // expands sideways
   margin-top 1rem
-  // flex-direction column
-  // min-height 90vh
-  // min-height 100%
-  // justify-content space-evenly
-  
 
 #vizz
-  display flex  // makes fronts fill screen
-  flex-direction column
   flex-grow 1
-  background $g4
+  display flex  // makes fronts fill screen
+  background $g45
+  flex-direction column
   justify-content space-between
-  // margin-top 1rem
 
 .front
   display flex // run sideways
   flex-wrap wrap
-  justify-content space-evenly
-  // margin-bottom 2.5rem
-  // border-bottom 2px solid $g2
-  // flex-grow 1
-  min-height 1rem
   background $g5
+  min-height 1rem
+  padding 0.25rem 0
+  justify-content space-evenly
   
 
 .node
   width 140px
   height 3rem
-  padding 0.05rem
   font-size 1rem
+  padding 0.05rem
   text-align center
+  border 2px solid $g3
   border-radius 0.5rem
   margin 0 0.75rem 0.4rem 0
-  border 2px solid $g3
 
 .value
   color #aa0
   background green
 
-// #article
-  // padding 0
-  // margin 0
+
+.node:hover
+  cursor pointer
+  animation flash linear 2s infinite
+  
 
 </style>
