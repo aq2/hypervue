@@ -52,8 +52,6 @@ export default {
 
 html
   height 100%
-  // display flex
-  // flex-direction column
   background green
 
 body 
@@ -64,14 +62,11 @@ body
   background $g5
   font-size 1.15em
   font-family Ubuntu, Helvetica, Arial, sans-serif
-  // flex-grow 1
-  // display flex
-  // flex-direction column
+  
 
 #app 
   display flex        // sidebar 'fixed', #main grows
-  background orange
-  // flex-grow 1
+  background $g4
   height 100%
   
 

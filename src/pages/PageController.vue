@@ -63,23 +63,15 @@ created() {
 
 </script>
 
+
 <style lang="stylus" scoped>
 
 #main 
   margin 0
   padding 0
-  // padding .5rem 0
   flex-grow 1         // expands sideways to fill
-  // background $g5
-  // max-height 100vh
-  // min-height 99.999vh
-  // display flex
-  // flex-direction column
 
-#article
-  margin 0
-  // padding 2rem 0 0 3rem
-  // background black
-  // flex-grow 1
+// #article
+  // margin 0
 
 </style>

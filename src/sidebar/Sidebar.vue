@@ -30,12 +30,12 @@ methods: {
   main() {
     // set sidebar height
     // const main = this.$('main')
-    const mainH = this.$('main').offsetHeight
-    console.log(mainH)
-    const headerH = this.$('header').offsetHeight
-    const sidebarH = mainH-headerH
-    const sidebar = this.$('sidebar')
-    sidebar.style.height = sidebarH
+    // const mainH = this.$('main').offsetHeight
+    // console.log(mainH)
+    // const headerH = this.$('header').offsetHeight
+    // const sidebarH = mainH-headerH
+    // const sidebar = this.$('sidebar')
+    // sidebar.style.height = sidebarH
     // sidebar.style.maxHeight = sidebarH
   },
 

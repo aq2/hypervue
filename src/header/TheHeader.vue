@@ -1,9 +1,14 @@
 <template lang="pug">
   
 #header
+  //- #candInfo
+  CandInfo(v-if='vizPage')
   #headerLinks
     HeaderLinks
-  
+  #search
+    button(@click='search')
+      icon(name='search' scale=2)
+
   #help
     button(@click='help' class='tooltip')
       span(class='tooltiptext tooltip-left') what do i do?
@@ -21,23 +26,19 @@
 
 import {EventBus} from './../main'
 import HeaderLinks from './HeaderLinks'
+import CandInfo from './../sidebar/components/CandInfo'
 
 export default {
-data() {
-  return {
-    sidebarOpen: false
-  }
-},
 components: {
   HeaderLinks,
+  CandInfo
+},
+data() {
+  return {
+    vizPage: false
+  }
 },
 methods: {
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen
-    // sidebar listens for this event
-    EventBus.$emit('sidebarToggled')
-  },
-  
   toggleFullScreen() {
     const d = document
     if (!d.fullscreenElement && !d.mozFullScreenElement &&
@@ -82,16 +83,19 @@ methods: {
 
   help() {
     // todo!      
+  },
+
+  search() {
+    // todo
   }
 
   },  
   created() {
-    EventBus.$on('paretoDataBuilt', () => {
-      this.$router.push('/viz/pareto/viz')
-    })
-
     EventBus.$on('fullScreen', () => {
       this.goFullScreen()
+    })
+    EventBus.$on('changePageType', (type) => {
+      this.vizPage = (type == 'viz')
     })
   }
 }
@@ -103,6 +107,12 @@ methods: {
 
 #header
   display flex
+  height 80px
+  background orange
+  
+#candInfo
+  // margin 0
+  // padding 0  
 
 #headerLinks 
   flex-grow 1

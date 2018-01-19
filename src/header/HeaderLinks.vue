@@ -43,10 +43,12 @@ created() {
   EventBus.$on('changePageType', newPageType => {
     this.pageType = newPageType
 
+    // make all inactive
     this.$('welcome').classList.remove('active')
     this.$('data').classList.remove('active')
     this.$('viz').classList.remove('active')
 
+    // make the one active
     this.$(newPageType).classList.add('active')
   })
 
@@ -72,7 +74,7 @@ methods: {
       case 1:
         pageType = 'data'
         break
-      case 4:
+      case 8:
         pageType = 'viz'
         break
       default:
@@ -92,6 +94,7 @@ methods: {
   width 50vw
   display flex
   margin 0 auto
+  // align right
 
 #links > button
   display flex

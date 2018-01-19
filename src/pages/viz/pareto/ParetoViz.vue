@@ -46,7 +46,7 @@ methods: {
 
     let mainH = this.$('main').offsetHeight
     let headerH = this.$('header').offsetHeight
-    let articleH = mainH - headerH
+    let articleH = mainH - headerH - 20
 
     // pViz.style.height = articleH + 'px'
     vizz.style.height = articleH + 'px'
@@ -234,7 +234,7 @@ mounted() {
 
 #pViz
   display flex  // expands sideways
-  // margin-top 1rem
+  margin-top 1rem
   // flex-direction column
   // min-height 90vh
   // min-height 100%
@@ -245,7 +245,7 @@ mounted() {
   display flex  // makes fronts fill screen
   flex-direction column
   flex-grow 1
-  background blue
+  background $g4
   justify-content space-between
   // margin-top 1rem
 
@@ -254,10 +254,10 @@ mounted() {
   flex-wrap wrap
   justify-content space-evenly
   // margin-bottom 2.5rem
-  border-bottom 2px solid $g2
+  // border-bottom 2px solid $g2
   // flex-grow 1
   min-height 1rem
-  background $g8
+  background $g5
   
 
 .node
