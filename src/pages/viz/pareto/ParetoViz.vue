@@ -40,7 +40,6 @@ data() {
 
 methods: {
   main() {
-    EventBus.$emit('changeVizTitle', 'Pareto Dominance Plot')
     // set height of #viz or pViz?
     let vizz = this.$('vizz')
 
@@ -163,27 +162,20 @@ methods: {
 
     // show dominances - functionate?
     const cand = this.candiData[candID]
-    // console.log(cand)
     
     const inferiors = cand.infs
     const superiors = cand.sups
-    // console.log('infs', inferiors)
 
     // got through all candidates
     this.candiData.forEach((cand,c) => {
       c = Number(c)
       const node = this.$(c)
-      // console.log(c)
       if (inferiors.includes(c)) {
-        // console.log('inf includes', c)
-        // its inf
         node.style.background = 'red'
-        // node.style.color = 'white'
         node.style.opacity = '1'
       } 
       else
       if (superiors.includes(c)) {
-        // it's inf
         node.style.background = 'green'
         node.style.opacity = '1'
                 
@@ -202,7 +194,7 @@ methods: {
     })
 
     // send message
-    EventBus.$emit('nodeClicked', cand)
+    EventBus.$emit('showCandInfo', ([cand, this.candiData.length]))
   },
 
 },

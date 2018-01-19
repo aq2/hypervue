@@ -2,7 +2,9 @@
 
 #info
   .data
-    | name
+    .name {{cand.candID}}
+    .rank mean Rank {{cand.meanRank}}  / {{candL}}
+    .score mean Norm Score {{meanNorm}}
   .databar
     .bar(v-for='(crit, c) in crits')
       .top(:id="'top'+c") {{critInit(c)}}
@@ -13,37 +15,43 @@
 
 <script>
 
+import {EventBus} from './../../main'
+
 export default {
 
 computed: {
-  candiData() {
-    return this.$store.getters.getCandiData
-  },
   dimMeta() {
     return this.$store.getters.getDimMeta
   },
   crits() {
     return this.dimMeta.crits
   },
+  meanNorm() {
+    return this.cand.meanNorm.toFixed(3)
+  }
   
 },
 data() {
   return {
-    critID: 34,
     critInit(c) {
       return this.dimMeta.dimNames[this.crits[c]][0]
-    }  
+    },
+    cand: {candID: 'click on a node', meanRank: -1, meanNorm: -1},
+    candL: 0
   }
 },
 
 // listen to click on node event to change candKeyloop[]
-
+created() {
+  EventBus.$on('showCandInfo', ([cand, length]) => {
+    this.cand = cand
+    this.candL = length
+  })
+}
 
 
 }
 </script>
-
-
 
 
 <style lang="stylus" scoped>
@@ -54,6 +62,15 @@ data() {
   height 80px
   margin 0
   display flex
+
+.data 
+  background purple 
+  width 300px
+
+.name
+  font-size 1.25rem
+  color $g9
+
 
 .databar  
   display flex

@@ -1,12 +1,12 @@
 <template lang="pug">
 
 #paretoSidebar
-  #candInfo
+  //- #candInfo
     h3 candInfo
     #candName {{candName}}
     p aveRank {{aveRank}}
     p aveScore {{aveScore}}
-  hr
+  //- hr
   #dims
     h3 dimensions
     .dim(v-for='(dim,d) in dimNames' :ID="'dim'+d" v-if='dimCrit(d)'
