@@ -94,8 +94,8 @@ methods: {
     EventBus.$on('fullScreen', () => {
       this.goFullScreen()
     })
-    EventBus.$on('changePageType', (type) => {
-      this.vizPage = (type == 'viz')
+    EventBus.$on('changePage', (pageNo) => {
+      this.vizPage = (pageNo == 8)
     })
   }
 }

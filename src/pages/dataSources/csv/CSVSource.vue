@@ -40,9 +40,7 @@ export default {
     }),
     EventBus.$on('dataBuilt', () => {
       EventBus.$emit('changePage', 5)
-    }),
-    EventBus.$emit('changeDataTitle', 'CSV Data')
+    })
   }
 }
-
 </script>

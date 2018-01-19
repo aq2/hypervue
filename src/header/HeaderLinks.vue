@@ -1,17 +1,17 @@
 <template lang="pug">
 
 #links  
-  button(id='welcome' @click='nextPage(0)')
+  button(id='welcomeBtn' @click='nextPage(0)')
     icon(name='home' scale=3)
-    h1 HyperDViz
+    h1 {{pageTitle}}
 
-  button(id='data' @click='nextPage(1)')
+  button(id='dataBtn' @click='nextPage(1)')
     icon(name='file-excel-o' scale=2.5)
-    h1 {{dataTitle}}
+    h1 {{pageTitle}}
   
-  button(id='viz' @click='nextPage(6)')
+  button(id='vizBtn' @click='nextPage(6)')
     icon(name='area-chart' scale=3)
-    h1 {{vizType}}
+    h1 {{pageTitle}}
 
 </template>
 
@@ -24,38 +24,60 @@ export default {
 
 data() {
   return {
-    dataTitle: 'data source',
-    vizType: 'Choose VizType',
     currentPage: 0,
-    pageType: 'welcome'
+    pageTitle: 'HyperDViz'
   }
 },
 
 created() {
-  EventBus.$on('changeDataTitle', newDataTitle => {
-    this.dataTitle = newDataTitle
-  })
-
-  EventBus.$on('changeVizTitle', newVizTitle => {
-    this.vizType = newVizTitle
-  })
-
-  EventBus.$on('changePageType', newPageType => {
-    this.pageType = newPageType
-
-    // make all inactive
-    this.$('welcome').classList.remove('active')
-    this.$('data').classList.remove('active')
-    this.$('viz').classList.remove('active')
-
-    // make the one active
-    this.$(newPageType).classList.add('active')
+  EventBus.$on('changePage', (newPage) => {
+    this.currentPage = newPage
+    switch(newPage) {
+      case 0:
+        this.deActivateAll()
+        this.$('welcomeBtn').classList.add('active')
+        this.pageTitle = 'Welcome to HyperDViz'
+        break
+      case 1:
+        this.deActivateAll()
+        this.$('dataBtn').classList.add('active')
+        this.pageTitle = 'Get DataSet'
+        break
+      case 2:
+        this.pageTitle = 'Get Data from CSV'        
+        break
+      case 3:
+        // fb source
+        break
+      case 4:
+        this.pageTitle = 'Dimension metaData'
+        break
+      case 5:
+        // save2fb
+        break
+      case 6:
+        this.pageTitle = 'Choose Viz Type'
+        this.deActivateAll()
+        this.$('vizBtn').classList.add('active')
+        break
+      case 7:
+        // pareto calcs
+        break
+      case 8:
+        // pareto viz
+        this.pageTitle = 'Pareto Dominance Plot'
+        this.deActivateAll()
+        this.$('vizBtn').classList.add('active')
+        break
+      default:
+        // dunno
+    }
   })
 
 },
 
 mounted() {
-  let el = this.$('welcome')
+  let el = this.$('welcomeBtn')
   el.classList.toggle('active')
 },
 
@@ -64,23 +86,17 @@ methods: {
     return document.getElementById(ID)
   },
 
+  deActivateAll() {
+    this.$('welcomeBtn').classList.remove('active')
+    this.$('dataBtn').classList.remove('active')
+    this.$('vizBtn').classList.remove('active')
+    
+  },
+
+
+  // what??
   nextPage(newPage) {
     EventBus.$emit('changePage', newPage)
-    let pageType
-    switch(newPage) {
-      case 0:
-        pageType = 'welcome'
-        break
-      case 1:
-        pageType = 'data'
-        break
-      case 8:
-        pageType = 'viz'
-        break
-      default:
-        pageType = this.pageType
-    }
-    EventBus.$emit('changePageType', pageType)
   }
 },
 
@@ -91,7 +107,7 @@ methods: {
 <style lang="stylus" scoped>
 
 #links
-  width 50vw
+  width 900px
   display flex
   margin 0 auto
   // align right
@@ -99,7 +115,7 @@ methods: {
 #links > button
   display flex
   transition all 1s
-  align-items baseline
+  align-items center
 
 button
   display flex
@@ -115,6 +131,7 @@ h1
   color lime
   flex-grow 1
   background $g3
+  border 0
 
 .active h1
   margin 0

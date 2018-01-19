@@ -139,8 +139,6 @@ created() {
 #paretoSidebar
   display flex
   flex-direction column
-  // min-height 95vh
-  // max-height 99.9vh
 
 label 
   margin 0
@@ -171,9 +169,9 @@ h3
 
 hr 
   border 0
-  border-top 2px dotted $g5
   width 100px
   margin 0.5rem auto
+  border-top 2px dotted $g5
 
 button
   padding 0.25rem 

@@ -28,15 +28,6 @@ data() {
 
 methods: {
   main() {
-    // set sidebar height
-    // const main = this.$('main')
-    // const mainH = this.$('main').offsetHeight
-    // console.log(mainH)
-    // const headerH = this.$('header').offsetHeight
-    // const sidebarH = mainH-headerH
-    // const sidebar = this.$('sidebar')
-    // sidebar.style.height = sidebarH
-    // sidebar.style.maxHeight = sidebarH
   },
 
   $(ID) {
@@ -76,7 +67,5 @@ mounted() {
   padding-top 0.25rem
   padding-left 0.5rem
   border-right 2px solid $g2
-  // max-height 100vh
-  // min-height 99.999vh
 
 </style>

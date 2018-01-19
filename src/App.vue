@@ -49,6 +49,7 @@ export default {
 * 
   box-sizing border-box
   user-select none
+  outline none
 
 html
   height 100%

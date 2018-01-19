@@ -3,7 +3,8 @@ doing now:
   ☐ pareto
     ☐ rank.score - decimals
     ☐ embed pareto calcs somehow - import?
-    
+  
+  ✔ changePage navigation @done(19-01 15:35)
 .
 header:
   ☐ header colors?
@@ -34,8 +35,7 @@ sidebar:
 .
 css:
   ☐ light/dark color scheme
-  how many greys do i need? $g5
-  ☐ replace all hard-coded stylus colors with global vars
+  ☐ how many greys do i need? $g5
 
 .
 csv:
@@ -48,7 +48,6 @@ csv:
 later:  
   ☐ deal with maxis @low
   ☐ word cloud map?
-  ☐ instructions
 
 .
 js/css learn:
@@ -59,6 +58,8 @@ js/css learn:
 =====================================================================  
 
 Archive:
+  ✔ replace all hard-coded stylus colors with global vars @done(19-01 15:24)
+  ✔ button outlines? @done(19-01 15:25)
   ✔ something not right about order/color  @crit @done(15-01 13:39)
   ✔ dominance relations @done(14-01 20:00)
   ✔ inferiors? @done(14-01 20:00)

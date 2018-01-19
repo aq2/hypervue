@@ -193,9 +193,7 @@ export default {
 
     EventBus.$on('updateID', i => {
       this.ID = i
-    }),
-
-    EventBus.$emit('changeDataTitle', 'CSV Meta Data')
+    })
 
   }
 }
