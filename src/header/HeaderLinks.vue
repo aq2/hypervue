@@ -107,7 +107,7 @@ methods: {
 <style lang="stylus" scoped>
 
 #links
-  width 700px
+  width 650px
   display flex
   // margin 0 auto
   // align right

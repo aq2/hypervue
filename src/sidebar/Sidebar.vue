@@ -1,7 +1,7 @@
 <template lang='pug'>
 
 #sidebar
-  ParetoSidebar
+  ParetoSidebar(v-show='open')
   //- todo should be dynamic! ie if page=pareto 
 
 
@@ -36,8 +36,9 @@ methods: {
 
   toggle: function() {
     this.open = !this.open
-    let sid = document.getElementById('sidebar')
+    let sid = this.$('sidebar')
     sid.style.width = sid.offsetWidth >= 50 ? '0px' : '150px'
+    sid.style.padding = 0
   }
 },
 
@@ -48,6 +49,9 @@ created() {
 
   EventBus.$on('sidebarOpen', () => {
     this.openUp()
+    let sid = this.$('sidebar')
+    sid.style.paddingLeft = '0.5rem'
+    
   })
 },
 

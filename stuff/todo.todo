@@ -1,20 +1,23 @@
 doing now:
 
+  ☐ databar - multibar sparkline sorta
+
   ☐ pareto
     ☐ rank.score - decimals
     ☐ embed pareto calcs somehow - import?
   
   ✔ changePage navigation @done(19-01 15:35)
-  ☐ click on node instructions
-  ☐ node hover
+  ✔ click on node instructions @done(19-01 19:30)
+  ✔ node hover @done(19-01 20:50)
   ☐ dimension hover
+  ✔ click and hover - compare @done(19-01 20:50)
 
 .
 header:
-  ☐ header colors?
+  ✔ header colors? @done(19-01 19:31)
   headerlinks:
-    ☐ styling
-    ☐ disable viz until data got
+    ✔ styling @done(19-01 19:31)
+    ✔ disable viz until data got @done(19-01 19:31)
 
 .    
 sidebar:
@@ -27,23 +30,22 @@ sidebar:
   
  .
  databar/multibar:
-   ☐ databar - multibar sparkline sorta
    ☐ height and width of databar
     
  .    
  general:
-   ☐ settings/preferences
+   ☐ settings/preferences - like what
    ☐ peers average? useful for databar somehow?
    ☐ instructions - autoload? ? icon in header
  
 .
 css:
-  ☐ light/dark color scheme
+  ✘ light/dark color scheme @cancelled(19-01 19:53)
   ☐ how many greys do i need? $g5
 
 .
 csv:
-  ☐ dynamic instructions for steps - via events/payload
+  ✘ dynamic instructions for steps - via events/payload @cancelled(19-01 19:54)
   ☐ save all data to firebase @normal 
   ☐ retrieve data from firebase @normal
   ☐ disable checkboxes on dimInfo after OK

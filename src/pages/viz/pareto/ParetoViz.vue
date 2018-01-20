@@ -4,7 +4,7 @@
   #vizz
     .front(v-for='front in fronts') 
       .node(v-for='node in front' :ID='node'
-            @mouseover='showInfo(node)' @click='showDom(node)') {{candName(node)}}
+            @mouseover='showInfo(node)' @click='select(node)') {{candName(node)}}
         .value(:ID="'nodeSpan'+node")
 
 </template>
@@ -157,7 +157,7 @@ methods: {
     this.colourAllNodes()
   },
 
-  showDom(candID) {
+  select(candID) {
     //todo unhighlight previously clicked node
 
     // show dominances - functionate?
@@ -193,8 +193,8 @@ methods: {
       }
     })
 
-    // // send message
-    // EventBus.$emit('showCandInfo', ([cand, this.candiData.length]))
+    // send message
+    EventBus.$emit('nodeSelected', ([cand, this.candiData.length]))
   },
   showInfo(candID) {
     const cand = this.candiData[candID]    
@@ -238,6 +238,8 @@ mounted() {
   background $g45
   flex-direction column
   justify-content space-between
+  // transition 2s all ease
+  
 
 .front
   display flex // run sideways
@@ -246,7 +248,7 @@ mounted() {
   min-height 1rem
   padding 0.25rem 0
   justify-content space-evenly
-  
+  // transition 2s all ease
 
 .node
   width 140px
@@ -257,6 +259,8 @@ mounted() {
   border 2px solid $g3
   border-radius 0.5rem
   margin 0 0.75rem 0.4rem 0
+  transition .51s all ease
+  
 
 .value
   color #aa0

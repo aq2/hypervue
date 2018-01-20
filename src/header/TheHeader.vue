@@ -1,16 +1,24 @@
 <template lang="pug">
   
 #header
-  CandInfo(v-if='vizPage')
-  
-  #headerLinks
-    HeaderLinks
-  
-  #buttons
+  #buttons1(v-show='vizPage')
+    #toggleSidebar
+      .tooltip(@click='toggleSidebar')
+        button
+          icon(v-if='sidebarOpen' name='chevron-circle-left' scale=2) 
+          icon(v-else name='chevron-circle-right' scale=2)
+          span(class='tooltiptext tooltip-right') click to toggle sidebar    
     #search
       button(@click='search')
         icon(name='search' scale=2)
 
+  #candInfo
+    CandInfo(v-show='vizPage')
+  
+  #headerLinks
+    HeaderLinks
+  
+  #buttons2
     #help
       button(@click='help' class='tooltip')
         span(class='tooltiptext tooltip-left') what do i do?
@@ -39,11 +47,17 @@ components: {
 
 data() {
   return {
-    vizPage: false
+    vizPage: false,
+    sidebarOpen: true
   }
 },
 
 methods: {
+  toggleSidebar() {
+    EventBus.$emit('sidebarToggled')
+    this.sidebarOpen = !this.sidebarOpen
+  },
+  
   toggleFullScreen() {
     const d = document
     if (!d.fullscreenElement && !d.mozFullScreenElement &&
@@ -117,6 +131,10 @@ methods: {
   border-bottom 2px solid $g2
   justify-content space-between
 
+#candInfo
+  min-width 800px
+
+
 #fullscreen-toggle
   margin 0
 
@@ -124,7 +142,7 @@ button
   height 80px
   min-width 80px
 
-#buttons
+#buttons1, #buttons2
   display flex
 
 </style>

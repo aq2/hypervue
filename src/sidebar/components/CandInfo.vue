@@ -1,16 +1,25 @@
 <template lang="pug">
 
 #candInfo
-  #info(v-if='candL > 0')
+  #info(v-show='candL > 0')
     .data
-      .name {{cand.candID}}
-      .rank mean Rank {{cand.meanRank}}  / {{candL}}
-      .score mean Norm Score {{meanNorm}}
+      .name {{cand1.candID}}
+      .rank mean Rank {{cand1.meanRank}}  / {{candL}}
+      .score mean Norm Score {{meanNorm(1)}}
     .databar
       .bar(v-for='(crit, c) in crits')
         .top(:id="'top'+c") {{critInit(c)}}
         .bottom(:id="'bott'+c")
-  #instr(v-else)
+    .databar2
+      .bar(v-for='(crit, c) in crits')
+        .top(:id="'top'+c") {{critInit(c)}}
+        .bottom(:id="'bott'+c")
+    .data2
+      .name {{cand2.candID}}
+      .rank mean Rank {{cand2.meanRank}}  / {{candL}}
+      .score mean Norm Score {{meanNorm(2)}}
+  
+  #instr(v-show='candL < 1')
     p Hover over a node for info
     p Click on a node for dominance
 
@@ -30,26 +39,41 @@ computed: {
   crits() {
     return this.dimMeta.crits
   },
-  meanNorm() {
-    return this.cand.meanNorm.toFixed(3)
-  }
+  
   
 },
+methods: {
+  meanNorm(cand) {
+    let thisCand = this.cand1
+    if (cand == 2) {
+      thisCand = this.cand2
+    }
+    return thisCand.meanNorm.toFixed(3)
+  }
+},
+
+
 data() {
   return {
     critInit(c) {
       return this.dimMeta.dimNames[this.crits[c]][0]
     },
-    cand: {candID: 'click on a node', meanRank: -1, meanNorm: -1},
-    candL: 0
+    candL: 0,
+    cand2: {meanNorm:-1},
+    cand1: {candID: 'click on a node', meanRank: -1, meanNorm: -1}
   }
 },
 
 // listen to click on node event to change candKeyloop[]
 created() {
   EventBus.$on('showCandInfo', ([cand, length]) => {
-    this.cand = cand
+    this.cand2 = cand
     this.candL = length
+  })
+
+  EventBus.$on('nodeSelected', ([cand, length]) => {
+    this.cand1 = cand
+    // this.candL = length
   })
 }
 
@@ -61,25 +85,25 @@ created() {
 <style lang="stylus" scoped>
 
 #info
-  background blue
-  width 400px
+  width 800px
   height 80px
-  margin 0 0 0 1rem
   display flex
+  margin 0 0 0 1rem
 
-.data 
-  background purple 
-  width 300px
+.data, .data2
+  max-width 230px
+  min-width 230px
 
 .name
-  font-size 1.25rem
   color $g9
+  font-size 1.25rem
 
-
-.databar  
-  display flex
+.databar, .databar2
   height 80px
-  // padding 0
+  display flex
+
+.databar2, .data2
+  padding-left 0.5rem
 
 .bar
   width 20px
@@ -97,10 +121,10 @@ created() {
   height 40px
   
 #instr p
+  margin 0
   color $g9
   font-size 1.52rem
   padding 0.5rem 0 0 1rem
-  margin 0
   animation flash linear 2s infinite
 
 </style>
