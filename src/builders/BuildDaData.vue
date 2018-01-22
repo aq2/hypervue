@@ -171,7 +171,6 @@ methods: {
 
   nextPage(newPage) {
     EventBus.$emit('changePage', newPage)
-    EventBus.$emit('changePageType', 'viz')
   }
 },
 

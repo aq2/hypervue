@@ -28,6 +28,9 @@ computed: {
   },
   dimMeta() {
     return this.$store.getters.getDimMeta
+  },
+  dimData() {
+    return this.$store.getters.getDimData
   }
 },
 
@@ -93,15 +96,10 @@ methods: {
       console.log(c, normScore)
     }
 
-
     let nodeEl = this.$(c)
     nodeEl.style.background = 'hsla(214, 60%, ' + (100-normScore) + '%, 0.9'
     nodeEl.style.opacity = 1
 
-
-    // if (normScore > 60) {
-    //   nodeEl.style.color = 'grey'
-    // }
   },
 
   orderANode(c) {
