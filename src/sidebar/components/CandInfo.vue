@@ -8,12 +8,12 @@
       .score mean Norm Score {{meanNorm(1)}}
     .databar
       .bar(v-for='(crit, c) in crits')
-        .top(:id="'top'+c") {{critInit(c)}}
-        .bottom(:id="'bott'+c")
+        .top(:id="'topA'+c") {{critInit(c)}}
+        .bottom(:id="'bottA'+c")
     .databar2
       .bar(v-for='(crit, c) in crits')
-        .top(:id="'top'+c") {{critInit(c)}}
-        .bottom(:id="'bott'+c")
+        .top(:id="'topB'+c") {{critInit(c)}}
+        .bottom(:id="'bottB'+c")
     .data2
       .name {{cand2.candID}}
       .rank mean Rank {{cand2.meanRank}}  / {{candL}}
@@ -43,12 +43,36 @@ computed: {
   
 },
 methods: {
+  $(ID) {
+    return document.getElementById(ID)
+  },
+
   meanNorm(cand) {
     let thisCand = this.cand1
     if (cand == 2) {
       thisCand = this.cand2
     }
     return thisCand.meanNorm.toFixed(3)
+  },
+
+  databar(cand) {
+    let thisCand = this.cand1
+    let letter = 'A'
+    if (cand == 2) {
+      thisCand = this.cand2
+      letter = 'B'
+    }
+      let x = 0
+    thisCand.norm.forEach((n, i) => {
+      if (n) {
+        let topID = 'top' + letter + x
+        let top = this.$(topID)
+        console.log('top', topID)
+      
+        top.style.height = 80 * n + 'px'
+        x++
+      }
+    })
   }
 },
 
@@ -65,18 +89,19 @@ data() {
 },
 
 // listen to click on node event to change candKeyloop[]
-created() {
-  EventBus.$on('showCandInfo', ([cand, length]) => {
-    this.cand2 = cand
-    this.candL = length
-  })
-
+mounted() {
   EventBus.$on('nodeSelected', ([cand, length]) => {
     this.cand1 = cand
     // this.candL = length
+    this.databar(1)   
   })
+  
+  EventBus.$on('showCandInfo', ([cand, length]) => {
+    this.cand2 = cand
+    this.candL = length
+    this.databar(2)
+  })  
 }
-
 
 }
 </script>
@@ -106,19 +131,14 @@ created() {
   padding-left 0.5rem
 
 .bar
-  width 20px
-  background red
+  width 20px   // should be set according to critsL
+  background blue
 
 .top
   background green
   height 20px
   text-align center
 
-#top5
-  height 50px
-
-#top3
-  height 40px
   
 #instr p
   margin 0

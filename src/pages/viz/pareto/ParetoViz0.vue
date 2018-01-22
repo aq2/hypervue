@@ -90,18 +90,14 @@ methods: {
       score = cand.meanNorm
       // norm ranking spreads from 0 to 100?
       normScore = score * 100
-      console.log(c, normScore)
     }
 
-
     let nodeEl = this.$(c)
-    nodeEl.style.background = 'hsla(214, 60%, ' + (100-normScore) + '%, 0.9'
-    nodeEl.style.opacity = 1
+    nodeEl.style.background = 'hsla(230, 60%, ' + (100-normScore) + '%, 0.9'
 
-
-    // if (normScore > 60) {
-    //   nodeEl.style.color = 'grey'
-    // }
+    if (normScore > 50) {
+      nodeEl.style.color = 'grey'
+    }
   },
 
   orderANode(c) {
@@ -130,8 +126,7 @@ methods: {
     // show value of each candidate
     const nodeSpan = this.$('nodeSpan'+c)
     nodeSpan.style.width = (score * 1) + '%'
-    // nodeSpan.innerHTML = this.orderMethod + ' ' + score.toFixed(1)
-    nodeSpan.innerHTML = score.toFixed(1)
+    nodeSpan.innerHTML = this.orderMethod + ' ' + score.toFixed(1)
   },
 
   showDimValues(d) {
@@ -171,25 +166,24 @@ methods: {
     const inferiors = cand.infs
     const superiors = cand.sups
 
-    // go through all candidates
+    // got through all candidates
     this.candiData.forEach((cand,c) => {
       c = Number(c)
       const node = this.$(c)
       if (inferiors.includes(c)) {
-        // node.style.background = 'red'
-        // node.classList.add('red')
+        node.style.background = 'red'
         node.style.opacity = '1'
       } 
       else
       if (superiors.includes(c)) {
-        // node.style.background = 'green'
+        node.style.background = 'green'
         node.style.opacity = '1'
                 
       } 
       else
       if (candID == c) {
         // it's this
-        // node.style.background = 'white'
+        node.style.background = 'white'
         node.style.opacity = '1'
 
       } 
@@ -202,7 +196,7 @@ methods: {
     // send message
     EventBus.$emit('nodeSelected', ([cand, this.candiData.length]))
   },
-
+  
   showInfo(candID) {
     const cand = this.candiData[candID]    
     EventBus.$emit('showCandInfo', ([cand, this.candiData.length]))
@@ -265,26 +259,18 @@ mounted() {
   text-align center
   border 2px solid $g3
   border-radius 0.5rem
-  margin 0.4rem 0.75rem 0.4rem 0
+  margin 0 0.75rem 0.4rem 0
   transition .51s all ease
-  color black
-  // text-shadow 0.5px 0.5px blue  
-  // font-weight bold
-  // background #992
+  
 
 .value
-  // color #aa0
-  color yellow 
+  color #aa0
   background green
 
 
 .node:hover
   cursor pointer
   animation flash linear 2s infinite
-
-
-.red 
-  // background red(#000, 255)
-  background blend(rgba(red, 0.5))
+  
 
 </style>

@@ -1,38 +1,30 @@
 doing now:
 
-  ☐ databar - multibar sparkline sorta
+  ✔ databar - multibar sparkline sorta @done(20-01 08:43)
+  ☐ databar mean for each
+  ✘ single/double click @cancelled(20-01 08:43)
 
-  ☐ pareto
-    ☐ rank.score - decimals
-    ☐ embed pareto calcs somehow - import?
+  ☐ candinfo bar hover - show dim and value
+
+  ✔ pareto colouring @done(20-01 09:10)
+  ☐ rank.score - decimals
+  ☐ embed pareto calcs somehow - import?
   
-  ✔ changePage navigation @done(19-01 15:35)
-  ✔ click on node instructions @done(19-01 19:30)
-  ✔ node hover @done(19-01 20:50)
   ☐ dimension hover
-  ✔ click and hover - compare @done(19-01 20:50)
-
-.
-header:
-  ✔ header colors? @done(19-01 19:31)
-  headerlinks:
-    ✔ styling @done(19-01 19:31)
-    ✔ disable viz until data got @done(19-01 19:31)
+  ✔ move candInfo to right @done(20-01 03:04)
+  ☐ search for cand - highlight/grow
 
 .    
 sidebar:
   ☐ sub-componentize
   ☐ select rather than radio
-  ☐ search for cand - highlight/grow
   ☐ accordian slideable sidebar components when it gets too big
-  ☐ toggleable sidebar for vizzes 
-  ☐ three states: hidden, open, closed
   
- .
+.
  databar/multibar:
    ☐ height and width of databar
     
- .    
+.    
  general:
    ☐ settings/preferences - like what
    ☐ peers average? useful for databar somehow?
@@ -40,12 +32,10 @@ sidebar:
  
 .
 css:
-  ✘ light/dark color scheme @cancelled(19-01 19:53)
   ☐ how many greys do i need? $g5
 
 .
 csv:
-  ✘ dynamic instructions for steps - via events/payload @cancelled(19-01 19:54)
   ☐ save all data to firebase @normal 
   ☐ retrieve data from firebase @normal
   ☐ disable checkboxes on dimInfo after OK
@@ -64,6 +54,17 @@ js/css learn:
 =====================================================================  
 
 Archive:
+  ✔ changePage navigation @done(19-01 15:35)
+  ✔ click on node instructions @done(19-01 19:30)
+  ✔ node hover @done(19-01 20:50)
+  ✔ click and hover - compare @done(19-01 20:50)
+  ✔ header colors? @done(19-01 19:31)
+  ✔ styling @done(19-01 19:31)
+  ✔ disable viz until data got @done(19-01 19:31)
+  ✔ toggleable sidebar for vizzes @done(19-01 20:58)
+  ✔ three states: hidden, open, closed @done(19-01 20:58)
+  ✘ light/dark color scheme @cancelled(19-01 19:53)
+  ✘ dynamic instructions for steps - via events/payload @cancelled(19-01 19:54)
   ✔ replace all hard-coded stylus colors with global vars @done(19-01 15:24)
   ✔ button outlines? @done(19-01 15:25)
   ✔ something not right about order/color  @crit @done(15-01 13:39)

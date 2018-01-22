@@ -8,17 +8,18 @@
           icon(v-if='sidebarOpen' name='chevron-circle-left' scale=2) 
           icon(v-else name='chevron-circle-right' scale=2)
           span(class='tooltiptext tooltip-right') click to toggle sidebar    
-    #search
-      button(@click='search')
-        icon(name='search' scale=2)
+
+  #headerLinks
+    HeaderLinks
 
   #candInfo
     CandInfo(v-show='vizPage')
   
-  #headerLinks
-    HeaderLinks
   
   #buttons2
+    #search
+      button(@click='search')
+        icon(name='search' scale=2)
     #help
       button(@click='help' class='tooltip')
         span(class='tooltiptext tooltip-left') what do i do?

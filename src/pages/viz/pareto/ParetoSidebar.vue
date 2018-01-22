@@ -1,12 +1,6 @@
 <template lang="pug">
 
 #paretoSidebar
-  //- #candInfo
-    h3 candInfo
-    #candName {{candName}}
-    p aveRank {{aveRank}}
-    p aveScore {{aveScore}}
-  //- hr
   #dims
     h3 dimensions
     .dim(v-for='(dim,d) in dimNames' :ID="'dim'+d" v-if='dimCrit(d)'
@@ -35,7 +29,7 @@
       span(class='checkmark radio')
     //- radio buttons?
   hr
-  #search
+  //- #search
     h3 search
     | insert search here
 
@@ -68,7 +62,7 @@ computed: {
 data() {
   return {
     ordBy: 1,      // sets default radio for orderBy
-    colBy: 2,      // sets default radio for orderBy
+    colBy: 1,      // sets default radio for orderBy
     candName: 'click a node',
     aveRank: -1,
     aveScore: -1,
@@ -87,7 +81,7 @@ methods: {
 
     // set color for clicked dim
     const dim = document.getElementById('dim' + d)
-    dim.style.color = '#89a'
+    dim.style.color = '#780'
 
     // change span widths in viz
     EventBus.$emit('showDimValues', d)
@@ -151,7 +145,7 @@ label span
   background-color $g4
 
 .dim
-  color $g9
+  // color green
   margin-bottom 0.5rem
 
 .stats p
@@ -180,5 +174,8 @@ button
 #candName
   color $g8
 
+.dim:hover
+  cursor pointer
+  color white
 
 </style>
